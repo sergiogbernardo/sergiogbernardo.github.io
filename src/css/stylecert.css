@@ -5,31 +5,26 @@
   /** SLIDESHOW **/
   .slideshow,
   .slideshow:after { 
-      top: 100px; /*Not sure why I needed this fix*/
-     
-          position: absolute;
-      width: 1000px;
-      height: 600px;
-           
+
+      top: 20px; /*Not sure why I needed this fix*/
+      position: absolute;
+      width: 1200px;
+      height: 760px;
+      border: 1px solid black;
       z-index: 0; 
-      background-position: center;
+      
   }
   
   .slideshow li span { 
           position: absolute;
-      width: 1000px;
-      height: 600px;
-            
+      width: 1200px;
+      height: 760px;
       color: transparent;
       background-size: cover;
-      background-position: center;
-      
       opacity: 0;
       z-index: 0;
       animation: imageAnimation 30s linear infinite 0s; 
   }
-  
-  
   
   .slideshow li:nth-child(1) span { 
     background-image: url("https://sergiogbernardo.github.io/img/Certificate.png"); 
@@ -50,10 +45,6 @@
     background-image: url("https://sergiogbernardo.github.io/img/certificados/linux.png");
     animation-delay: 24s; 
 }
-
-
-  
-  
   
   @keyframes imageAnimation { 
       0% { opacity: 0; animation-timing-function: ease-in; }
@@ -62,8 +53,7 @@
       25% { opacity: 0 }
       100% { opacity: 0 }
   }
-  
-  
+ 
   @keyframes titleAnimation { 
       0% { opacity: 0 }
       8% { opacity: 1 }
