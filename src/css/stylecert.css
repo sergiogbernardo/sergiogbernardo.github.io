@@ -30,22 +30,22 @@
   }
    
   .slideshow li:nth-child(1) span { 
-      background-image: url("https://sergiogbernardo.github.io/img/certificadosj/Linuxessentials.JPG"); 
+      background-image: url("https://sergiogbernardo.github.io/img/Certificate.png"); 
   }
   .slideshow li:nth-child(2) span { 
-      background-image: url("https://sergiogbernardo.github.io/img/certificadosj/Linuxessentials.JPG");
+      background-image: url("https://sergiogbernardo.github.io/img/certificados/ccnav7.png");
       animation-delay: 6s; 
   }
   .slideshow li:nth-child(3) span { 
-      background-image: url("https://sergiogbernardo.github.io/img/certificadosj/Linuxessentials.JPG");
+      background-image: url("https://sergiogbernardo.github.io/img/certificados/cyber.png");
       animation-delay: 12s; 
   }
   .slideshow li:nth-child(4) span { 
-      background-image: url("https://sergiogbernardo.github.io/img/certificadosj/Linuxessentials.JPG");   
+      background-image: url("https://sergiogbernardo.github.io/img/certificados/iot.png");   
       animation-delay: 18s; 
   }
   .slideshow li:nth-child(5) span { 
-      background-image: url("https://sergiogbernardo.github.io/img/certificadosj/Linuxessentials.JPG");
+      background-image: url("https://sergiogbernardo.github.io/img/certificados/linux.png");
       animation-delay: 24s; 
   }
   
