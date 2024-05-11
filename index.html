@@ -1,1 +1,61 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controles CIS</title>
+</head>
+<body>
+    <h1>Controles CIS disponíveis:</h1>
+    <div id="controles"></div>
+    <input type="text" id="controleId" placeholder="Insira o ID do controle">
+    <button onclick="avaliarControle()">Avaliar Controle</button>
+    <script>
+        async function fetchControles() {
+            const response = await fetch('https://sergiogbernardo.github.io/ciscontrols_v8.json');
+            const data = await response.json();
+            return data;
+        }
+
+        async function exibirControles() {
+            const dataControles = await fetchControles();
+            const controlesDiv = document.getElementById('controles');
+            let html = '<table><tr><th>ID</th><th>Título</th><th>Descrição</th></tr>';
+            dataControles.forEach(controle => {
+                html += `<tr><td>${controle.id}</td><td>${controle.nome}</td><td>${controle.descricao}</td></tr>`;
+            });
+            html += '</table>';
+            controlesDiv.innerHTML = html;
+        }
+
+        async function avaliarControle() {
+            const controleId = document.getElementById('controleId').value;
+            if (!controleId) {
+                alert('Por favor, insira o ID do controle.');
+                return;
+            }
+            const dataControles = await fetchControles();
+            const controle = dataControles.find(controle => controle.id === parseInt(controleId));
+            if (controle) {
+                let message = `Você escolheu avaliar o controle com o ID ${controleId}, este controle fala sobre "${controle.nome}"`;
+                if (controle.subcontroles) {
+                    const numSubcontroles = controle.subcontroles.length;
+                    message += ` e possui um total de ${numSubcontroles} subcontroles.`;
+                    if (numSubcontroles > 0) {
+                        message += '\n\nSubcontroles:\n';
+                        controle.subcontroles.forEach(subcontrole => {
+                            message += `Subcontrole ${subcontrole.id}: ${subcontrole.descricao}\n`;
+                        });
+                    }
+                }
+                alert(message);
+            } else {
+                alert(`O controle com o ID ${controleId} não foi encontrado.`);
+            }
+        }
+
+        window.onload = exibirControles;
+    </script>
+</body>
+</html>
