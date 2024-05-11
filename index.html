@@ -30,6 +30,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
 
         th, td {
@@ -65,10 +66,14 @@
         }
 
         .response {
-            margin-top: 20px;
             padding: 10px;
             background-color: #f9f9f9;
             border-left: 4px solid #4caf50;
+            display: none;
+        }
+
+        .subcontrols {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -79,7 +84,9 @@
         <div class="response" id="response"></div>
         <input type="text" id="controleId" placeholder="Insira o ID do controle">
         <button onclick="avaliarControle()">Avaliar Controle</button>
+        <div class="subcontrols" id="subcontrols"></div>
     </div>
+
     <script>
         async function fetchControles() {
             const response = await fetch('https://sergiogbernardo.github.io/ciscontrols_v8.json');
@@ -113,12 +120,16 @@
                     message += ` e possui um total de ${numSubcontroles} subcontroles.`;
                     if (numSubcontroles > 0) {
                         message += '\n\nSubcontroles:\n';
+                        let subcontrolsHtml = '<table><tr><th>ID</th><th>Descrição</th></tr>';
                         controle.subcontroles.forEach(subcontrole => {
-                            message += `Subcontrole ${subcontrole.id}: ${subcontrole.descricao}\n`;
+                            subcontrolsHtml += `<tr><td>${subcontrole.id}</td><td>${subcontrole.descricao}</td></tr>`;
                         });
+                        subcontrolsHtml += '</table>';
+                        document.getElementById('subcontrols').innerHTML = subcontrolsHtml;
                     }
                 }
-                alert(message);
+                document.getElementById('response').innerText = message;
+                document.getElementById('response').style.display = 'block';
             } else {
                 alert(`O controle com o ID ${controleId} não foi encontrado.`);
             }
