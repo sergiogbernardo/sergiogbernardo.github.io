@@ -409,8 +409,430 @@
             "descricao": "Coletar logs do provedor de serviços, onde houver suporte. Implementações de exemplo incluem coleta de eventos de autenticação e autorização, criação de dados e eventos de descarte e eventos de gerenciamento de usuário."
         }
     ]
-}
-]
+},
+{
+    "id": 9,
+    "nome": "Controle de acesso de usuário",
+    "descricao": "Implementar políticas e procedimentos para controlar o acesso dos usuários aos sistemas e dados da empresa, garantindo que apenas indivíduos autorizados tenham permissão para acessar recursos específicos de acordo com suas funções e responsabilidades.",
+    "subcontroles": [
+      {
+        "id": "9.1",
+        "nome": "Definir políticas de acesso",
+        "descricao": "Estabelecer políticas claras de acesso que descrevam os direitos e privilégios de acesso dos usuários aos sistemas e dados da empresa, com base em suas funções e necessidades operacionais."
+      },
+      {
+        "id": "9.2",
+        "nome": "Implementar autenticação forte",
+        "descricao": "Exigir autenticação forte (por exemplo, senha e autenticação de dois fatores) para verificar a identidade dos usuários antes de conceder acesso aos sistemas e dados corporativos, especialmente para acessos remotos e privilegiados."
+      },
+      {
+        "id": "9.3",
+        "nome": "Aplicar o princípio do menor privilégio",
+        "descricao": "Adotar o princípio do menor privilégio, fornecendo aos usuários apenas as permissões mínimas necessárias para realizar suas funções específicas, limitando assim o potencial de danos em caso de comprometimento das credenciais do usuário."
+      },
+      {
+        "id": "9.4",
+        "nome": "Monitorar e auditar acessos",
+        "descricao": "Implementar mecanismos de monitoramento e auditoria para registrar e analisar os acessos dos usuários aos sistemas e dados da empresa, identificando atividades suspeitas ou não autorizadas para ações corretivas imediatas."
+      },
+      {
+        "id": "9.5",
+        "nome": "Revisar e atualizar regularmente",
+        "descricao": "Revisar regularmente as permissões de acesso dos usuários e atualizar conforme necessário com base em mudanças de função, necessidades operacionais ou rotatividade de pessoal, garantindo a manutenção da segurança dos recursos corporativos."
+      }
+    ]
+  },
+{
+    "id": 10,
+    "nome": "Gestão de vulnerabilidades",
+    "descricao": "Implementar um processo para identificar, avaliar e remediar vulnerabilidades de segurança em sistemas e aplicativos para reduzir o risco de exploração por parte de invasores.",
+    "subcontroles": [
+      {
+        "id": "10.1",
+        "nome": "Realizar varreduras de vulnerabilidades",
+        "descricao": "Realizar varreduras regulares de vulnerabilidades em sistemas e aplicativos para identificar possíveis falhas de segurança, usando ferramentas automatizadas ou serviços especializados."
+      },
+      {
+        "id": "10.2",
+        "nome": "Avaliar criticidade das vulnerabilidades",
+        "descricao": "Avaliar a criticidade das vulnerabilidades identificadas com base em fatores como impacto potencial, probabilidade de exploração e contexto operacional, para priorizar ações de remediação."
+      },
+      {
+        "id": "10.3",
+        "nome": "Implementar correções e atualizações",
+        "descricao": "Aplicar correções de segurança e atualizações de software para remediar as vulnerabilidades identificadas, seguindo um processo de gerenciamento de mudanças para minimizar o impacto nos sistemas em produção."
+      },
+      {
+        "id": "10.4",
+        "nome": "Realizar testes de penetração",
+        "descricao": "Conduzir testes de penetração para validar a eficácia das correções e atualizações aplicadas, simulando ataques controlados para identificar se as vulnerabilidades foram adequadamente mitigadas."
+      },
+      {
+        "id": "10.5",
+        "nome": "Monitorar e revisar continuamente",
+        "descricao": "Monitorar continuamente sistemas e aplicativos em busca de novas vulnerabilidades e revisar periodicamente o processo de gestão de vulnerabilidades para garantir sua eficácia e alinhamento com as melhores práticas."
+      }
+    ]
+  },
+{
+    "id": 11,
+    "nome": "Proteção de dados em trânsito e em repouso",
+    "descricao": "Implementar medidas de segurança para proteger dados enquanto estão em trânsito entre sistemas e enquanto estão armazenados em dispositivos ou servidores.",
+    "subcontroles": [
+      {
+        "id": "11.1",
+        "nome": "Utilizar criptografia para dados em trânsito",
+        "descricao": "Implementar criptografia de transporte, como SSL/TLS, para proteger a comunicação de dados entre sistemas e redes, garantindo que os dados transmitidos não possam ser interceptados ou lidos por partes não autorizadas."
+      },
+      {
+        "id": "11.2",
+        "nome": "Criptografar dados em repouso",
+        "descricao": "Criptografar dados armazenados em dispositivos ou servidores para proteger contra acesso não autorizado, garantindo que mesmo se os dispositivos forem comprometidos, os dados permaneçam ilegíveis sem a chave de criptografia adequada."
+      },
+      {
+        "id": "11.3",
+        "nome": "Implementar controles de acesso",
+        "descricao": "Estabelecer políticas e mecanismos de controle de acesso para garantir que apenas usuários autorizados tenham permissão para acessar dados sensíveis, com base em princípios de necessidade de saber e privilégios mínimos."
+      },
+      {
+        "id": "11.4",
+        "nome": "Proteger dispositivos de armazenamento",
+        "descricao": "Implementar medidas de segurança física e lógica para proteger dispositivos de armazenamento, como discos rígidos, dispositivos USB e servidores de arquivos, contra roubo, perda ou acesso não autorizado."
+      },
+      {
+        "id": "11.5",
+        "nome": "Monitorar e auditar acesso a dados sensíveis",
+        "descricao": "Implementar sistemas de monitoramento e auditoria para rastrear e registrar acessos a dados sensíveis, permitindo a detecção de atividades suspeitas ou não autorizadas e a prestação de contas sobre quem acessou quais dados e quando."
+      }
+    ]
+  },
+{
+    "id": 12,
+    "nome": "Monitoramento e resposta de segurança",
+    "descricao": "Implementar sistemas de monitoramento contínuo e estabelecer procedimentos de resposta para identificar e responder rapidamente a eventos de segurança.",
+    "subcontroles": [
+      {
+        "id": "12.1",
+        "nome": "Implementar sistemas de detecção de intrusão (IDS)",
+        "descricao": "Implementar sistemas de detecção de intrusão para monitorar a rede e identificar padrões de tráfego suspeitos ou atividades maliciosas que possam indicar uma violação de segurança."
+      },
+      {
+        "id": "12.2",
+        "nome": "Configurar alertas de segurança",
+        "descricao": "Configurar alertas automáticos para notificar a equipe de segurança sobre eventos de segurança suspeitos ou potencialmente maliciosos, permitindo uma resposta rápida e eficaz."
+      },
+      {
+        "id": "12.3",
+        "nome": "Realizar análise de logs",
+        "descricao": "Realizar análise regular dos logs de segurança e registros de eventos para identificar atividades anômalas, detectar tentativas de intrusão e investigar incidentes de segurança."
+      },
+      {
+        "id": "12.4",
+        "nome": "Implementar monitoramento de segurança de endpoint",
+        "descricao": "Implementar soluções de monitoramento de segurança em endpoints, como antivírus, detecção de malware e prevenção de violações, para proteger contra ameaças direcionadas a dispositivos de usuário final."
+      },
+      {
+        "id": "12.5",
+        "nome": "Estabelecer procedimentos de resposta a incidentes",
+        "descricao": "Desenvolver e documentar procedimentos de resposta a incidentes para orientar a equipe de segurança na identificação, análise, contenção, erradicação e recuperação de incidentes de segurança."
+      },
+      {
+        "id": "12.6",
+        "nome": "Conduzir exercícios de simulação de incidentes",
+        "descricao": "Realizar exercícios regulares de simulação de incidentes para testar a eficácia dos procedimentos de resposta a incidentes, identificar áreas de melhoria e treinar a equipe de segurança para responder efetivamente a situações de crise."
+      }
+    ]
+  },
+{
+    "id": 13,
+    "nome": "Segurança de redes",
+    "descricao": "Proteger a infraestrutura de rede da organização contra ameaças internas e externas, garantindo a integridade, confidencialidade e disponibilidade dos dados e serviços.",
+    "subcontroles": [
+      {
+        "id": "13.1",
+        "nome": "Implementar firewalls de rede",
+        "descricao": "Implementar firewalls de rede para controlar o tráfego de entrada e saída na rede da organização, permitindo apenas o tráfego autorizado de acordo com as políticas de segurança."
+      },
+      {
+        "id": "13.2",
+        "nome": "Configurar segurança de rede sem fio",
+        "descricao": "Configurar medidas de segurança para redes sem fio, como autenticação forte, criptografia de dados (por exemplo, WPA2), e segmentação de rede para proteger contra acesso não autorizado e interceptação de dados."
+      },
+      {
+        "id": "13.3",
+        "nome": "Implementar detecção e prevenção de intrusões (IDS/IPS)",
+        "descricao": "Implementar sistemas de detecção e prevenção de intrusões para identificar e responder a atividades maliciosas na rede, como tentativas de invasão, ataques de negação de serviço (DDoS) e exploração de vulnerabilidades."
+      },
+      {
+        "id": "13.4",
+        "nome": "Realizar monitoramento de tráfego de rede",
+        "descricao": "Realizar monitoramento contínuo do tráfego de rede para identificar padrões anormais de atividade que possam indicar uma violação de segurança ou tentativa de ataque."
+      },
+      {
+        "id": "13.5",
+        "nome": "Implementar políticas de segurança de VLAN",
+        "descricao": "Implementar políticas de segurança para redes de área local virtual (VLANs) para isolar e segmentar o tráfego de rede com base em critérios de segurança, reduzindo o risco de acesso não autorizado a recursos de rede sensíveis."
+      },
+      {
+        "id": "13.6",
+        "nome": "Configurar autenticação de rede",
+        "descricao": "Configurar métodos de autenticação de rede, como Protocolo de Autenticação Extensível (EAP) e Autenticação IEEE 802.1X, para garantir que apenas dispositivos e usuários autorizados tenham acesso à rede."
+      }
+    ]
+  },
+{
+    "id": 14,
+    "nome": "Gerenciamento de dados",
+    "descricao": "Gerenciar dados da organização de forma segura e eficiente ao longo de seu ciclo de vida, desde a criação até o descarte final.",
+    "subcontroles": [
+      {
+        "id": "14.1",
+        "nome": "Identificar e classificar dados sensíveis",
+        "descricao": "Identificar e classificar os dados sensíveis da organização com base em seu valor, confidencialidade, integridade e criticidade para a empresa. Isso pode incluir informações pessoais identificáveis (PII), informações financeiras, propriedade intelectual e outros dados confidenciais."
+      },
+      {
+        "id": "14.2",
+        "nome": "Implementar controles de acesso de dados",
+        "descricao": "Implementar controles de acesso de dados para garantir que apenas usuários autorizados tenham permissão para acessar dados sensíveis. Isso pode incluir a criptografia de dados, autenticação de usuários, controle de acesso baseado em função (RBAC) e monitoramento de acesso a dados."
+      },
+      {
+        "id": "14.3",
+        "nome": "Estabelecer políticas de retenção de dados",
+        "descricao": "Estabelecer políticas de retenção de dados que definam por quanto tempo os dados devem ser retidos e quando devem ser excluídos de acordo com requisitos legais, regulatórios e comerciais. Isso ajuda a reduzir o risco de retenção excessiva de dados e a garantir a conformidade com as leis de privacidade de dados."
+      },
+      {
+        "id": "14.4",
+        "nome": "Realizar backup e recuperação de dados",
+        "descricao": "Realizar backup regular de dados críticos da organização e implementar procedimentos de recuperação de desastres para garantir a disponibilidade e integridade dos dados em caso de falha do sistema, erro humano ou desastre."
+      },
+      {
+        "id": "14.5",
+        "nome": "Desenvolver procedimentos de descarte seguro de dados",
+        "descricao": "Desenvolver e implementar procedimentos de descarte seguro de dados para garantir que os dados sensíveis sejam permanentemente removidos de dispositivos de armazenamento quando não forem mais necessários. Isso pode incluir a destruição física de dispositivos ou a eliminação segura de dados por meio de métodos de apagamento."
+      },
+      {
+        "id": "14.6",
+        "nome": "Realizar criptografia de dados em repouso e em trânsito",
+        "descricao": "Realizar a criptografia de dados sensíveis enquanto estão em repouso (armazenados) e em trânsito (em movimento entre sistemas ou locais) para proteger contra acesso não autorizado e interceptação de dados."
+      },
+      {
+        "id": "14.7",
+        "nome": "Implementar políticas de compartilhamento seguro de dados",
+        "descricao": "Implementar políticas e procedimentos de compartilhamento seguro de dados para garantir que os dados sejam compartilhados apenas com partes autorizadas e de acordo com os requisitos de segurança e privacidade de dados da organização."
+      }
+    ]
+  },
+{
+    "id": 15,
+    "nome": "Controle de acesso de usuário",
+    "descricao": "Garantir que apenas usuários autorizados tenham acesso aos recursos de sistema necessários para realizar suas responsabilidades atribuídas, e que os usuários não autorizados não tenham acesso a esses recursos.",
+    "subcontroles": [
+      {
+        "id": "15.1",
+        "nome": "Estabelecer direitos de acesso do usuário",
+        "descricao": "Estabelecer direitos de acesso para os usuários que descrevem as permissões necessárias para executar suas funções de trabalho. Esses direitos de acesso devem ser revisados regularmente e atualizados conforme necessário para refletir mudanças nas responsabilidades dos usuários."
+      },
+      {
+        "id": "15.2",
+        "nome": "Limitar o acesso a sistemas e serviços essenciais",
+        "descricao": "Limitar o acesso a sistemas e serviços essenciais somente aos usuários que precisam desses recursos para desempenhar suas funções de trabalho. Isso pode ser feito por meio da implementação de controles de acesso baseados em função (RBAC) ou atributos de segurança, como grupos de segurança."
+      },
+      {
+        "id": "15.3",
+        "nome": "Implementar autenticação multifatorial (MFA)",
+        "descricao": "Implementar autenticação multifatorial (MFA) sempre que possível para aumentar a segurança do processo de autenticação. MFA requer a apresentação de duas ou mais formas de evidência para verificar a identidade do usuário."
+      },
+      {
+        "id": "15.4",
+        "nome": "Auditar acessos de usuários",
+        "descricao": "Auditar os acessos dos usuários aos sistemas e recursos da empresa para identificar atividades suspeitas ou não autorizadas. Os registros de auditoria devem ser revisados regularmente para detectar e investigar atividades incomuns."
+      },
+      {
+        "id": "15.5",
+        "nome": "Implementar princípios de privilégio mínimo",
+        "descricao": "Implementar o princípio de privilégio mínimo para conceder aos usuários apenas os direitos de acesso necessários para realizar suas funções específicas. Isso ajuda a reduzir a superfície de ataque e limita o impacto de uma violação de segurança."
+      },
+      {
+        "id": "15.6",
+        "nome": "Revogar imediatamente os direitos de acesso de usuários",
+        "descricao": "Revogar imediatamente os direitos de acesso de usuários quando esses direitos não forem mais necessários para desempenhar suas funções de trabalho. Isso pode ser feito como parte de um processo de gerenciamento de mudanças ou quando um usuário deixa a empresa."
+      },
+      {
+        "id": "15.7",
+        "nome": "Proteger credenciais de usuário",
+        "descricao": "Proteger as credenciais de usuário contra acesso não autorizado ou uso indevido. Isso inclui o armazenamento seguro de senhas, a implementação de políticas de complexidade de senha e a educação dos usuários sobre práticas seguras de senha."
+      },
+      {
+        "id": "15.8",
+        "nome": "Implementar restrições de acesso baseadas em localização",
+        "descricao": "Implementar restrições de acesso baseadas em localização para impedir que usuários acessem sistemas e recursos da empresa de locais não autorizados. Isso pode ser feito por meio de controles de rede ou tecnologias de geolocalização."
+      }
+    ]
+  },
+{
+    "id": 16,
+    "nome": "Segurança de software de aplicativo",
+    "descricao": "Gerenciar o ciclo de vida da segurança de software desenvolvido, hospedado ou adquirido internamente para prevenir, detectar e corrigir os pontos fracos de segurança antes que eles afetem a empresa.",
+    "subcontroles": [
+      {
+        "id": "16.1",
+        "nome": "Estabelecer e manter um processo seguro de desenvolvimento de aplicativos",
+        "descricao": "Estabelecer e manter um processo seguro de desenvolvimento de aplicativos. No processo, tratar de itens como: padrões de design de aplicativo seguro, práticas de codificação seguras, treinamento de desenvolvedor, gerenciamento de vulnerabilidade, segurança de código de terceiros e procedimentos de Testar de segurança de aplicativo. Revisar e atualizar a documentação anualmente ou quando ocorrerem mudanças significativas na empresa que possam afetar esta proteção."
+      },
+      {
+        "id": "16.2",
+        "nome": "Estabelecer e manter um processo para aceitar e resolver vulnerabilidades de software",
+        "descricao": "Estabelecer e manter um processo para aceitar e abordar relatórios de vulnerabilidades de software, incluindo o fornecimento de meios para que entidades externas façam relatórios. O processo deve incluir itens como: uma política de tratamento de vulnerabilidade que identifica o processo de relatório, a parte responsável por lidar com os relatórios de vulnerabilidade e um processo de entrada, atribuição, correção e Testar de correção. Como parte do processo, usar um sistema de rastreamento de vulnerabilidade que inclui classificações de gravidade e métricas para medir o tempo de identificação, análise e remediação de vulnerabilidades. Revisar e atualizar a documentação anualmente ou quando ocorrerem mudanças significativas na empresa que possam afetar esta proteção. Os desenvolvedores de aplicativos de terceiros precisam considerar esta uma política voltada para o exterior que ajuda a definir as expectativas para as partes interessadas externas."
+      },
+      {
+        "id": "16.3",
+        "nome": "Executar análise de causa raiz em vulnerabilidades de segurança",
+        "descricao": "Executar a análise de causa raiz em vulnerabilidades de segurança. Ao revisar as vulnerabilidades, a análise da causa raiz é a tarefa de avaliar os problemas subjacentes que criam vulnerabilidades no código e permite que as equipes de desenvolvimento vão além de apenas corrigir vulnerabilidades individuais conforme elas surgem."
+      },
+      {
+        "id": "16.4",
+        "nome": "Estabelecer e gerenciar um inventário de componentes de software de terceiros",
+        "descricao": "Estabelecer e gerenciar um estoque atualizado de componentes de terceiros usados ​​no desenvolvimento, muitas vezes referido como uma “lista de materiais”, bem como componentes programados para uso futuro. Este inventário deve incluir quaisquer riscos que cada componente de terceiros possa representar. Avaliar a lista pelo menos uma vez por mês para identificar quaisquer alterações ou atualizações nesses componentes e validar se o componente ainda é compatível."
+      },
+      {
+        "id": "16.5",
+        "nome": "Usar componentes de software de terceiros atualizados e confiáveis",
+        "descricao": "Usar componentes de software de terceiros atualizados e confiáveis. Quando possível, escolher bibliotecas e frameworks estabelecidos e comprovados que forneçam segurança adequada. Adquirir esses componentes de fontes confiáveis ​​ou avaliar o software quanto a vulnerabilidades antes de usá-los."
+      },
+      {
+        "id": "16.6",
+        "nome": "Estabelecer e manter um sistema de classificação de gravidade e processo para vulnerabilidades de aplicativos",
+        "descricao": "Estabelecer e manter um sistema de classificação de gravidade e processo para vulnerabilidades de aplicativos que facilitam a priorização da ordem em que as vulnerabilidades descobertas são corrigidas. Este processo inclui a definição de um nível mínimo de aceitação de segurança para liberação de código ou aplicativos. As classificações de gravidade oferecem uma forma sistemática de triagem de vulnerabilidades que melhora o gerenciamento de riscos e ajuda a garantir que os bugs mais graves sejam corrigidos primeiro. Revisar e atualizar o sistema e processo anualmente."
+      },
+      {
+        "id": "16.7",
+        "nome": "Usar modelos de configuração de proteção padrão para infraestrutura de aplicativos",
+        "descricao": "Usar modelos de configuração de proteção padrão recomendados pelo setor para componentes de infraestrutura de aplicativos. Isso inclui servidores subjacentes, bancos de dados e servidores da web e se aplica a contêineres de nuvem, componentes de plataforma como serviço (PaaS) e componentes de SaaS. Não permitir que software desenvolvido internamente enfraqueça a proteção da configuração."
+      },
+      {
+        "id": "16.8",
+        "nome": "Sistemas de produção e não produção separados",
+        "descricao": "Manter ambientes separados para sistemas de produção e não produção."
+      },
+      {
+        "id": "16.9",
+        "nome": "Treinar desenvolvedores em conceitos de segurança de aplicativos e codificação segura",
+        "descricao": "Certificar-se de que todo o pessoal de desenvolvimento de software receba treinamento para escrever código seguro para seu ambiente de desenvolvimento e responsabilidades específicas. O treinamento pode incluir princípios gerais de segurança e práticas padrão de segurança de aplicativos. Conduza o treinamento pelo menos uma vez por ano e projete de forma a promover a segurança dentro da equipe de desenvolvimento e construir uma cultura de segurança entre os desenvolvedores."
+      },
+      {
+        "id": "16.10",
+        "nome": "Aplicar princípios de design seguro em arquiteturas de aplicativos",
+        "descricao": "Aplicar princípios de design seguro em arquiteturas de aplicativos. Os princípios de design seguro incluem o conceito de privilégio mínimo e imposição de mediação para validar cada operação que o usuário faz, promovendo o conceito de 'nunca confiar na entrada do usuário'. Os exemplos incluem garantir que a verificação explícita de erros seja realizada e documentada para todas as entradas, incluindo tamanho, tipo de dados e intervalos ou formatos aceitáveis. O design seguro também significa minimizar a superfície de ataque da infraestrutura do aplicativo, como desligar portas e serviços desprotegidos, remover programas e arquivos desnecessários e renomear ou remover contas padrão."
+      },
+      {
+        "id": "16.11",
+        "nome": "Aproveitar os módulos ou serviços controlados para componentes de segurança de aplicativos",
+        "descricao": "Aproveitar os módulos ou serviços verificados para os componentes de segurança do aplicativo, tais como gerenciamento de identidade, criptografia e auditoria e registro. O uso de recursos da plataforma em funções críticas de segurança reduzirá a carga de trabalho dos desenvolvedores e minimizará a probabilidade de erros de design ou implementação. Os sistemas operacionais modernos fornecem mecanismos eficazes para identificação, autenticação e autorização e disponibilizam esses mecanismos para os aplicativos. Usar apenas algoritmos de criptografia padronizados, atualmente aceitos e amplamente revisados. Os sistemas operacionais também fornecem mecanismos para criar e manter logs de auditoria seguros."
+      },
+      {
+        "id": "16.12",
+        "nome": "Implementar verificações de segurança em nível de código",
+        "descricao": "Aplicar ferramentas de análise estática e dinâmica dentro do ciclo de vida do aplicativo para verificar se as práticas de codificação seguras estão sendo seguidas."
+      },
+      {
+        "id": "16.13",
+        "nome": "Realizar teste de penetração de aplicação",
+        "descricao": "Conduzir o teste de penetração da aplicação. Para aplicações críticas, o teste de penetração autenticado é mais adequado para encontrar vulnerabilidades de lógica de negócios do que a varredura de código e o teste de segurança automatizado. O teste de penetração depende da habilidade do testador para manipular manualmente uma aplicação como um usuário autenticado e não autenticado."
+      },
+      {
+        "id": "16.14",
+        "nome": "Conduzir modelagem de ameaças",
+        "descricao": "Conduzir a modelagem de ameaças. A modelagem de ameaças é o processo de identificar e abordar as falhas de design de segurança da aplicação em um design, antes que o código seja criado. É conduzido por pessoas especialmente treinadas que avaliam o design da aplicação e medem os riscos de segurança para cada ponto de entrada e nível de acesso. O objetivo é mapear a aplicação, a arquitetura e a infraestrutura de uma forma estruturada para entender seus pontos fracos."
+      }
+    ]
+  },
+{
+    "id": 17,
+    "nome": "Gerenciamento de resposta a incidentes",
+    "descricao": "Estabelecer um programa para desenvolver e manter uma capacidade de resposta a incidentes (por exemplo, políticas, planos, procedimentos, funções definidas, treinamento e comunicações) para preparar, detectar e responder rapidamente a um ataque.",
+    "subcontroles": [
+      {
+        "id": "17.1",
+        "nome": "Designar pessoal para gerenciar tratamento de incidentes",
+        "descricao": "Designar uma pessoa-chave e, pelo menos, um suplente que gerenciará o processo de tratamento de incidentes da empresa. A equipe de gerenciamento é responsável pela coordenação e documentação dos esforços de resposta e recuperação a incidentes e pode consistir em funcionários internos da empresa, fornecedores terceirizados ou uma abordagem híbrida. Se estiver usando um fornecedor terceirizado, designar pelo menos uma pessoa interna da empresa para supervisionar o trabalho de terceiros. Revisar anualmente ou quando ocorrerem mudanças significativas na empresa que possam afetar esta proteção."
+      },
+      {
+        "id": "17.2",
+        "nome": "Estabelecer e manter informações de contato para relatar incidentes de segurança",
+        "descricao": "Estabelecer e manter as informações de contato das partes que precisam ser informadas sobre os incidentes de segurança. Os contatos podem incluir funcionários internos, fornecedores terceirizados, policiais, provedores de seguros cibernéticos, agências governamentais relevantes, parceiros do Centro de Análise e Compartilhamento de Informações (ISAC) ou outras partes interessadas. Verificar os contatos anualmente para garantir que as informações estejam atualizadas."
+      },
+      {
+        "id": "17.3",
+        "nome": "Estabelecer e manter um processo empresarial para relatar incidentes",
+        "descricao": "Estabelecer e manter um processo corporativo para a força de trabalho relatar incidentes de segurança. O processo inclui cronograma de relatório, pessoal a quem reportar, mecanismo de relatório e as informações mínimas a serem reportadas. Certificar-se de que o processo esteja publicamente disponível para todos os funcionários. Revisar anualmente ou quando ocorrerem mudanças significativas na empresa que possam impactar esta proteção."
+      },
+      {
+        "id": "17.4",
+        "nome": "Estabelecer e manter um processo de resposta a incidentes",
+        "descricao": "Estabelecer e manter um processo de resposta a incidentes que aborde funções e responsabilidades, requisitos de conformidade e um plano de comunicação. Revisar anualmente ou quando ocorrerem mudanças significativas na empresa que possam impactar esta proteção."
+      },
+      {
+        "id": "17.5",
+        "nome": "Atribuir funções e responsabilidades principais",
+        "descricao": "Atribuir funções e responsabilidades principais para resposta a incidentes, incluindo equipe jurídica, TI, segurança da informação, instalações, relações públicas, recursos humanos, respondentes a incidentes e analistas, conforme aplicável. Revisar anualmente ou quando ocorrerem mudanças significativas na empresa que possam impactar esta proteção."
+      },
+      {
+        "id": "17.6",
+        "nome": "Definir mecanismos de comunicação durante a resposta ao incidente",
+        "descricao": "Determinar quais mecanismos primários e secundários serão usados ​​para se comunicar e relatar durante um incidente de segurança. Os mecanismos podem incluir ligações, e-mails ou cartas. Lembre-se de que certos mecanismos, como e-mails, podem ser afetados durante um incidente de segurança. Revisar anualmente ou quando ocorrerem mudanças significativas na empresa que possam impactar esta proteção."
+      },
+      {
+        "id": "17.7",
+        "nome": "Conduzir exercícios rotineiros de resposta a incidentes",
+        "descricao": "Planejar e conduzir exercícios de resposta a incidentes de rotina e cenários para o pessoal-chave envolvido no processo de resposta a incidentes para se preparar para responder a incidentes do mundo real. Os exercícios precisam testar os canais de comunicação, tomada de decisão e fluxos de trabalho. Realizar testes anualmente, no mínimo."
+      },
+      {
+        "id": "17.8",
+        "nome": "Conduzir análises pós-incidente",
+        "descricao": "Realizar análises pós-incidente. As revisões pós-incidente ajudam a prevenir a recorrência do incidente por meio da identificação de lições aprendidas e ações de acompanhamento."
+      },
+      {
+        "id": "17.9",
+        "nome": "Estabelecer e manter limites de incidentes de segurança",
+        "descricao": "Estabelecer e manter limites de incidentes de segurança, incluindo, no mínimo, a diferenciação entre um incidente e um evento. Os exemplos podem incluir: atividade anormal, vulnerabilidade de segurança, fraqueza de segurança, violação de dados, incidente de privacidade, etc. Revisar anualmente ou quando ocorrerem mudanças corporativas significativas que possam impactar esta proteção."
+      }
+    ]
+  },
+
+    {
+      "id": 18,
+      "nome": "Teste de Penetração",
+      "descricao": "Testar a eficácia e a resiliência dos ativos corporativos por meio da identificação e exploração de fraquezas nos controles (pessoas, processos e tecnologia) e da simulação dos objetivos e ações de um invasor.",
+      "subcontroles": [
+        {
+          "id": "18.1",
+          "nome": "Estabelecer e manter um programa de teste de penetração",
+          "descricao": "Estabelecer e manter um programa de teste de penetração apropriado ao tamanho, complexidade e maturidade da empresa. As características do programa de teste de penetração incluem escopo, como rede, aplicação web, Interface de Programação de Aplicativo (API), serviços hospedados e controles de instalações físicas; frequência; limitações, como horas aceitáveis ​​e tipos de ataque excluídos; informações do ponto de contato; remediação, por exemplo, como as descobertas serão encaminhadas internamente; e requisitos retrospectivos."
+        },
+        {
+          "id": "18.2",
+          "nome": "Realizar testes periódicos de penetração externa",
+          "descricao": "Realizar testes de penetração externa periódicos com base nos requisitos do programa, pelo menos uma vez por ano. O teste de penetração externa deve incluir reconhecimento empresarial e ambiental para detectar informações exploráveis. O teste de penetração requer habilidades e experiência especializadas e deve ser conduzido por uma parte qualificada. O teste pode ser uma caixa transparente ou uma caixa opaca."
+        },
+        {
+          "id": "18.3",
+          "nome": "Remediar as descobertas do teste de penetração",
+          "descricao": "Remediar as descobertas do teste de penetração com base na política da empresa para o escopo e priorização da correção."
+        },
+        {
+          "id": "18.4",
+          "nome": "Validar Medidas de Segurança",
+          "descricao": "Validar as medidas de segurança após cada teste de penetração. Se considerado necessário, modificar os conjuntos de regras e recursos para detectar as técnicas usadas durante o teste."
+        },
+        {
+          "id": "18.5",
+          "nome": "Realizar testes periódicos de penetração interna",
+          "descricao": "Realizar testes de penetração internos periódicos com base nos requisitos do programa, pelo menos uma vez por ano. O teste pode ser uma caixa transparente ou uma caixa opaca."
+        }
+      ]
+    }
+  ]
+
 
 
 
