@@ -1,141 +1,414 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controles CIS</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sérgio G. Bernardo — Portfólio de Cibersegurança</title>
+  <meta name="description" content="Portfólio de Sérgio Gomes Bernardo — Consultor Sênior em Cibersegurança. Arquitetura de Segurança, Maturidade (NIST/ISO), GRC, Cloud Security e Automação." />
+  <meta name="theme-color" content="#0ef" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f1a;           /* fundo dark */
+      --panel:#101726;        /* painéis */
+      --muted:#8aa0b8;        /* texto secundário */
+      --text:#e6f1ff;         /* texto */
+      --neon:#00e7ff;         /* ciano neon */
+      --neon-2:#6cff7d;       /* verde neon */
+      --accent:#7c5cff;       /* roxo */
+      --grid: rgba(0, 231, 255, .07);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+      color:var(--text); background:radial-gradient(1200px 800px at 100% -10%, rgba(124,92,255,.12), transparent 40%),
+                         radial-gradient(1000px 700px at -10% 0%, rgba(0,231,255,.10), transparent 50%), var(--bg);
+      line-height:1.55; overflow-x:hidden;
+    }
+    /* Grid cibernético de fundo */
+    .grid-bg::before{
+      content:""; position:fixed; inset:0; z-index:-1;
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px) 0 0/ 24px 24px,
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/ 24px 24px;
+      mask: radial-gradient(circle at 50% 30%, rgba(0,0,0,.8), transparent 70%);
+      animation: drift 40s linear infinite;
+    }
+    @keyframes drift{to{transform:translateY(24px)}}
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    a{color:var(--neon)}
+    img{max-width:100%; display:block}
+    .container{max-width:1100px; margin-inline:auto; padding:24px}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
+      background:linear-gradient(180deg, rgba(16,23,38,.9), rgba(16,23,38,.6)); border-bottom:1px solid rgba(0,231,255,.12)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .brand .logo{
+      width:38px; height:38px; border-radius:10px; background:
+        radial-gradient(circle at 30% 30%, #00e7ff, transparent 40%),
+        radial-gradient(circle at 70% 70%, #7c5cff, transparent 40%),
+        linear-gradient(135deg, #07293a, #101726); box-shadow:0 0 18px rgba(0,231,255,.35) inset, 0 0 20px rgba(124,92,255,.35) inset;
+      position:relative
+    }
+    .brand .name{font-family:Orbitron, Inter, sans-serif; letter-spacing:.5px; font-weight:700}
+    .menu{display:flex; gap:18px}
+    .menu a{color:var(--text); text-decoration:none; font-weight:600; opacity:.85}
+    .menu a:hover{color:var(--neon)}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+    /* Hero */
+    .hero{display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:center; padding:52px 0}
+    .badge{display:inline-flex; align-items:center; gap:8px; font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+      border:1px solid rgba(0,231,255,.25); padding:6px 10px; border-radius:999px; backdrop-filter: blur(3px)}
+    h1{font-family:Orbitron, Inter, sans-serif; font-size:40px; margin:12px 0 6px}
+    .subtitle{font-size:18px; color:var(--muted); max-width:58ch}
+    .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+    .btn{appearance:none; border:1px solid rgba(0,231,255,.35); background:linear-gradient(180deg, rgba(0,231,255,.12), rgba(124,92,255,.12)); color:var(--text);
+      padding:12px 16px; border-radius:12px; font-weight:700; text-decoration:none; position:relative; overflow:hidden}
+    .btn:hover{box-shadow:0 0 0 2px rgba(0,231,255,.25) inset}
+    .btn.primary{background:linear-gradient(180deg, rgba(0,231,255,.25), rgba(108,255,125,.2)); color:#001014}
 
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+    .panel{background:linear-gradient(180deg, rgba(16,23,38,.9), rgba(16,23,38,.7));
+      border:1px solid rgba(0,231,255,.12); border-radius:16px; padding:18px}
+    .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px}
+    .kpi{background:rgba(0,231,255,.06); border:1px solid rgba(0,231,255,.12); border-radius:12px; padding:12px; text-align:center}
+    .kpi strong{font-size:20px}
 
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
+    /* Sections */
+    section{padding:48px 0}
+    .sec-title{font-family:Orbitron; font-size:24px; margin:0 0 18px; display:flex; align-items:center; gap:10px}
+    .sec-title::before{content:""; width:8px; height:22px; background:linear-gradient(180deg,var(--neon),var(--accent)); border-radius:3px}
 
-        input[type="text"] {
-            padding: 8px;
-            width: calc(100% - 100px);
-            margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .card{background:var(--panel); border:1px solid rgba(0,231,255,.12); border-radius:14px; padding:16px}
+    .card h3{margin:0 0 6px; font-size:16px}
+    .meta{color:var(--muted); font-size:13px}
 
-        button {
-            padding: 8px 16px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .skills{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+    .chiplist{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+    .chip{border:1px dashed rgba(0,231,255,.35); padding:6px 10px; border-radius:999px; font-size:13px; color:var(--text); background:rgba(0,231,255,.05)}
 
-        button:hover {
-            background-color: #45a049;
-        }
+    .timeline{display:grid; gap:12px}
+    .job{background:var(--panel); border:1px solid rgba(0,231,255,.12); border-radius:14px; padding:16px}
+    .job .where{display:flex; justify-content:space-between; gap:12px}
+    .job ul{margin:8px 0 0 18px}
+    .job ul li{margin-bottom:10px} /* espaçamento entre bullets da timeline */
 
-        .response {
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-left: 4px solid #4caf50;
-            display: none;
-        }
+    .certs{display:flex; flex-wrap:wrap; gap:10px}
+    .cert{padding:8px 12px; border:1px solid rgba(108,255,125,.25); background:rgba(108,255,125,.08); border-radius:10px; font-size:13px}
 
-        .subcontrols {
-            margin-top: 10px;
-        }
-    </style>
+    footer{padding:28px 0 60px; color:var(--muted); border-top:1px solid rgba(0,231,255,.12)}
+
+    /* Responsivo */
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .skills{grid-template-columns:1fr}
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Controles CIS disponíveis:</h1>
-        <div id="controles"></div>
-        <div class="response" id="response"></div>
-        <input type="text" id="controleId" placeholder="Insira o ID do controle">
-        <button onclick="avaliarControle()">Avaliar Controle</button>
-        <div class="subcontrols" id="subcontrols"></div>
+<body class="grid-bg">
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Início">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="name">Sérgio G. Bernardo</div>
+      </a>
+      <nav class="menu" aria-label="Seções">
+        <a href="#sobre">Sobre</a>
+        <a href="#skills">Competências</a>
+        <a href="#experiencia">Experiência</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#cases">Time Line</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero" aria-label="Destaque">
+      <div>
+        <span class="badge">Consultor Sênior em Cibersegurança • São Paulo, BR</span>
+        <h1>Especialista em Arquitetura <span style="color:var(--neon)">cibernética </span>.</h1>
+        <p class="subtitle"> Com formação em Defesa Cibernética pela FIAP e Gestão de Tecnologia da Informação pela Anhanguera. Ajudo empresas a fortalecer sua maturidade em segurança da informação e a proteger seus dados críticos contra ameaças, fornecendo estratégias e soluções para mitigação de riscos.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://www.linkedin.com/in/sergio-bernardo" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/sergiogbernardo" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="Curriculo_Sergio_Bernardo_2025.pdf" download>Baixar CV (PDF)</a>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong>12+ anos</strong><div class="meta">em tecnologia</div></div>
+          <div class="kpi"><strong>NIST/ISO</strong><div class="meta">maturidade e GRC</div></div>
+          <div class="kpi"><strong>Cloud & Automação</strong><div class="meta">Azure, Ansible, Linux</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <h3 style="margin:0 0 8px">Foco</h3>
+          <ul style="margin:0 0 0 18px">
+            <li>Arquitetura de Segurança & Zero Trust</li>
+            <li>Avaliação de Maturidade (NIST CSF, ISO 27001, CIS)</li>
+            <li>Gestão de Vulnerabilidades & Resposta a Incidentes</li>
+            <li>Cloud Security (Microsoft 365/Azure) & IAM</li>
+            <li>Automação com Ansible, Linux, Redes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <h2 class="sec-title">Sobre</h2>
+      <p>Sou <strong>Sérgio Gomes Bernardo</strong>, consultor de cibersegurança com experiência em diagnóstico de maturidade cibernética, desenho de arquiteturas seguras, implementação de controles e auditorias técnicas. Atuo principalmente em <em>Cyber Defense (Blue Team)</em>.</p>
+
+    </section>
+
+   <section id="skills">
+  <h2 class="sec-title">Competências</h2>
+  <div class="skills">
+
+    <div class="card">
+      <h3>Arquitetura & Segurança Operacional</h3>
+      <div class="chiplist">
+        <span class="chip">Arquitetura de Segurança</span>
+        <span class="chip">Gestão de Vulnerabilidades</span>
+        <span class="chip">Resposta a Incidentes</span>
+        <span class="chip">SIEM/SOAR (Casos de Uso & Taxonomias)</span>
+        <span class="chip">EDR/XDR</span>
+        <span class="chip">NAC & Segmentação</span>
+        <span class="chip">VPNs & ACLs</span>
+      </div>
     </div>
 
-    <script>
-        async function fetchControles() {
-            const response = await fetch('https://sergiogbernardo.github.io/ciscontrols_v8.json');
-            const data = await response.json();
-            return data;
-        }
+    <div class="card">
+      <h3>Governança & Compliance</h3>
+      <div class="chiplist">
+        <span class="chip">NIST CSF</span>
+        <span class="chip">ISO 27001</span>
+        <span class="chip">LGPD</span>
+        <span class="chip">CIS Controls</span>
+        <span class="chip">Auditoria & Risco</span>
+        <span class="chip">TPRM</span>
+      </div>
+    </div>
 
-        async function exibirControles() {
-            const dataControles = await fetchControles();
-            const controlesDiv = document.getElementById('controles');
-            let html = '<table><tr><th>ID</th><th>Título</th><th>Descrição</th></tr>';
-            dataControles.forEach(controle => {
-                html += `<tr><td>${controle.id}</td><td>${controle.nome}</td><td>${controle.descricao}</td></tr>`;
-            });
-            html += '</table>';
-            controlesDiv.innerHTML = html;
-        }
+    <div class="card">
+      <h3>Cloud & Microsoft</h3>
+      <div class="chiplist">
+        <span class="chip">Azure Security</span>
+        <span class="chip">Microsoft 365</span>
+        <span class="chip">Active Directory (GPO/Policies)</span>
+        <span class="chip">SC-900</span>
+        <span class="chip">AZ-900</span>
+        <span class="chip">MS-900</span>
+      </div>
+    </div>
 
-        async function avaliarControle() {
-            const controleId = document.getElementById('controleId').value;
-            if (!controleId) {
-                alert('Por favor, insira o ID do controle.');
-                return;
-            }
-            const dataControles = await fetchControles();
-            const controle = dataControles.find(controle => controle.id === parseInt(controleId));
-            if (controle) {
-                let message = `Você escolheu avaliar o controle com o ID ${controleId}, este controle fala sobre "${controle.nome}"`;
-                if (controle.subcontroles) {
-                    const numSubcontroles = controle.subcontroles.length;
-                    message += ` e possui um total de ${numSubcontroles} subcontroles.`;
-                    if (numSubcontroles > 0) {
-                        message += '\n\nSubcontroles:\n';
-                        let subcontrolsHtml = '<table><tr><th>ID</th><th>Descrição</th></tr>';
-                        controle.subcontroles.forEach(subcontrole => {
-                            subcontrolsHtml += `<tr><td>${subcontrole.id}</td><td>${subcontrole.descricao}</td></tr>`;
-                        });
-                        subcontrolsHtml += '</table>';
-                        document.getElementById('subcontrols').innerHTML = subcontrolsHtml;
-                    }
-                }
-                document.getElementById('response').innerText = message;
-                document.getElementById('response').style.display = 'block';
-            } else {
-                alert(`O controle com o ID ${controleId} não foi encontrado.`);
-            }
-        }
+    <div class="card">
+      <h3>Automação & Infra</h3>
+      <div class="chiplist">
+        <span class="chip">Ansible</span>
+        <span class="chip">Linux (Red Hat)</span>
+        <span class="chip">Windows Server</span>
+        <span class="chip">Redes Corporativas</span>
+      </div>
+    </div>
 
-        window.onload = exibirControles;
-    </script>
+    <div class="card">
+      <h3>Redes & Firewalls</h3>
+      <div class="chiplist">
+        <span class="chip">Fortinet</span>
+        <span class="chip">Sophos</span>
+        <span class="chip">pfSense</span>
+        <span class="chip">Regras de ACL & iptables</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Frameworks & Métodos</h3>
+      <div class="chiplist">
+        <span class="chip">Zero Trust</span>
+        <span class="chip">Planos Diretores de SI (PDSI)</span>
+        <span class="chip">Scrum (SFC)</span>
+        <span class="chip">Kanban</span>
+        <span class="chip">SAFe</span>
+        <span class="chip">Cascata & PMBOK</span>
+        <span class="chip">MS Project</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <section id="experiencia">
+      <h2 class="sec-title">Experiência</h2>
+      <div class="timeline">
+        <article class="job">
+          <div class="where"><strong>KPMG — Consultor Sênior em Cibersegurança</strong><span class="meta">Out/2024 — Atual • São Paulo</span></div>
+          <ul>
+            <li>Diagnósticos de arquitetura e maturidade com base em NIST, ISO e CIS.</li>
+            <li>Roadmaps priorizados e guias de implementação de controles.</li>
+          </ul>
+        </article>
+        <article class="job">
+          <div class="where"><strong>KPMG — Consultor Pleno</strong><span class="meta">Out/2022 — Out/2024</span></div>
+          <ul>
+            <li>Implementação de controles técnicos e processos para LGPD.</li>
+            <li>Projetos em finanças, saúde e indústria.</li>
+          </ul>
+        </article>
+        <article class="job">
+          <div class="where"><strong>KPMG — Trainee</strong><span class="meta">Out/2021 — Out/2022</span></div>
+          <ul>
+            <li>Coleta de dados, relatórios e suporte em auditorias.</li>
+          </ul>
+        </article>
+        <article class="job">
+          <div class="where"><strong>ATENTO — Técnico/Analista de Telecom</strong><span class="meta">2011 — 2021</span></div>
+          <ul>
+            <li>Suporte a redes da VIVO e infraestrutura da Caixa Econômica Federal (roteadores, backbones, switches).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- NOVA SEÇÃO: TIME LINE -->
+    <section id="cases">
+      <h2 class="sec-title">Time Line — Projetos</h2>
+      <div class="timeline">
+        <article class="job">
+          <div class="where"><strong>2025</strong></div>
+          <ul>
+            <li>Avaliação de arquitetura cibernética. Identificação de lacunas em soluções de segurança e geração de inputs para plano de ação e roadmap de melhorias.</li>
+            <li>Investigação cibernética (pessoas, processos, tecnologias). Coleta de logs, análise de perfis e plataformas para determinar vetores, meios e oportunidades de vazamento de dados.</li>
+            <li>Investigação cibernética com foco em fraude e vazamento: correlação de eventos, rastreio de credenciais, análise de acessos privilegiados e recomendações de reforço de controles.</li>
+            <li>Auditoria de Segurança da Informação com base em NIST/ISO; revisão de políticas, processos e controles técnicos.</li>
+            <li>Avaliação da estratégia de backup (imutabilidade, replicação, testes de restore e verificação de integridade) e recomendações de alinhamento.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="where"><strong>2024</strong></div>
+          <ul>
+            <li>Avaliação de arquitetura cibernética e health-check de soluções de segurança; priorização de riscos e plano de ação.</li>
+            <li>Avaliação de arquitetura cibernética; identificação de vulnerabilidades e roadmap de controles.</li>
+            <li>Revisão de estratégia de backup e testes de recuperação; validação de imutabilidade e processos de replicação.</li>
+            <li>Elaboração do Plano Diretor de Segurança da Informação; avaliação de maturidade e definição de programas plurianuais.</li>
+            <li>Auditoria de Segurança da Informação (controles, processos e aderência a políticas).</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="where"><strong>2023</strong></div>
+          <ul>
+            <li>Avaliação de arquitetura de segurança e redes; implementação e verificação de controles CIS v8.1.</li>
+            <li>Plano Diretor de Segurança da Informação; avaliação de maturidade e plano de ação.</li>
+            <li>Mapeamento de riscos (ISO 27001/NIST 1.1) e avaliação de arquitetura cibernética; análise de orçamentos CAPEX/OPEX.</li>
+            <li>Avaliação de arquitetura cibernética; priorização de gaps e recomendações.</li>
+            <li>Investigação cibernética de ataque direcionado; coleta de evidências, análise de elevação de privilégios e lições aprendidas.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="where"><strong>2021–2022</strong></div>
+          <ul>
+            <li>TPRM: due diligence de terceiros, análise de controles, classificação de riscos e recomendações de mitigação.</li>
+            <li>Avaliação de arquitetura de cloud utilizando CSA e CMM; identificação de riscos e falhas de configuração.</li>
+            <li>Avaliação de arquitetura de segurança; identificação de vulnerabilidades e consolidação de plano de ação/roadmap.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <!-- FIM DA TIME LINE -->
+
+    <section id="projetos">
+      <h2 class="sec-title">Projetos (highlights)</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Diagnóstico NIST CSF em instituição financeira</h3>
+          <p class="meta">Arquitetura & Maturidade • 60+ controles priorizados</p>
+          <p>Condução de entrevistas, análise de evidências e elaboração de <em>gap assessment</em> com roadmap prático de implementação.</p>
+        </div>
+        <div class="card">
+          <h3>Hardening e Gestão de Vulnerabilidades</h3>
+          <p class="meta">CIS Benchmarks • Automação com Ansible</p>
+          <p>Definição de baseline, criação de playbooks e rotina de varreduras com métricas de remediação.</p>
+        </div>
+        <div class="card">
+          <h3>Taxonomias, Playbooks e SIEM</h3>
+          <p class="meta">Operação de Segurança • Wazuh/SIEM</p>
+          <p>Catalogação de casos de uso, taxonomias de alertas e playbooks para resposta coordenada a incidentes.</p>
+        </div>
+      </div>
+    </section>
+
+<section id="certs">
+  <h2 class="sec-title">Formação & Certificações</h2>
+  <p class="meta">
+    FIAP — Defesa Cibernética (2024) • 
+    Gama Cyber Security Academy — Cyber Defense (2021) • 
+    Senac — Redes de Sistemas e Telecomunicações (2018) • 
+    Anhanguera — Gestão de TI (2016)
+  </p>
+  <div class="certs" aria-label="Certificações">
+    <span class="cert">Cisco CyberOps Associate</span>
+    <span class="cert">AZ-900</span>
+    <span class="cert">SC-900</span>
+    <span class="cert">MS-900</span>
+    <span class="cert">Fortinet NSE 3</span>
+    <span class="cert">RH294 (Ansible)</span>
+    <span class="cert">CCNAv7: Bridging</span>
+    <span class="cert">Scrum Fundamentals Certified</span>
+  </div>
+</section>
+
+
+    <section id="contato">
+      <h2 class="sec-title">Contato</h2>
+      <div class="panel">
+        <p><strong>E-mail:</strong> <a href="mailto:sergio.gb@hotmail.com">sergio.gb@hotmail.com</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/sergio-bernardo" target="_blank" rel="noopener">/in/sergio-bernardo</a></p>
+        <p><strong>São Paulo — SP</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div>© <span id="y"></span> Sérgio G. Bernardo • Cibersegurança</div>
+  </footer>
+
+  <script>
+    // Ano automático no rodapé
+    document.getElementById('y').textContent = new Date().getFullYear();
+    // Rolagem suave (acessível)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+  </script>
+
+  <!-- Estrutura de dados para SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sérgio Gomes Bernardo",
+    "jobTitle": "Consultor Sênior em Cibersegurança",
+    "url": "https://sergiogbernardo.github.io/",
+    "email": "mailto:sergio.gb@hotmail.com",
+    "address": {"@type":"PostalAddress","addressLocality":"São Paulo","addressRegion":"SP","addressCountry":"BR"},
+    "sameAs": [
+      "https://github.com/sergiogbernardo",
+      "https://www.linkedin.com/in/sergio-bernardo"
+    ]
+  }
+  </script>
 </body>
 </html>
