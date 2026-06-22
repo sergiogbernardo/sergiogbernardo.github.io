@@ -18,4 +18,15 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/copa-2026',
     featured: true,
   },
+  {
+    slug: 'translatorvg',
+    name: 'Translatorvg',
+    description:
+      'Versão GitHub Pages do tradutor, com endpoint configurável, favoritos e histórico local.',
+    track: 'ai',
+    status: 'live',
+    stack: ['HTML', 'CSS', 'JavaScript'],
+    liveUrl: 'https://sergiogbernardo.github.io/Translatorvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Translatorvg',
+  },
 ];
