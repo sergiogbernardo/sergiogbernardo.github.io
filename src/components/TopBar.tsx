@@ -13,7 +13,6 @@ export default function TopBar({ liveCount }: Props) {
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-emerald-400/80">
               Hub de Projetos
             </p>
-            <p className="text-sm text-slate-400">Sergio Bernardo</p>
           </div>
           <span className="hidden rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 sm:inline-flex">
             {liveCount} online

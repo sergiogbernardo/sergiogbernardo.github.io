@@ -18,8 +18,7 @@ export default function Sidebar({ activeFilter, counts, liveCount, onChange }: P
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-emerald-400/80">Navegação</p>
         <h2 className="mt-3 text-2xl font-semibold text-slate-100">Hub de Projetos</h2>
         <p className="mt-2 text-sm leading-6 text-slate-400">
-          Seleção curta de projetos publicados. A pasta <span className="text-emerald-300">Github</span> é
-          a fonte pública; <span className="text-slate-300">Local</span> fica fora do catálogo.
+          Seleção de projetos publicados.
         </p>
 
         <div className="mt-5 grid gap-3">
