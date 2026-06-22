@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
-import Hero from './components/Hero';
+import MatrixRain from './components/MatrixRain';
+import Sidebar from './components/Sidebar';
 import ProjectCard from './components/ProjectCard';
-import FilterBar, { type Filter } from './components/FilterBar';
+import type { Filter } from './components/FilterBar';
 import { projects } from './data/projects';
 import type { Track } from './data/types';
+import TopBar from './components/TopBar';
 
 export default function App() {
   const [filter, setFilter] = useState<Filter>('all');
@@ -11,54 +13,67 @@ export default function App() {
   const featured = useMemo(() => projects.filter((p) => p.featured), []);
   const rest = useMemo(() => projects.filter((p) => !p.featured), []);
   const liveCount = useMemo(() => projects.filter((p) => p.status === 'live').length, []);
+  const catalog = rest.length > 0 ? rest : projects;
 
   const counts = useMemo(() => {
-    const base = { all: rest.length } as Record<Filter, number>;
+    const base = { all: catalog.length } as Record<Filter, number>;
     (['security', 'fintech', 'ai', 'other'] as Track[]).forEach((track) => {
-      base[track] = rest.filter((p) => p.track === track).length;
+      base[track] = catalog.filter((p) => p.track === track).length;
     });
     return base;
-  }, [rest]);
+  }, [catalog]);
 
-  const visible = filter === 'all' ? rest : rest.filter((p) => p.track === filter);
+  const visible = filter === 'all' ? catalog : catalog.filter((p) => p.track === filter);
 
   return (
-    <div className="min-h-screen">
-      <Hero liveCount={liveCount} />
+    <div className="relative min-h-screen overflow-hidden bg-black text-slate-100">
+      <MatrixRain />
+      <div className="relative z-10">
+        <TopBar liveCount={liveCount} />
 
-      <main className="mx-auto max-w-5xl px-5 py-12">
-        {featured.length > 0 && (
-          <section className="mb-14">
-            <h2 className="mb-4 font-display text-sm font-semibold uppercase tracking-wider text-slate-400">
-              Em destaque
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {featured.map((project) => (
-                <ProjectCard key={project.slug} project={project} featured />
-              ))}
-            </div>
-          </section>
-        )}
+        <main className="mx-auto grid max-w-7xl gap-6 px-4 py-6 lg:grid-cols-[320px_minmax(0,1fr)] lg:px-6">
+          <Sidebar activeFilter={filter} counts={counts} liveCount={liveCount} onChange={setFilter} />
 
-        <section>
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-slate-400">
-              Todos os projetos
-            </h2>
-            <FilterBar active={filter} counts={counts} onChange={setFilter} />
+          <div className="space-y-6">
+            {featured.length > 0 && rest.length > 0 && (
+              <section className="rounded-2xl border border-emerald-500/15 bg-black/70 p-5 backdrop-blur-md">
+                <h2 className="mb-4 font-display text-sm font-semibold uppercase tracking-wider text-emerald-300/80">
+                  Em destaque
+                </h2>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {featured.map((project) => (
+                    <ProjectCard key={project.slug} project={project} featured />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <section id="projects" className="rounded-2xl border border-emerald-500/15 bg-black/70 p-5 backdrop-blur-md">
+              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-emerald-300/80">
+                    Todos os projetos
+                  </h2>
+                  <p className="mt-1 text-sm text-slate-400">
+                    {visible.length} projeto{visible.length === 1 ? '' : 's'} visível
+                    {visible.length === 1 ? '' : 's'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {visible.map((project) => (
+                  <ProjectCard key={project.slug} project={project} />
+                ))}
+              </div>
+            </section>
           </div>
+        </main>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {visible.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
-            ))}
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-400 dark:border-slate-800">
-        <p className="font-mono">© {new Date().getFullYear()} Sergio Bernardo</p>
-      </footer>
+        <footer className="border-t border-emerald-500/10 py-6 text-center text-sm text-slate-500">
+          <p className="font-mono">© {new Date().getFullYear()} Sergio Bernardo</p>
+        </footer>
+      </div>
     </div>
   );
 }

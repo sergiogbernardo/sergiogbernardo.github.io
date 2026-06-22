@@ -8,7 +8,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label={isDark ? 'Ativar modo claro' : 'Ativar modo escuro'}
-      className="rounded-full border border-slate-300 px-3 py-1.5 text-sm transition hover:border-accent hover:text-accent dark:border-slate-700"
+      className="rounded-full border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition hover:border-emerald-400 hover:text-emerald-300"
     >
       {isDark ? '☀️ Claro' : '🌙 Escuro'}
     </button>

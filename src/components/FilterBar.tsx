@@ -26,8 +26,8 @@ export default function FilterBar({ active, counts, onChange }: Props) {
           onClick={() => onChange(value)}
           className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
             active === value
-              ? 'bg-accent text-slate-950'
-              : 'border border-slate-300 text-slate-600 hover:border-accent hover:text-accent dark:border-slate-700 dark:text-slate-400'
+              ? 'bg-emerald-400 text-black'
+              : 'border border-slate-700 text-slate-300 hover:border-emerald-400 hover:text-emerald-300'
           }`}
         >
           {label}

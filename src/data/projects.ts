@@ -2,10 +2,8 @@ import type { Project } from './types';
 
 // Curated project catalog.
 //
-// Only Copa 2026 is linked for now. To publish any other project later, just add
-// `liveUrl` (the live demo) and/or `repoUrl` (the source) to its object — the
-// card shows the "Ver ao vivo" / "Código" buttons automatically once present.
-// Live demos are served under their own slug on GitHub Pages (e.g. /copa-2026/).
+// Only published projects should live here. If a project is not meant to be
+// public yet, keep it out of this list.
 
 export const projects: Project[] = [
   {
@@ -19,133 +17,5 @@ export const projects: Project[] = [
     liveUrl: '/copa-2026/',
     repoUrl: 'https://github.com/sergiogbernardo/copa-2026',
     featured: true,
-  },
-  {
-    slug: 'cyber-architecture',
-    name: 'Cyber Architecture',
-    description: 'Referência de arquitetura de segurança e controles para ambientes corporativos.',
-    track: 'security',
-    status: 'wip',
-    stack: ['TypeScript', 'React'],
-  },
-  {
-    slug: 'risk-platform',
-    name: 'Risk Platform',
-    description: 'Plataforma de gestão de riscos cibernéticos e corporativos.',
-    track: 'security',
-    status: 'wip',
-    stack: ['Node', 'TypeScript', 'PostgreSQL'],
-  },
-  {
-    slug: 'cybermaturity',
-    name: 'Cybermaturity',
-    description: 'Avaliação de maturidade em cibersegurança com base em frameworks (NIST/CIS).',
-    track: 'security',
-    status: 'wip',
-    stack: ['React', 'TypeScript'],
-  },
-  {
-    slug: 'cyber-sabion',
-    name: 'Cyber Sabion',
-    description: 'Assistente de cibersegurança para consultas e apoio à decisão.',
-    track: 'security',
-    status: 'wip',
-    stack: ['TypeScript', 'IA'],
-  },
-  {
-    slug: 'portscan',
-    name: 'PortScan',
-    description: 'Scanner de portas e reconhecimento de rede para pentest ético.',
-    track: 'security',
-    status: 'wip',
-    stack: ['Node', 'TypeScript'],
-  },
-  {
-    slug: 'password-manager',
-    name: 'Password Manager',
-    description: 'Gerenciador de senhas com foco em segurança e usabilidade.',
-    track: 'security',
-    status: 'wip',
-    stack: ['React', 'TypeScript'],
-  },
-  {
-    slug: 'loghive',
-    name: 'LogHive',
-    description: 'Centralização e análise de logs para observabilidade e detecção.',
-    track: 'security',
-    status: 'wip',
-    stack: ['Node', 'TypeScript'],
-  },
-  {
-    slug: 'file-inspector',
-    name: 'File Inspector',
-    description: 'Inspeção de arquivos para identificar metadados e indicadores de risco.',
-    track: 'security',
-    status: 'wip',
-    stack: ['TypeScript'],
-  },
-  {
-    slug: 'bank',
-    name: 'Bank',
-    description: 'Aplicação bancária digital: contas, transações e extratos.',
-    track: 'fintech',
-    status: 'wip',
-    stack: ['React', 'Node', 'PostgreSQL'],
-  },
-  {
-    slug: 'domusfin',
-    name: 'DomusFin',
-    description: 'Gestão financeira pessoal e doméstica.',
-    track: 'fintech',
-    status: 'wip',
-    stack: ['React', 'TypeScript'],
-  },
-  {
-    slug: 'finance',
-    name: 'Finance',
-    description: 'Painel de finanças e acompanhamento de investimentos.',
-    track: 'fintech',
-    status: 'wip',
-    stack: ['React', 'TypeScript'],
-  },
-  {
-    slug: 'calculadora',
-    name: 'Calculadora Financeira',
-    description: 'Simulações de juros, parcelas e rendimentos.',
-    track: 'fintech',
-    status: 'wip',
-    stack: ['React', 'TypeScript'],
-  },
-  {
-    slug: 'teceu-search',
-    name: 'Teceu Search',
-    description: 'Busca inteligente sobre documentos com apoio de IA.',
-    track: 'ai',
-    status: 'wip',
-    stack: ['React', 'Node', 'IA'],
-  },
-  {
-    slug: 'translator',
-    name: 'Translator',
-    description: 'Tradutor com apoio de IA.',
-    track: 'ai',
-    status: 'wip',
-    stack: ['React', 'TypeScript', 'IA'],
-  },
-  {
-    slug: 'nexus',
-    name: 'Nexus',
-    description: 'Hub de integração e automação de fluxos.',
-    track: 'ai',
-    status: 'wip',
-    stack: ['Node', 'TypeScript'],
-  },
-  {
-    slug: 'monsterworld',
-    name: 'MonsterWorld',
-    description: 'Experiência interativa / jogo.',
-    track: 'other',
-    status: 'wip',
-    stack: ['TypeScript'],
   },
 ];
