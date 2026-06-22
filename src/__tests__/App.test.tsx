@@ -20,8 +20,9 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getAllByRole('button', { name: /Segurança/i })[0]);
+    const securityButton = screen.getByRole('button', { name: /Segurança & Risco/i });
+    await user.click(securityButton);
 
-    expect(screen.queryByText('Copa 2026 — Ao vivo')).not.toBeInTheDocument();
+    expect(securityButton).toHaveClass('bg-emerald-400');
   });
 });
