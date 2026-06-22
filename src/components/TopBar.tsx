@@ -1,5 +1,3 @@
-import ThemeToggle from './ThemeToggle';
-
 interface Props {
   liveCount: number;
 }
@@ -11,16 +9,15 @@ export default function TopBar({ liveCount }: Props) {
         <div />
 
         <div className="justify-self-center">
-          <p className="font-mono text-xs uppercase tracking-[0.35em] text-emerald-400/80">
+          <p className="font-mono text-sm uppercase tracking-[0.45em] text-emerald-400/80 sm:text-base">
             Hub de Projetos
           </p>
         </div>
 
-        <div className="flex items-center justify-self-end gap-3">
+        <div className="justify-self-end">
           <span className="hidden rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 sm:inline-flex">
             {liveCount} online
           </span>
-          <ThemeToggle />
         </div>
       </div>
     </div>
