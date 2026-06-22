@@ -10,7 +10,7 @@ export default function ThemeToggle() {
       aria-label={isDark ? 'Ativar modo claro' : 'Ativar modo escuro'}
       className="rounded-full border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition hover:border-emerald-400 hover:text-emerald-300"
     >
-      {isDark ? '☀️ Claro' : '🌙 Escuro'}
+      <span aria-hidden="true">{isDark ? '☀️' : '🌙'}</span>
     </button>
   );
 }
