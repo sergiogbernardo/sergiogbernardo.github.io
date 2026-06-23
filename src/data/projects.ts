@@ -51,4 +51,15 @@ export const projects: Project[] = [
     liveUrl: 'https://sergiogbernardo.github.io/Scanvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Scanvg',
   },
+  {
+    slug: 'inspectorvg',
+    name: 'Inspectorvg — Inspetor de arquivos',
+    description:
+      'Inspeciona qualquer arquivo no navegador: hashes, entropia, magic bytes, strings, IOCs/segredos, hex dump e metadados. Nenhum byte é enviado.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Web Crypto', 'hash-wasm'],
+    liveUrl: 'https://sergiogbernardo.github.io/Inspectorvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Inspectorvg',
+  },
 ];
