@@ -73,4 +73,15 @@ export const projects: Project[] = [
     liveUrl: 'https://sergiogbernardo.github.io/Loghivevg/',
     repoUrl: 'https://github.com/sergiogbernardo/Loghivevg',
   },
+  {
+    slug: 'calculadoravg',
+    name: 'Calculadoravg — Calculadora notepad',
+    description:
+      'Calculadora estilo notepad: várias linhas com variáveis, unidades, funções, álgebra simbólica e gráficos. Mais teclado clássico e modo financeiro.',
+    track: 'other',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'math.js'],
+    liveUrl: 'https://sergiogbernardo.github.io/Calculadoravg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Calculadoravg',
+  },
 ];
