@@ -29,4 +29,15 @@ export const projects: Project[] = [
     liveUrl: 'https://sergiogbernardo.github.io/Translatorvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Translatorvg',
   },
+  {
+    slug: 'bytevg',
+    name: 'Bytevg — Canivete de bytes',
+    description:
+      'Ferramentas de dev e segurança no navegador: encode/decode, hash, AES e análise (entropia, subnet, senha, UUID).',
+    track: 'security',
+    status: 'live',
+    stack: ['HTML', 'CSS', 'JavaScript', 'Web Crypto', 'hash-wasm'],
+    liveUrl: 'https://sergiogbernardo.github.io/Bytevg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Bytevg',
+  },
 ];
