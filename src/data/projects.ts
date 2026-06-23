@@ -40,4 +40,15 @@ export const projects: Project[] = [
     liveUrl: 'https://sergiogbernardo.github.io/Bytevg/',
     repoUrl: 'https://github.com/sergiogbernardo/Bytevg',
   },
+  {
+    slug: 'scanvg',
+    name: 'Scanvg — Gerador de comandos de scan',
+    description:
+      'Monta comandos de nmap, masscan, rustscan e descoberta de rede, com referência de portas e recon da sua conexão — tudo no navegador.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/Scanvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Scanvg',
+  },
 ];
