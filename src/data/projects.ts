@@ -62,4 +62,15 @@ export const projects: Project[] = [
     liveUrl: 'https://sergiogbernardo.github.io/Inspectorvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Inspectorvg',
   },
+  {
+    slug: 'loghivevg',
+    name: 'Loghivevg — Análise de logs e texto',
+    description:
+      'Kit de análise de logs e texto no navegador: parser (Apache, Nginx, syslog, SSH, iptables…), laboratório de regex, extração de IOCs e encode/decode.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/Loghivevg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Loghivevg',
+  },
 ];
