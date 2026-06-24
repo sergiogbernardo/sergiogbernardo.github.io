@@ -1,25 +1,32 @@
-interface Props {
-  liveCount: number;
-}
+const HUB_URL = 'https://sergiogbernardo.github.io/';
 
-export default function TopBar({ liveCount }: Props) {
+export default function TopBar() {
   return (
-    <div className="sticky top-0 z-20 border-b border-emerald-500/15 bg-black/75 backdrop-blur-md">
+    <header className="sticky top-0 z-20 border-b border-emerald-500/10 bg-black/60 backdrop-blur-md">
       <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 sm:px-6 lg:px-8">
         <div />
 
         <div className="justify-self-center">
-          <p className="font-mono text-sm uppercase tracking-[0.45em] text-emerald-400/80 sm:text-base">
+          <h1 className="font-display text-lg font-bold tracking-tight text-emerald-300">
             Hub de Projetos
-          </p>
+          </h1>
         </div>
 
         <div className="justify-self-end">
-          <span className="hidden rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 sm:inline-flex">
-            {liveCount} online
-          </span>
+          <a
+            href={HUB_URL}
+            aria-label="Hub de Projetos"
+            title="Hub de Projetos"
+            className="flex shrink-0 items-center transition hover:scale-105"
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}hub-icon.png`}
+              alt="Hub de Projetos"
+              className="h-8 w-8"
+            />
+          </a>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
