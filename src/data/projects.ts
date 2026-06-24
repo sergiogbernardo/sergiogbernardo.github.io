@@ -107,6 +107,17 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/Headersvg',
   },
   {
+    slug: 'payloadvg',
+    name: 'Payloadvg — Biblioteca de payloads',
+    description:
+      'Reverse shells parametrizáveis, catálogo de payloads (XSS, SQLi, LFI, SSTI, SSRF) e encoders no navegador. Para pentest autorizado e CTF.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/Payloadvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Payloadvg',
+  },
+  {
     slug: 'calculadoravg',
     name: 'Calculadoravg — Calculadora notepad',
     description:
