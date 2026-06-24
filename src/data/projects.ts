@@ -96,6 +96,17 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/Certvg',
   },
   {
+    slug: 'headersvg',
+    name: 'Headersvg — Auditor de headers de segurança',
+    description:
+      'Analisa headers HTTP e CSP no navegador, dá uma nota (A+..F) e aponta o que falta (HSTS, CSP, X-Frame e mais).',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/Headersvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Headersvg',
+  },
+  {
     slug: 'calculadoravg',
     name: 'Calculadoravg — Calculadora notepad',
     description:
