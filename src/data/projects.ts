@@ -85,6 +85,17 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/Cryptovg',
   },
   {
+    slug: 'certvg',
+    name: 'Certvg — Inspetor de certificados e tokens',
+    description:
+      'Decodifica certificados X.509, cadeias, CSRs e JWTs no navegador: validade, SAN, algoritmos e claims. Nada é enviado.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind', '@peculiar/x509', 'jose'],
+    liveUrl: 'https://sergiogbernardo.github.io/Certvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Certvg',
+  },
+  {
     slug: 'calculadoravg',
     name: 'Calculadoravg — Calculadora notepad',
     description:
