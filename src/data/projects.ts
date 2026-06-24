@@ -19,6 +19,19 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: 'certification-roadmap',
+    name: 'Certification Roadmap — Trilhas de certificações',
+    description:
+      'Mapa interativo de certificações de cibersegurança: explore por domínio e senioridade, monte sua trilha a partir de uma cert e avalie seu perfil. Tudo no navegador.',
+    track: 'security',
+    area: 'appsec',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/Certification-Roadmap/',
+    repoUrl: 'https://github.com/sergiogbernardo/Certification-Roadmap',
+    featured: true,
+  },
+  {
     slug: 'translatorvg',
     name: 'Translatorvg',
     description:
