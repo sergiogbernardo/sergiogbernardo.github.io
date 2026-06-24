@@ -43,19 +43,7 @@ export default function ProjectCard({ project, featured = false }: { project: Pr
             href={project.liveUrl}
             className="flex-1 rounded-lg bg-emerald-400 px-3 py-2 text-center text-sm font-semibold text-black transition hover:bg-emerald-300"
           >
-            Ver ao vivo →
-          </a>
-        )}
-        {project.repoUrl && (
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={`rounded-lg border border-slate-700 px-3 py-2 text-center text-sm font-medium text-slate-300 transition hover:border-emerald-400 hover:text-emerald-300 ${
-              project.liveUrl ? '' : 'flex-1'
-            }`}
-          >
-            Código
+            Visualizar →
           </a>
         )}
       </div>

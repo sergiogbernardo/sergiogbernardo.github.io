@@ -5,7 +5,7 @@ export default function StatusBadge({ status }: { status: ProjectStatus }) {
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-0.5 text-xs font-semibold text-accent">
         <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-live" />
-        AO VIVO
+        ONLINE
       </span>
     );
   }

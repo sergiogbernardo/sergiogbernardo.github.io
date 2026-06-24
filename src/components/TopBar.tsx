@@ -7,7 +7,7 @@ export default function TopBar() {
         <div />
 
         <div className="justify-self-center">
-          <h1 className="font-display text-lg font-bold tracking-tight text-emerald-300">
+          <h1 className="font-display text-lg font-bold uppercase tracking-wide text-emerald-300">
             Hub de Projetos
           </h1>
         </div>

@@ -6,7 +6,7 @@ import { projects } from './data/projects';
 import { SECURITY_AREAS, type SecurityArea, type Track } from './data/types';
 import TopBar from './components/TopBar';
 
-const TRACK_ORDER: Track[] = ['security', 'fintech', 'ai', 'other'];
+const TRACK_ORDER: Track[] = ['security', 'fintech', 'ai', 'games', 'other'];
 const AREA_ORDER: SecurityArea[] = ['offensive', 'forensics', 'crypto', 'appsec'];
 
 export default function App() {

@@ -3,7 +3,7 @@ import { SECURITY_AREAS, TRACKS, type SecurityArea, type Track } from '../data/t
 export type TrackFilter = Track | 'all';
 export type AreaFilter = SecurityArea | 'all';
 
-const TRACK_ORDER: Track[] = ['security', 'fintech', 'ai', 'other'];
+const TRACK_ORDER: Track[] = ['security', 'fintech', 'ai', 'games', 'other'];
 const AREA_ORDER: SecurityArea[] = ['offensive', 'forensics', 'crypto', 'appsec'];
 
 interface Props {

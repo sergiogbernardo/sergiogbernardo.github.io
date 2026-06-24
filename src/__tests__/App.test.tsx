@@ -11,8 +11,8 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: 'Hub de Projetos', level: 1 })).toBeInTheDocument();
     expect(screen.getByText('Copa 2026 — Ao vivo')).toBeInTheDocument();
-    // The featured live project exposes a "Ver ao vivo" link.
-    expect(screen.getAllByRole('link', { name: /Ver ao vivo/i }).length).toBeGreaterThan(0);
+    // The featured live project exposes a "Visualizar" link.
+    expect(screen.getAllByRole('link', { name: /Visualizar/i }).length).toBeGreaterThan(0);
   });
 
   it('filters projects by track', async () => {
