@@ -118,6 +118,17 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/Payloadvg',
   },
   {
+    slug: 'threatvg',
+    name: 'Threatvg — Matriz de risco e MITRE ATT&CK',
+    description:
+      'Monta matriz de risco (probabilidade × impacto), modelagem STRIDE e seleção de técnicas do MITRE ATT&CK, com exportação. Tudo local.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/Threatvg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Threatvg',
+  },
+  {
     slug: 'calculadoravg',
     name: 'Calculadoravg — Calculadora notepad',
     description:
