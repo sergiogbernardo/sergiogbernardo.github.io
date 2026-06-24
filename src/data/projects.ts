@@ -74,6 +74,17 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/Loghivevg',
   },
   {
+    slug: 'cryptovg',
+    name: 'Cryptovg — Cofre de senhas e segredos',
+    description:
+      'Gera e analisa senhas, passphrases e TOTP no navegador e checa vazamentos (HIBP) sem expor a senha. Tudo local.',
+    track: 'security',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Web Crypto', 'zxcvbn'],
+    liveUrl: 'https://sergiogbernardo.github.io/Cryptovg/',
+    repoUrl: 'https://github.com/sergiogbernardo/Cryptovg',
+  },
+  {
     slug: 'calculadoravg',
     name: 'Calculadoravg — Calculadora notepad',
     description:
