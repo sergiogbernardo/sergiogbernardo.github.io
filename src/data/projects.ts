@@ -35,6 +35,7 @@ export const projects: Project[] = [
     description:
       'Ferramentas de dev e segurança no navegador: encode/decode, hash, AES e análise (entropia, subnet, senha, UUID).',
     track: 'security',
+    area: 'crypto',
     status: 'live',
     stack: ['HTML', 'CSS', 'JavaScript', 'Web Crypto', 'hash-wasm'],
     liveUrl: 'https://sergiogbernardo.github.io/Bytevg/',
@@ -46,6 +47,7 @@ export const projects: Project[] = [
     description:
       'Monta comandos de nmap, masscan, rustscan e descoberta de rede, com referência de portas e recon da sua conexão — tudo no navegador.',
     track: 'security',
+    area: 'offensive',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
     liveUrl: 'https://sergiogbernardo.github.io/Scanvg/',
@@ -57,6 +59,7 @@ export const projects: Project[] = [
     description:
       'Inspeciona qualquer arquivo no navegador: hashes, entropia, magic bytes, strings, IOCs/segredos, hex dump e metadados. Nenhum byte é enviado.',
     track: 'security',
+    area: 'forensics',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Web Crypto', 'hash-wasm'],
     liveUrl: 'https://sergiogbernardo.github.io/Inspectorvg/',
@@ -68,6 +71,7 @@ export const projects: Project[] = [
     description:
       'Kit de análise de logs e texto no navegador: parser (Apache, Nginx, syslog, SSH, iptables…), laboratório de regex, extração de IOCs e encode/decode.',
     track: 'security',
+    area: 'forensics',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
     liveUrl: 'https://sergiogbernardo.github.io/Loghivevg/',
@@ -79,6 +83,7 @@ export const projects: Project[] = [
     description:
       'Gera e analisa senhas, passphrases e TOTP no navegador e checa vazamentos (HIBP) sem expor a senha. Tudo local.',
     track: 'security',
+    area: 'crypto',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Web Crypto', 'zxcvbn'],
     liveUrl: 'https://sergiogbernardo.github.io/Cryptovg/',
@@ -90,6 +95,7 @@ export const projects: Project[] = [
     description:
       'Decodifica certificados X.509, cadeias, CSRs e JWTs no navegador: validade, SAN, algoritmos e claims. Nada é enviado.',
     track: 'security',
+    area: 'crypto',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', '@peculiar/x509', 'jose'],
     liveUrl: 'https://sergiogbernardo.github.io/Certvg/',
@@ -101,6 +107,7 @@ export const projects: Project[] = [
     description:
       'Analisa headers HTTP e CSP no navegador, dá uma nota (A+..F) e aponta o que falta (HSTS, CSP, X-Frame e mais).',
     track: 'security',
+    area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
     liveUrl: 'https://sergiogbernardo.github.io/Headersvg/',
@@ -112,6 +119,7 @@ export const projects: Project[] = [
     description:
       'Reverse shells parametrizáveis, catálogo de payloads (XSS, SQLi, LFI, SSTI, SSRF) e encoders no navegador. Para pentest autorizado e CTF.',
     track: 'security',
+    area: 'offensive',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
     liveUrl: 'https://sergiogbernardo.github.io/Payloadvg/',
@@ -123,6 +131,7 @@ export const projects: Project[] = [
     description:
       'Monta matriz de risco (probabilidade × impacto), modelagem STRIDE e seleção de técnicas do MITRE ATT&CK, com exportação. Tudo local.',
     track: 'security',
+    area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
     liveUrl: 'https://sergiogbernardo.github.io/Threatvg/',

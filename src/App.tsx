@@ -4,8 +4,10 @@ import Sidebar from './components/Sidebar';
 import ProjectCard from './components/ProjectCard';
 import type { Filter } from './components/FilterBar';
 import { projects } from './data/projects';
-import type { Track } from './data/types';
+import { SECURITY_AREAS, type SecurityArea, type Track } from './data/types';
 import TopBar from './components/TopBar';
+
+const AREA_ORDER: SecurityArea[] = ['offensive', 'forensics', 'crypto', 'appsec'];
 
 export default function App() {
   const [filter, setFilter] = useState<Filter>('all');
@@ -61,11 +63,32 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {visible.map((project) => (
-                  <ProjectCard key={project.slug} project={project} />
-                ))}
-              </div>
+              {filter === 'security' ? (
+                <div className="space-y-6">
+                  {AREA_ORDER.map((area) => {
+                    const items = visible.filter((project) => project.area === area);
+                    if (items.length === 0) return null;
+                    return (
+                      <div key={area}>
+                        <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                          {SECURITY_AREAS[area].label}
+                        </h3>
+                        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                          {items.map((project) => (
+                            <ProjectCard key={project.slug} project={project} />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {visible.map((project) => (
+                    <ProjectCard key={project.slug} project={project} />
+                  ))}
+                </div>
+              )}
             </section>
           </div>
         </main>
