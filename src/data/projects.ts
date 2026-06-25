@@ -7,6 +7,19 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
+    slug: 'solucoes-cyber',
+    name: 'Soluções Cyber — Catálogo de soluções',
+    description:
+      'Catálogo de soluções de segurança de mercado: explore por categoria, compare soluções lado a lado e responda algumas perguntas para descobrir o que se encaixa no seu cenário. Tudo no navegador.',
+    track: 'security',
+    area: 'appsec',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sergiogbernardo.github.io/solucoes-cyber/',
+    repoUrl: 'https://github.com/sergiogbernardo/solucoes-cyber',
+    featured: true,
+  },
+  {
     slug: 'copa-2026',
     name: 'Copa 2026 — Ao vivo',
     description:
