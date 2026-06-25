@@ -163,6 +163,18 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/sergiogbernardo/Threatvg',
   },
   {
+    slug: 'exvul',
+    name: 'Exvul — Exposições & Vulnerabilidades',
+    description:
+      'Navegue CVEs recentes (alta/crítica) e o catálogo KEV da CISA com suas fraquezas CWE: filtre por severidade, CWE e exploração ativa. Dados de NVD/CISA atualizados via GitHub Actions, tudo no navegador.',
+    track: 'security',
+    area: 'appsec',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'NVD API', 'CISA KEV'],
+    liveUrl: 'https://sergiogbernardo.github.io/exvul/',
+    repoUrl: 'https://github.com/sergiogbernardo/exvul',
+  },
+  {
     slug: 'calculadoravg',
     name: 'Calculadoravg — Calculadora notepad',
     description:
