@@ -17,7 +17,6 @@ export const projects: Project[] = [
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
     liveUrl: 'https://sergiogbernardo.github.io/solucoes-cyber/',
     repoUrl: 'https://github.com/sergiogbernardo/solucoes-cyber',
-    featured: true,
   },
   {
     slug: 'copa-2026',
