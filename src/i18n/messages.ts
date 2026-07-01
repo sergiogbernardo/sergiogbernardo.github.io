@@ -73,7 +73,6 @@ export const messages = {
     detail: {
       back: 'Back to labs',
       open: 'Open live tool',
-      repository: 'Repository',
       privacyModel: 'Privacy model',
       technicalStack: 'Technical stack',
       collection: 'Collection',
@@ -181,7 +180,6 @@ export const messages = {
     detail: {
       back: 'Voltar aos labs',
       open: 'Abrir ferramenta',
-      repository: 'Repositório',
       privacyModel: 'Modelo de privacidade',
       technicalStack: 'Stack técnica',
       collection: 'Coleção',

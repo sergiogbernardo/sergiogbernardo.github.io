@@ -424,20 +424,9 @@ function LabDetail({
                   href={project.liveUrl}
                   onClick={() => trackEvent('lab_open', { slug: project.slug })}
                   className="rounded-md bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400"
-                >
-                  {t.detail.open}
-                </a>
-              )}
-              {project.repoUrl && (
-                <a
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackEvent('repo_open', { slug: project.slug })}
-                  className="rounded-md border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-700 dark:border-slate-700 dark:text-slate-200 dark:hover:border-emerald-400 dark:hover:text-emerald-300"
-                >
-                  {t.detail.repository}
-                </a>
+                  >
+                    {t.detail.open}
+                  </a>
               )}
             </div>
           </div>
