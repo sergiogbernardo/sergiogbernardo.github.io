@@ -13,7 +13,6 @@ import {
   type Track,
 } from './data/types';
 import TopBar from './components/TopBar';
-import FeedbackWidget from './components/FeedbackWidget';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import { useLocale } from './hooks/useLocale';
 import { useRoute } from './hooks/useRoute';
@@ -80,7 +79,6 @@ export default function App() {
             area={area}
             query={query}
             locale={locale}
-            theme={theme}
             t={t}
             onQueryChange={(nextQuery) => {
               setQuery(nextQuery);
@@ -124,7 +122,6 @@ function HomePage({
   area,
   query,
   locale,
-  theme,
   t,
   onQueryChange,
   onTrackChange,
@@ -136,7 +133,6 @@ function HomePage({
   area: AreaFilter;
   query: string;
   locale: 'en' | 'pt-BR';
-  theme: 'light' | 'dark';
   t: Messages;
   onQueryChange: (query: string) => void;
   onTrackChange: (track: TrackFilter) => void;
@@ -382,25 +378,6 @@ function HomePage({
           </div>
         </ProjectSection>
 
-        <ProjectSection title={t.sections.feedback} subtitle={t.feedback.body}>
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="https://github.com/sergiogbernardo/sergiogbernardo.github.io/issues/new?labels=feedback&title=Sabion%20Labs%20feedback"
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackEvent('feedback_open', { target: 'github_issues' })}
-                className="rounded-md bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400"
-              >
-                {t.feedback.action}
-              </a>
-              <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
-                {t.feedback.note}
-              </span>
-            </div>
-            <FeedbackWidget theme={theme} />
-          </div>
-        </ProjectSection>
       </div>
     </main>
   );

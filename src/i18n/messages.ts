@@ -48,7 +48,6 @@ export const messages = {
       allProjects: 'All labs',
       buildingNext: 'Building next',
       about: 'About Sabion Labs',
-      feedback: 'Comments and ratings',
       privacy: 'Privacy and cookies',
       principles: 'Principles',
     },
@@ -100,11 +99,6 @@ export const messages = {
         'This site uses Cloudflare Web Analytics and Real User Measurements for privacy-first traffic and performance metrics. The setup does not rely on tracking cookies.',
       cookies:
         'We do not use advertising cookies or session replay. Browser preferences such as theme and language may be stored locally on your device.',
-    },
-    feedback: {
-      body: 'Leave a comment, share an idea, or drop a quick rating. The feedback stays in GitHub, with no separate Sabion account.',
-      action: 'Open feedback on GitHub',
-      note: 'GitHub Issues backs this area for now.',
     },
     next: {
       body: 'Sabion is in constant evolution: new tools, experiments, and improvements are shaped from real technical needs and public usage signals.',
@@ -161,7 +155,6 @@ export const messages = {
       allProjects: 'Todos os labs',
       buildingNext: 'Construindo agora',
       about: 'Sobre o Sabion Labs',
-      feedback: 'Comentários e avaliações',
       privacy: 'Privacidade e cookies',
       principles: 'Princípios',
     },
@@ -213,11 +206,6 @@ export const messages = {
         'Este site usa Cloudflare Web Analytics e Real User Measurements para métricas de tráfego e performance com foco em privacidade. A configuração não depende de cookies de rastreamento.',
       cookies:
         'Não usamos cookies de publicidade nem gravação de sessão. Preferências como tema e idioma podem ser salvas localmente no seu dispositivo.',
-    },
-    feedback: {
-      body: 'Deixe um comentário, compartilhe uma ideia ou faça uma avaliação rápida. O feedback fica no GitHub, sem conta separada no Sabion.',
-      action: 'Abrir feedback no GitHub',
-      note: 'Por enquanto a área usa GitHub Issues como base.',
     },
     next: {
       body: 'Sabion está em evolução constante: novas ferramentas, experimentos e melhorias nascem de necessidades técnicas reais e dos sinais de uso público.',
