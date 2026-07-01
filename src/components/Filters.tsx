@@ -1,4 +1,5 @@
-import { SECURITY_AREAS, TRACKS, type SecurityArea, type Track } from '../data/types';
+import { SECURITY_AREAS, TRACKS, type Locale, type SecurityArea, type Track } from '../data/types';
+import type { Messages } from '../i18n/messages';
 
 export type TrackFilter = Track | 'all';
 export type AreaFilter = SecurityArea | 'all';
@@ -11,6 +12,11 @@ interface Props {
   area: AreaFilter;
   trackCounts: Record<TrackFilter, number>;
   areaCounts: Record<AreaFilter, number>;
+  locale: Locale;
+  query: string;
+  resultCount: number;
+  t: Messages;
+  onQueryChange: (query: string) => void;
   onTrackChange: (track: TrackFilter) => void;
   onAreaChange: (area: AreaFilter) => void;
 }
@@ -25,16 +31,53 @@ export default function Filters({
   area,
   trackCounts,
   areaCounts,
+  locale,
+  query,
+  resultCount,
+  t,
+  onQueryChange,
   onTrackChange,
   onAreaChange,
 }: Props) {
   return (
-    <section className="rounded-2xl border border-emerald-500/15 bg-black/70 p-5 backdrop-blur-md">
-      <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-emerald-400/80">Filtros</p>
+    <section className="rounded-lg border border-slate-200 bg-white/85 p-4 shadow-sm backdrop-blur-md dark:border-emerald-500/15 dark:bg-black/70">
+      <div className="mb-4 grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+        <label className="block">
+          <span className="mb-2 block font-mono text-xs uppercase text-emerald-700 dark:text-emerald-300">
+            {t.filters.title}
+          </span>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+              ⌕
+            </span>
+            <input
+              type="search"
+              value={query}
+              aria-label={t.filters.searchLabel}
+              placeholder={t.filters.searchPlaceholder}
+              onChange={(event) => onQueryChange(event.target.value)}
+              className="h-11 w-full rounded-md border border-slate-300 bg-white pl-9 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            />
+            {query && (
+              <button
+                type="button"
+                aria-label={t.filters.clear}
+                onClick={() => onQueryChange('')}
+                className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-slate-100"
+              >
+                ×
+              </button>
+            )}
+          </div>
+        </label>
+        <p className="font-mono text-xs text-slate-500 dark:text-slate-400">
+          {t.filters.resultCount(resultCount)}
+        </p>
+      </div>
 
       <div className="flex flex-wrap gap-2">
         <Chip active={track === 'all'} count={trackCounts.all} onClick={() => onTrackChange('all')}>
-          Todos
+          {t.filters.all}
         </Chip>
         {TRACK_ORDER.filter((t) => trackCounts[t] > 0).map((t) => (
           <Chip
@@ -43,15 +86,15 @@ export default function Filters({
             count={trackCounts[t]}
             onClick={() => onTrackChange(t)}
           >
-            {TRACKS[t].emoji} {TRACKS[t].label}
+            {TRACKS[t].emoji} {TRACKS[t].label[locale]}
           </Chip>
         ))}
       </div>
 
       {track === 'security' && (
-        <div className="mt-3 flex flex-wrap gap-2 border-t border-emerald-500/10 pt-3">
+        <div id="security" className="mt-3 flex flex-wrap gap-2 border-t border-slate-200 pt-3 dark:border-emerald-500/10">
           <Chip subtle active={area === 'all'} count={areaCounts.all} onClick={() => onAreaChange('all')}>
-            Todos
+            {t.filters.all}
           </Chip>
           {AREA_ORDER.filter((a) => areaCounts[a] > 0).map((a) => (
             <Chip
@@ -61,7 +104,7 @@ export default function Filters({
               count={areaCounts[a]}
               onClick={() => onAreaChange(a)}
             >
-              {SECURITY_AREAS[a].label}
+              {SECURITY_AREAS[a].label[locale]}
             </Chip>
           ))}
         </div>
@@ -87,7 +130,7 @@ function Chip({ active, count, subtle = false, onClick, children }: ChipProps) {
       className={`rounded-full font-medium transition ${size} ${
         active
           ? 'bg-emerald-400 text-black'
-          : 'border border-slate-700 text-slate-300 hover:border-emerald-400 hover:text-emerald-300'
+          : 'border border-slate-300 text-slate-700 hover:border-emerald-500 hover:text-emerald-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-emerald-400 dark:hover:text-emerald-300'
       }`}
     >
       {children}

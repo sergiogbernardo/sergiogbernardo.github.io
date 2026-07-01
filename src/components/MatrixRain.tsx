@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
+import type { Theme } from '../hooks/useTheme';
 
 const MATRIX_CHARS = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@*+-'.split('');
 
-export default function MatrixRain() {
+export default function MatrixRain({ theme }: { theme: Theme }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -39,10 +40,10 @@ export default function MatrixRain() {
     };
 
     const draw = () => {
-      context.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      context.fillStyle = theme === 'dark' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(248, 250, 252, 0.08)';
       context.fillRect(0, 0, width, height);
 
-      context.fillStyle = 'rgba(34, 197, 94, 0.65)';
+      context.fillStyle = theme === 'dark' ? 'rgba(34, 197, 94, 0.65)' : 'rgba(5, 150, 105, 0.5)';
       context.font = '16px monospace';
 
       for (let column = 0; column < columns; column += 1) {
@@ -70,7 +71,13 @@ export default function MatrixRain() {
       window.cancelAnimationFrame(animationFrame);
       window.removeEventListener('resize', resize);
     };
-  }, []);
+  }, [theme]);
 
-  return <canvas ref={canvasRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 opacity-35" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className={`pointer-events-none fixed inset-0 z-0 ${theme === 'dark' ? 'opacity-35' : 'opacity-30'}`}
+    />
+  );
 }

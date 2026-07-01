@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark';
 
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem('theme');

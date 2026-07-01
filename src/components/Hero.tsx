@@ -1,9 +1,5 @@
-import ThemeToggle from './ThemeToggle';
-
 const links = [
-  { label: 'GitHub', href: 'https://github.com/sergiogbernardo' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sergiogbernardo' },
-  { label: 'E-mail', href: 'mailto:' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sergio-bernardo/' },
 ];
 
 export default function Hero({ liveCount }: { liveCount: number }) {
@@ -12,7 +8,6 @@ export default function Hero({ liveCount }: { liveCount: number }) {
       <div className="mx-auto max-w-5xl px-5 py-5">
         <div className="flex items-center justify-between">
           <span className="font-mono text-sm text-accent">~/sergiogbernardo</span>
-          <ThemeToggle />
         </div>
 
         <div className="py-16 sm:py-20">
