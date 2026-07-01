@@ -121,6 +121,25 @@ export const projects: Project[] = [
     collection: 'build',
   },
   {
+    slug: 'biblioteca-de-comandos',
+    name: {
+      en: 'Command Library',
+      'pt-BR': 'Biblioteca de Comandos',
+    },
+    description: {
+      en: 'A searchable command reference for Windows, Linux, macOS, Git, Docker, Cloudflare, networking, and troubleshooting.',
+      'pt-BR':
+        'Biblioteca pesquisável de comandos para Windows, Linux, macOS, Git, Docker, Cloudflare, rede e troubleshooting.',
+    },
+    track: 'other',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sabion.io/biblioteca-de-comandos/',
+    repoUrl: 'https://github.com/sergiogbernardo/biblioteca-de-comandos',
+    signals: ['clientSide', 'local', 'noUpload', 'noAccount'],
+    collection: 'utilities',
+  },
+  {
     slug: 'inspectorvg',
     name: { en: 'Inspectorvg — File inspector', 'pt-BR': 'Inspectorvg — Inspetor de arquivos' },
     description: {
