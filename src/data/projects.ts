@@ -15,7 +15,7 @@ export const projects: Project[] = [
     area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/solucoes-cyber/',
+    liveUrl: 'https://sabion.io/solucoes-cyber/',
     repoUrl: 'https://github.com/sergiogbernardo/solucoes-cyber',
   },
   {
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/Certification-Roadmap/',
+    liveUrl: 'https://sabion.io/Certification-Roadmap/',
     repoUrl: 'https://github.com/sergiogbernardo/Certification-Roadmap',
     featured: true,
   },
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     track: 'ai',
     status: 'live',
     stack: ['HTML', 'CSS', 'JavaScript'],
-    liveUrl: 'https://sergiogbernardo.github.io/Translatorvg/',
+    liveUrl: 'https://sabion.io/Translatorvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Translatorvg',
   },
   {
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     area: 'crypto',
     status: 'live',
     stack: ['HTML', 'CSS', 'JavaScript', 'Web Crypto', 'hash-wasm'],
-    liveUrl: 'https://sergiogbernardo.github.io/Bytevg/',
+    liveUrl: 'https://sabion.io/Bytevg/',
     repoUrl: 'https://github.com/sergiogbernardo/Bytevg',
   },
   {
@@ -75,7 +75,7 @@ export const projects: Project[] = [
     area: 'offensive',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/Scanvg/',
+    liveUrl: 'https://sabion.io/Scanvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Scanvg',
   },
   {
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     area: 'forensics',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Web Crypto', 'hash-wasm'],
-    liveUrl: 'https://sergiogbernardo.github.io/Inspectorvg/',
+    liveUrl: 'https://sabion.io/Inspectorvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Inspectorvg',
   },
   {
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     area: 'forensics',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/Loghivevg/',
+    liveUrl: 'https://sabion.io/Loghivevg/',
     repoUrl: 'https://github.com/sergiogbernardo/Loghivevg',
   },
   {
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     area: 'crypto',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Web Crypto', 'zxcvbn'],
-    liveUrl: 'https://sergiogbernardo.github.io/Cryptovg/',
+    liveUrl: 'https://sabion.io/Cryptovg/',
     repoUrl: 'https://github.com/sergiogbernardo/Cryptovg',
   },
   {
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     area: 'crypto',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', '@peculiar/x509', 'jose'],
-    liveUrl: 'https://sergiogbernardo.github.io/Certvg/',
+    liveUrl: 'https://sabion.io/Certvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Certvg',
   },
   {
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/Headersvg/',
+    liveUrl: 'https://sabion.io/Headersvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Headersvg',
   },
   {
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     area: 'offensive',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/Payloadvg/',
+    liveUrl: 'https://sabion.io/Payloadvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Payloadvg',
   },
   {
@@ -159,7 +159,7 @@ export const projects: Project[] = [
     area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
-    liveUrl: 'https://sergiogbernardo.github.io/Threatvg/',
+    liveUrl: 'https://sabion.io/Threatvg/',
     repoUrl: 'https://github.com/sergiogbernardo/Threatvg',
   },
   {
@@ -171,7 +171,7 @@ export const projects: Project[] = [
     area: 'appsec',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'NVD API', 'CISA KEV'],
-    liveUrl: 'https://sergiogbernardo.github.io/exvul/',
+    liveUrl: 'https://sabion.io/exvul/',
     repoUrl: 'https://github.com/sergiogbernardo/exvul',
   },
   {
@@ -182,7 +182,7 @@ export const projects: Project[] = [
     track: 'other',
     status: 'live',
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind', 'math.js'],
-    liveUrl: 'https://sergiogbernardo.github.io/Calculadoravg/',
+    liveUrl: 'https://sabion.io/Calculadoravg/',
     repoUrl: 'https://github.com/sergiogbernardo/Calculadoravg',
   },
 ];
