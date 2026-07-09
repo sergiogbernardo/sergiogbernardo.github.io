@@ -84,6 +84,26 @@ export const projects: Project[] = [
     collection: 'utilities',
   },
   {
+    slug: 'prompt-inspector',
+    name: {
+      en: 'Prompt Inspector — Prompt quality matrix',
+      'pt-BR': 'Prompt Inspector — Matriz de qualidade de prompts',
+    },
+    description: {
+      en: 'Evaluate prompts locally with a quality matrix, prioritized gaps, a 0-100 score, and a structured rewrite.',
+      'pt-BR':
+        'Avalie prompts localmente com matriz de qualidade, lacunas priorizadas, nota de 0 a 100 e uma versão reestruturada.',
+    },
+    track: 'ai',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Tailwind'],
+    liveUrl: 'https://sabion.io/prompt-inspector/',
+    repoUrl: 'https://github.com/sergiogbernardo/prompt-inspector',
+    featured: true,
+    signals: ['clientSide', 'local', 'browserStorage', 'noAccount'],
+    collection: 'build',
+  },
+  {
     slug: 'bytevg',
     name: { en: 'Bytevg — Byte toolkit', 'pt-BR': 'Bytevg — Canivete de bytes' },
     description: {
