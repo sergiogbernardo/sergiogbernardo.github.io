@@ -21,6 +21,7 @@ describe('App', () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByText('Cyber Solutions — Solution catalog')).toBeInTheDocument();
+    expect(screen.getByText('ColaFig — Sticker collection tracker')).toBeInTheDocument();
     expect(screen.getByText('Inspectorvg — File inspector')).toBeInTheDocument();
     expect(screen.getByText('Certvg — Certificate and token inspector')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /View details/i }).length).toBeGreaterThan(0);

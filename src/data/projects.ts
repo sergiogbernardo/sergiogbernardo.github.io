@@ -47,6 +47,26 @@ export const projects: Project[] = [
     collection: 'utilities',
   },
   {
+    slug: 'colafig',
+    name: {
+      en: 'ColaFig — Sticker collection tracker',
+      'pt-BR': 'ColaFig — Organizador de figurinhas',
+    },
+    description: {
+      en: 'Track album progress, missing stickers, and duplicates in a World Cup-inspired, installable collection organizer.',
+      'pt-BR':
+        'Organize o progresso do álbum, as figurinhas faltantes e as repetidas em uma experiência instalável inspirada na Copa do Mundo.',
+    },
+    track: 'other',
+    status: 'live',
+    stack: ['React', 'Vite', 'TypeScript', 'Supabase', 'PWA'],
+    liveUrl: '/colafig/',
+    repoUrl: 'https://github.com/sergiogbernardo/colafig',
+    featured: true,
+    signals: ['clientSide', 'browserStorage', 'experimental'],
+    collection: 'utilities',
+  },
+  {
     slug: 'certification-roadmap',
     name: {
       en: 'Certification Roadmap',
