@@ -292,11 +292,29 @@ img {
 }
 
 .status-dot {
+  flex: 0 0 auto;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--neon);
   box-shadow: 0 0 0 5px rgba(104, 240, 0, 0.1);
+  animation: pulse-live 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-live {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 4px rgba(104, 240, 0, 0.12);
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 0 1px rgba(104, 240, 0, 0.04);
+    transform: scale(0.82);
+  }
 }
 
 .hero h1,
@@ -1236,6 +1254,8 @@ img {
   height: 6px;
   border-radius: 50%;
   background: #10b981;
+  animation: pulse-live 1.4s ease-in-out infinite;
+  transform-origin: center;
 }
 
 .hub-lab-copy {
@@ -2317,6 +2337,8 @@ a.article-list-item:hover {
 .footer-bottom,
 .article-list-number,
 .article-list-action span,
+.back-link,
+.article-author span,
 .article-cover-kicker,
 .article-cover-models span,
 .article-aside > span,
@@ -2329,8 +2351,87 @@ a.article-list-item:hover {
 .catalog-card-icon,
 .catalog-card-footer > span,
 .thesis-grid article > span,
+.hub-track-category,
+.hub-track-code,
+.hub-track-topics,
+.hub-lab-category,
+.hub-lab-status,
+.hub-lab-chips,
 .instagram-link {
   font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "zero" 1;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.055em;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.instagram-link,
+.article-meta,
+.hub-track-category,
+.hub-track-code,
+.hub-lab-category,
+.hub-lab-status,
+.labs-footer,
+.process-list > li > span,
+.footer-links span:first-child,
+.footer-bottom,
+.article-list-number,
+.article-list-action span,
+.back-link,
+.article-author span {
+  font-weight: 500;
+}
+
+.article-meta {
+  font-size: 10px;
+  letter-spacing: 0.065em;
+}
+
+.featured-rule span,
+.rule-box span,
+.article-cover-kicker,
+.article-cover-models span,
+.article-aside > span,
+.section-label,
+.minute-box > span,
+.model-examples,
+.decision-map span,
+.article-cta span,
+.footer-links span:first-child {
+  font-weight: 500;
+  letter-spacing: 0.09em;
+}
+
+.hub-track-category,
+.hub-lab-category,
+.hub-lab-status {
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.hero h1,
+.page-hero h1,
+.labs-page-hero h1,
+.featured-copy h3,
+.article-hero h1,
+.article-body h2 {
+  font-weight: 700;
+}
+
+.manifesto-inner p,
+.about-grid h2 {
+  font-weight: 600;
+}
+
+.article-body .article-opening,
+.article-body blockquote {
+  font-weight: 500;
 }
 
 /* Matrix theme */
@@ -2792,6 +2893,11 @@ a.article-list-item:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .status-dot,
+  .hub-lab-status > span {
+    animation: none;
+  }
+
   .brand img,
   .footer-brand img {
     transition: none;
