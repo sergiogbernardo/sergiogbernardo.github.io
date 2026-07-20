@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Live demos hub — portfolio of Sergio Bernardo's projects.",
+  "description": "Sabion Labs editorial hub for articles, solutions, and browser-based labs.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -13,8 +13,10 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "lucide-react": "^1.25.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",

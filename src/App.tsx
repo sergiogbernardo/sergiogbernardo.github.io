@@ -1,572 +1,818 @@
-import { useMemo, useState } from 'react';
+import { useEffect, type AnchorHTMLAttributes, type MouseEvent, type ReactNode } from 'react';
+import { Moon, Sun } from 'lucide-react';
+import { FaInstagram } from 'react-icons/fa6';
 import MatrixRain from './components/MatrixRain';
-import ProjectCard from './components/ProjectCard';
-import Filters, { type AreaFilter, type TrackFilter } from './components/Filters';
 import { projects } from './data/projects';
-import {
-  COLLECTIONS,
-  SECURITY_AREAS,
-  TRACKS,
-  type Project,
-  type ProjectCollection,
-  type SecurityArea,
-  type Track,
-} from './data/types';
-import TopBar from './components/TopBar';
-import { useDocumentMeta } from './hooks/useDocumentMeta';
-import { useLocale } from './hooks/useLocale';
+import { TRACKS } from './data/types';
 import { useRoute } from './hooks/useRoute';
 import { useTheme } from './hooks/useTheme';
-import { messages, type Messages } from './i18n/messages';
-import type { Route } from './lib/router';
-import { trackEvent } from './lib/analytics';
 
-const TRACK_ORDER: Track[] = ['security', 'fintech', 'ai', 'games', 'other'];
-const AREA_ORDER: SecurityArea[] = ['offensive', 'forensics', 'crypto', 'appsec'];
-const COLLECTION_ORDER: ProjectCollection[] = ['analyze', 'build', 'learn', 'utilities'];
+const articles = [
+  {
+    title: 'Sol, Terra ou Luna: qual modelo usar no Codex?',
+    description:
+      'A OpenAI dividiu o GPT-5.6 em três perfis de trabalho. Entenda o que muda e escolha sem depender de jargão.',
+    category: 'IA E AGENTES',
+    readTime: '7 MIN',
+    date: '18 JUL 2026',
+    href: '/artigos/sol-terra-luna',
+    status: 'NOVO',
+  },
+];
+
+const tracks = [
+  {
+    code: 'IA',
+    icon: '🤖',
+    title: 'IA e agentes',
+    description:
+      'Codex, Claude, MCP, contexto e automações explicados pelo trabalho que realmente entregam.',
+    topics: 'AGENTES · MCP · MODELOS',
+  },
+  {
+    code: 'CY',
+    icon: '🔐',
+    title: 'Cibersegurança',
+    description:
+      'Riscos, controles e incidentes traduzidos em decisões que cabem no fluxo de trabalho.',
+    topics: 'APPSEC · PRIVACIDADE · DEFESA',
+  },
+  {
+    code: 'DV',
+    icon: '🧰',
+    title: 'Dev e ferramentas',
+    description:
+      'Construção real, bastidores, padrões e pequenas ferramentas que economizam tempo.',
+    topics: 'CÓDIGO · AUTOMAÇÃO · LABS',
+  },
+];
+
+const signalLabels: Record<string, string> = {
+  clientSide: 'Client-side only',
+  local: 'Processamento local',
+  noUpload: 'Sem upload',
+  noAccount: 'Sem conta',
+  browserStorage: 'Dados no navegador',
+  publicData: 'Dados públicos',
+  externalApi: 'API externa',
+  experimental: 'Experimental',
+};
+
+const labCatalog = projects.map((project) => ({
+  project,
+  name: project.name['pt-BR'],
+  category: TRACKS[project.track].label['pt-BR'],
+  categoryIcon: TRACKS[project.track].emoji,
+  description: project.description['pt-BR'],
+  signals: project.signals.map((signal) => signalLabels[signal]),
+  stack: project.stack,
+  liveUrl: project.liveUrl,
+}));
+
+const featuredLabSlugs = ['inspectorvg', 'scanvg', 'biblioteca-de-comandos'];
+const featuredLabs = featuredLabSlugs
+  .map((slug) => labCatalog.find((lab) => lab.project.slug === slug))
+  .filter((lab): lab is (typeof labCatalog)[number] => Boolean(lab));
+
+const modelSections = [
+  {
+    name: 'Sol',
+    role: 'O estrategista',
+    title: 'Quando ainda é preciso descobrir o caminho.',
+    body: 'Sol é a escolha para trabalho complexo, aberto ou ambíguo. Ele dedica mais profundidade quando o resultado exige análise, julgamento e acabamento.',
+    examples: 'Arquitetura · bugs difíceis · pesquisa profunda · segurança',
+    rule: 'Se o caminho ainda não está claro, comece com Sol.',
+    image: '/assets/sabion-sol.png',
+    accent: 'sol',
+  },
+  {
+    name: 'Terra',
+    role: 'O construtor',
+    title: 'Quando o caminho existe, mas ainda há decisões.',
+    body: 'Terra é o modelo pragmático para o trabalho cotidiano. Combina raciocínio forte e uso de ferramentas sem exigir toda a profundidade do Sol.',
+    examples: 'Features · revisão de código · debug · automação',
+    rule: 'Tarefa clara com decisões no meio? Terra.',
+    image: '/assets/sabion-terra.png',
+    accent: 'terra',
+  },
+  {
+    name: 'Luna',
+    role: 'O executor veloz',
+    title: 'Quando o trabalho é claro e se repete.',
+    body: 'Luna funciona melhor em tarefas específicas, verificáveis e em volume. Quando você já sabe como é uma boa resposta, ele prioriza velocidade e eficiência.',
+    examples: 'Extração · classificação · transformação · resumos',
+    rule: 'Se é repetível e fácil de conferir, use Luna.',
+    image: '/assets/sabion-luna.png',
+    accent: 'luna',
+  },
+];
 
 export default function App() {
-  const [track, setTrack] = useState<TrackFilter>('all');
-  const [area, setArea] = useState<AreaFilter>('all');
-  const [query, setQuery] = useState('');
-  const { locale, switchLocale } = useLocale();
-  const { route, navigate } = useRoute();
+  const { route } = useRoute();
   const { theme, toggle } = useTheme();
-  const t = messages[locale];
-  const activeProject = route.name === 'lab' ? projects.find((project) => project.slug === route.slug) : undefined;
 
-  useDocumentMeta({ route, locale, t, project: activeProject });
+  useEffect(() => {
+    const metadata = {
+      home: {
+        title: 'Sabion Labs — Artigos, Soluções e Laboratórios',
+        description: 'Labs de cibersegurança, desenvolvimento e inteligência artificial.',
+      },
+      articles: {
+        title: 'Artigos | Sabion Labs',
+        description:
+          'Análises, guias e testes sobre IA, agentes, cibersegurança e desenvolvimento.',
+      },
+      article: {
+        title: 'Sol, Terra ou Luna: qual modelo usar no Codex? | Sabion Labs',
+        description:
+          'Entenda a diferença entre os modelos GPT-5.6 Sol, Terra e Luna e escolha pelo formato da tarefa.',
+      },
+      labs: {
+        title: 'Labs | Sabion Labs',
+        description:
+          'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
+      },
+    }[route.name];
 
-  const handleLocaleChange = (nextLocale: typeof locale) => {
-    switchLocale(nextLocale);
-    trackEvent('language_change', { locale: nextLocale });
-  };
+    document.title = metadata.title;
+    setMeta('description', metadata.description);
+    setMeta('twitter:title', metadata.title);
+    setMeta('twitter:description', metadata.description);
+    setProperty('og:title', metadata.title);
+    setProperty('og:description', metadata.description);
+    setProperty('og:url', window.location.href);
 
-  const handleThemeToggle = () => {
-    toggle();
-    trackEvent('theme_change', { theme: theme === 'dark' ? 'light' : 'dark' });
-  };
-
-  const handleNavigateLab = (project: Project) => {
-    trackEvent('lab_detail_open', { slug: project.slug, collection: project.collection });
-    navigate({ name: 'lab', slug: project.slug });
-  };
+    const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) canonical.href = window.location.href;
+  }, [route.name]);
 
   return (
-    <div
-      id="top"
-      className="relative min-h-screen overflow-x-hidden bg-slate-50 text-slate-950 dark:bg-black dark:text-slate-100"
-    >
+    <>
       <MatrixRain theme={theme} />
-      <div className="relative z-10">
-        <TopBar
-          locale={locale}
-          theme={theme}
-          t={t}
-          onLocaleChange={handleLocaleChange}
-          onThemeToggle={handleThemeToggle}
-          onNavigate={navigate}
-        />
-        <div className="h-[65px]" aria-hidden="true" />
-
-        {route.name === 'lab' && activeProject ? (
-          <LabDetail project={activeProject} locale={locale} t={t} onNavigate={navigate} />
-        ) : route.name === 'privacy' ? (
-          <PrivacyPage t={t} onNavigate={navigate} />
+      <SiteHeader routeName={route.name} theme={theme} onThemeToggle={toggle} />
+      <div className="site-content">
+        {route.name === 'articles' ? (
+          <ArticlesPage />
+        ) : route.name === 'article' ? (
+          <ArticlePage />
+        ) : route.name === 'labs' ? (
+          <LabsPage />
         ) : (
-          <HomePage
-            track={track}
-            area={area}
-            query={query}
-            locale={locale}
-            t={t}
-            onQueryChange={(nextQuery) => {
-              setQuery(nextQuery);
-              if (nextQuery.trim()) trackEvent('search_used', { length: nextQuery.trim().length });
-            }}
-            onTrackChange={(nextTrack) => {
-              setTrack(nextTrack);
-              if (nextTrack !== 'security') setArea('all');
-              trackEvent('filter_used', { filter: 'track', value: nextTrack });
-            }}
-            onAreaChange={(nextArea) => {
-              setArea(nextArea);
-              trackEvent('filter_used', { filter: 'area', value: nextArea });
-            }}
-            onNavigate={navigate}
-            onNavigateLab={handleNavigateLab}
-          />
+          <HomePage />
         )}
-
-        <footer className="py-6 text-center text-sm text-slate-500 dark:text-slate-400">
-          <p className="font-mono">
-            © {new Date().getFullYear()} {t.footer.rights} · {t.footer.privacy} ·{' '}
-            <a
-              href="https://www.linkedin.com/in/sergio-bernardo/"
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => trackEvent('social_open', { target: 'linkedin' })}
-              className="text-emerald-700 underline-offset-4 hover:underline dark:text-emerald-300"
-            >
-              {t.footer.linkedin}
-            </a>
-          </p>
-        </footer>
+        <SiteFooter />
       </div>
-    </div>
+    </>
   );
 }
 
-function HomePage({
-  track,
-  area,
-  query,
-  locale,
-  t,
-  onQueryChange,
-  onTrackChange,
-  onAreaChange,
-  onNavigate,
-  onNavigateLab,
+function SiteHeader({
+  routeName,
+  theme,
+  onThemeToggle,
 }: {
-  track: TrackFilter;
-  area: AreaFilter;
-  query: string;
-  locale: 'en' | 'pt-BR';
-  t: Messages;
-  onQueryChange: (query: string) => void;
-  onTrackChange: (track: TrackFilter) => void;
-  onAreaChange: (area: AreaFilter) => void;
-  onNavigate: (route: Route) => void;
-  onNavigateLab: (project: Project) => void;
+  routeName: 'home' | 'articles' | 'article' | 'labs';
+  theme: 'light' | 'dark';
+  onThemeToggle: () => void;
 }) {
-  const searchedProjects = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) return projects;
+  const navItems = [
+    { href: '/', label: 'Início', active: routeName === 'home' },
+    {
+      href: '/artigos',
+      label: 'Artigos',
+      active: routeName === 'articles' || routeName === 'article',
+    },
+    { href: '/labs', label: 'Labs', active: routeName === 'labs' },
+  ];
 
-    return projects.filter((project) => {
-      const searchable = [
-        project.slug,
-        project.name.en,
-        project.name['pt-BR'],
-        project.description.en,
-        project.description['pt-BR'],
-        project.collection,
-        COLLECTIONS[project.collection].label.en,
-        COLLECTIONS[project.collection].label['pt-BR'],
-        project.track,
-        TRACKS[project.track].label.en,
-        TRACKS[project.track].label['pt-BR'],
-        project.area ? SECURITY_AREAS[project.area].label.en : '',
-        project.area ? SECURITY_AREAS[project.area].label['pt-BR'] : '',
-        project.status,
-        ...project.signals,
-        ...project.stack,
-      ]
-        .join(' ')
-        .toLowerCase();
+  return (
+    <header className="site-header">
+      <div className="shell header-inner">
+        <InternalLink className="brand" href="/" aria-label="Sabion Labs — início">
+          <img src="/assets/sabion-icon.png" width="36" height="36" alt="" />
+          <strong>Sabion Labs</strong>
+        </InternalLink>
 
-      return searchable.includes(normalizedQuery);
-    });
-  }, [query]);
+        <nav aria-label="Navegação principal">
+          {navItems.map((item) => (
+            <InternalLink
+              className={item.active ? 'is-active' : undefined}
+              href={item.href}
+              key={item.href}
+            >
+              {item.label}
+            </InternalLink>
+          ))}
+        </nav>
 
-  const trackCounts = useMemo(() => {
-    const base = { all: searchedProjects.length } as Record<TrackFilter, number>;
-    TRACK_ORDER.forEach((currentTrack) => {
-      base[currentTrack] = searchedProjects.filter((project) => project.track === currentTrack).length;
-    });
-    return base;
-  }, [searchedProjects]);
-
-  const areaCounts = useMemo(() => {
-    const security = searchedProjects.filter((project) => project.track === 'security');
-    const base = { all: security.length } as Record<AreaFilter, number>;
-    AREA_ORDER.forEach((currentArea) => {
-      base[currentArea] = security.filter((project) => project.area === currentArea).length;
-    });
-    return base;
-  }, [searchedProjects]);
-
-  const filteredProjects = searchedProjects.filter(
-    (project) =>
-      (track === 'all' || project.track === track) && (area === 'all' || project.area === area),
+        <div className="header-actions">
+          <a
+            className="instagram-link"
+            href="https://instagram.com/sabion_labs"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaInstagram className="brand-icon" size={16} aria-hidden="true" />
+            @sabion_labs
+          </a>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={onThemeToggle}
+            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+            title={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+          >
+            {theme === 'dark' ? (
+              <Sun size={17} aria-hidden="true" />
+            ) : (
+              <Moon size={17} aria-hidden="true" />
+            )}
+          </button>
+        </div>
+      </div>
+    </header>
   );
-  const featured = filteredProjects.filter((project) => project.featured);
-  const listed = filteredProjects.filter((project) => !project.featured);
-  const groupByArea = track === 'security' && area === 'all';
-  const empty = filteredProjects.length === 0;
-  const localFirstCount = projects.filter((project) => project.signals.includes('local')).length;
+}
+
+function HomePage() {
+  const featured = articles[0];
 
   return (
     <main>
-      <section className="border-b border-emerald-500/10">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">
-          <div className="max-w-3xl">
-            <p className="mb-4 font-mono text-xs uppercase text-emerald-700 dark:text-emerald-300">
-              {t.hero.eyebrow}
-            </p>
-            <h1 className="font-display text-4xl font-bold leading-tight text-slate-950 sm:text-6xl dark:text-slate-50">
-              {t.hero.title}
-            </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-              {t.hero.body}
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#labs"
-                className="rounded-md bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400"
-              >
-                {t.hero.primaryAction}
-              </a>
-              <button
-                type="button"
-                onClick={() => onNavigate({ name: 'privacy' })}
-                className="rounded-md border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-700 dark:border-slate-700 dark:text-slate-200 dark:hover:border-emerald-400 dark:hover:text-emerald-300"
-              >
-                {t.hero.secondaryAction}
-              </button>
-            </div>
+      <section className="hero shell">
+        <div className="hero-copy">
+          <h1>
+            Artigos,
+            <br />
+            <span>Soluções e</span>
+            <br />
+            Laboratórios.
+          </h1>
+          <p className="hero-lead">
+            Labs de Cibersegurança, Desenvolvimento e Inteligência Artificial.
+          </p>
+          <div className="button-row">
+            <InternalLink className="button button-primary" href="/artigos">
+              Ler os artigos <span aria-hidden="true">→</span>
+            </InternalLink>
+            <InternalLink className="button button-secondary" href="/labs">
+              Explorar os Labs
+            </InternalLink>
           </div>
+        </div>
 
-          <aside className="rounded-lg border border-slate-200 bg-slate-50 p-5 shadow-sm dark:border-emerald-500/15 dark:bg-slate-950/80">
-            <p className="font-mono text-xs uppercase text-slate-500 dark:text-slate-400">
-              {t.hero.builtBy}
-            </p>
-            <dl className="mt-5 grid gap-4">
-              <Metric value={projects.length} label={t.hero.stats.liveTools} />
-              <Metric value={localFirstCount} label={t.hero.stats.localFirst} />
-              <Metric value="No" label={t.hero.stats.noTracking} />
-            </dl>
-          </aside>
+        <div className="hero-mascot-showcase" aria-label="Mascote da Sabion Labs">
+          <img
+            className="hero-mascot-standalone"
+            src="/assets/sabion-sol.png"
+            width="620"
+            height="620"
+            alt="Mascote da Sabion analisando uma rede de decisões"
+          />
         </div>
       </section>
 
-      <div id="labs" className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
-        <CollectionsPanel locale={locale} t={t} />
-
-        <Filters
-          track={track}
-          area={area}
-          trackCounts={trackCounts}
-          areaCounts={areaCounts}
-          locale={locale}
-          query={query}
-          resultCount={filteredProjects.length}
-          t={t}
-          onQueryChange={onQueryChange}
-          onTrackChange={onTrackChange}
-          onAreaChange={onAreaChange}
-        />
-
-        {featured.length > 0 && (
-          <ProjectSection title={t.sections.featured}>
-            <div className="grid gap-4 lg:grid-cols-3">
-              {featured.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                  locale={locale}
-                  t={t}
-                  onOpenDetails={onNavigateLab}
-                  featured
-                />
-              ))}
-            </div>
-          </ProjectSection>
-        )}
-
-        {!empty && (
-          <ProjectSection title={t.sections.allProjects} subtitle={t.filters.resultCount(listed.length)}>
-            {groupByArea ? (
-              <div className="space-y-6">
-                {AREA_ORDER.map((currentArea) => {
-                  const items = listed.filter((project) => project.area === currentArea);
-                  if (items.length === 0) return null;
-                  return (
-                    <div key={currentArea}>
-                      <h3 className="mb-3 font-mono text-xs uppercase text-slate-500 dark:text-slate-400">
-                        {SECURITY_AREAS[currentArea].label[locale]}
-                      </h3>
-                      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                        {items.map((project) => (
-                          <ProjectCard
-                            key={project.slug}
-                            project={project}
-                            locale={locale}
-                            t={t}
-                            onOpenDetails={onNavigateLab}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {listed.map((project) => (
-                  <ProjectCard
-                    key={project.slug}
-                    project={project}
-                    locale={locale}
-                    t={t}
-                    onOpenDetails={onNavigateLab}
-                  />
-                ))}
-              </div>
-            )}
-          </ProjectSection>
-        )}
-
-        {empty && (
-          <div className="rounded-lg border border-slate-200 bg-white/85 p-8 text-center shadow-sm backdrop-blur-md dark:border-emerald-500/15 dark:bg-black/70">
-            <h2 className="font-display text-lg font-semibold text-slate-950 dark:text-slate-50">
-              {t.filters.noResults}
-            </h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-500 dark:text-slate-400">
-              {t.filters.noResultsBody}
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                onQueryChange('');
-                onTrackChange('all');
-                onAreaChange('all');
-                trackEvent('filters_clear_empty_state');
-              }}
-              className="mt-5 rounded-md bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400"
-            >
-              {t.filters.clearAll}
-            </button>
+      <section className="section shell" aria-labelledby="destaque-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Leitura em destaque</p>
+            <h2 id="destaque-title">Comece pelo que mudou agora.</h2>
           </div>
-        )}
+          <InternalLink className="text-link" href="/artigos">
+            Todos os artigos <span aria-hidden="true">↗</span>
+          </InternalLink>
+        </div>
 
-        <ProjectSection>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <InfoPanel id="about" title={t.sections.about}>
-              <p>{t.about.body}</p>
-              <p>{t.about.author}</p>
-            </InfoPanel>
-            <InfoPanel title={t.sections.principles}>
-              <ul className="space-y-2">
-                {t.principles.items.map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-                    <span>{item}</span>
-                  </li>
+        <article className="featured-article">
+          <div className="featured-copy">
+            <div className="article-meta">
+              <span>{featured.category}</span>
+              <span>{featured.readTime}</span>
+              <span>{featured.date}</span>
+            </div>
+            <h3>{featured.title}</h3>
+            <p>{featured.description}</p>
+            <div className="featured-rule">
+              <span>REGRA SABION</span>
+              <strong>
+                Não existe um melhor para tudo. Existe o modelo certo para cada tipo de
+                trabalho.
+              </strong>
+            </div>
+            <InternalLink className="button button-dark" href={featured.href}>
+              Entender a diferença <span aria-hidden="true">→</span>
+            </InternalLink>
+          </div>
+
+          <div className="featured-visual" aria-hidden="true">
+            <div className="visual-orbit visual-orbit-one" />
+            <div className="visual-orbit visual-orbit-two" />
+            <img src="/assets/sabion-presenter.png" width="580" height="580" alt="" />
+            <div className="visual-card visual-card-sol">Sol</div>
+            <div className="visual-card visual-card-terra">Terra</div>
+            <div className="visual-card visual-card-luna">Luna</div>
+          </div>
+        </article>
+      </section>
+
+      <section className="manifesto-strip">
+        <div className="shell manifesto-inner">
+          <p>Menos lista de ferramenta.</p>
+          <p>Mais contexto, prova e decisão.</p>
+        </div>
+      </section>
+
+      <section className="section shell" aria-labelledby="tracks-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Escolha uma trilha</p>
+            <h2 id="tracks-title">Acompanhe pelo problema.</h2>
+          </div>
+          <p className="section-note">
+            Notícias passam. Princípios, testes e ferramentas continuam úteis.
+          </p>
+        </div>
+
+        <div className="track-grid">
+          {tracks.map((track, index) => (
+            <article className="hub-track-card" key={track.title}>
+              <div className="hub-track-card-top">
+                <span className="hub-track-category">
+                  <span aria-hidden="true">{track.icon}</span>
+                  Trilha editorial
+                </span>
+                <span className="hub-track-code">
+                  {track.code} · 0{index + 1}
+                </span>
+              </div>
+              <div className="hub-track-copy">
+                <h3>{track.title}</h3>
+                <p>{track.description}</p>
+              </div>
+              <ul className="hub-track-topics" aria-label="Assuntos da trilha">
+                {track.topics.split(' · ').map((topic) => (
+                  <li key={topic}>{topic}</li>
                 ))}
               </ul>
-            </InfoPanel>
-            <InfoPanel id="privacy" title={t.sections.privacy}>
-              <p>{t.privacy.body}</p>
-              <p>{t.privacy.analytics}</p>
-              <button
-                type="button"
-                onClick={() => onNavigate({ name: 'privacy' })}
-                className="font-semibold text-emerald-700 underline-offset-4 hover:underline dark:text-emerald-300"
-              >
-                {t.hero.secondaryAction}
-              </button>
-            </InfoPanel>
-            <InfoPanel title={t.sections.buildingNext}>
-              <p>{t.next.body}</p>
-              <span className="inline-flex w-fit rounded bg-emerald-500/10 px-2 py-1 font-mono text-xs text-emerald-700 dark:text-emerald-300">
-                {t.next.status}
-              </span>
-            </InfoPanel>
+              <InternalLink className="hub-track-action" href="/artigos">
+                Ver artigos <span aria-hidden="true">→</span>
+              </InternalLink>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="labs-section" aria-labelledby="labs-title">
+        <div className="shell">
+          <div className="labs-heading labs-heading-simple">
+            <h2 id="labs-title">Visualize os Labs</h2>
           </div>
-        </ProjectSection>
-
-      </div>
-    </main>
-  );
-}
-
-function LabDetail({
-  project,
-  locale,
-  t,
-  onNavigate,
-}: {
-  project: Project;
-  locale: 'en' | 'pt-BR';
-  t: Messages;
-  onNavigate: (route: Route) => void;
-}) {
-  const collection = COLLECTIONS[project.collection];
-
-  return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <ProjectSection>
-        <button
-          type="button"
-          onClick={() => onNavigate({ name: 'home' })}
-          className="mb-6 font-mono text-xs text-emerald-700 hover:underline dark:text-emerald-300"
-        >
-          ← {t.detail.back}
-        </button>
-
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-          <div>
-            <p className="mb-3 font-mono text-xs uppercase text-emerald-700 dark:text-emerald-300">
-              {collection.label[locale]} · {TRACKS[project.track].label[locale]}
-            </p>
-            <h1 className="font-display text-4xl font-bold leading-tight text-slate-950 dark:text-slate-50">
-              {project.name[locale]}
-            </h1>
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-              {project.description[locale]}
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  onClick={() => trackEvent('lab_open', { slug: project.slug })}
-                  className="rounded-md bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400"
-                  >
-                    {t.detail.open}
-                  </a>
-              )}
-            </div>
+          <div className="lab-grid">
+            {featuredLabs.map((lab) => (
+              <LabCard lab={lab} key={lab.name} />
+            ))}
           </div>
-
-          <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-emerald-500/15 dark:bg-slate-950/80">
-            <DetailList title={t.detail.privacyModel} items={project.signals.map((signal) => t.signals[signal])} />
-            <DetailList title={t.detail.technicalStack} items={project.stack} />
-            <DetailList title={t.detail.collection} items={[collection.label[locale]]} />
-          </aside>
+          <div className="labs-footer">
+            <span>{labCatalog.length} ferramentas no ecossistema</span>
+            <InternalLink className="button button-neon" href="/labs">
+              Ver todos os Labs <span aria-hidden="true">→</span>
+            </InternalLink>
+          </div>
         </div>
-      </ProjectSection>
+      </section>
+
+      <section className="section shell process-section" aria-labelledby="process-title">
+        <div className="process-intro">
+          <p className="eyebrow">Método Sabion</p>
+          <h2 id="process-title">Do sinal ao veredito.</h2>
+          <p>
+            Uma publicação de terceiro pode apontar o assunto. Nunca será a nossa única
+            fonte.
+          </p>
+        </div>
+        <ol className="process-list">
+          <ProcessItem
+            number="01"
+            title="Encontramos o sinal"
+            body="Releases, dúvidas, incidentes e tendências."
+          />
+          <ProcessItem
+            number="02"
+            title="Voltamos à fonte"
+            body="Documentação, código, pesquisa e evidência original."
+          />
+          <ProcessItem
+            number="03"
+            title="Testamos a promessa"
+            body="Exemplo real, limitação e consequência prática."
+          />
+          <ProcessItem
+            number="04"
+            title="Entregamos uma decisão"
+            body="Use, teste, espere ou evite — e por quê."
+          />
+        </ol>
+      </section>
     </main>
   );
 }
 
-function PrivacyPage({
-  t,
-  onNavigate,
-}: {
-  t: Messages;
-  onNavigate: (route: Route) => void;
-}) {
+function ProcessItem({ number, title, body }: { number: string; title: string; body: string }) {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-      <ProjectSection title={t.sections.privacy}>
-        <button
-          type="button"
-          onClick={() => onNavigate({ name: 'home' })}
-          className="mb-6 font-mono text-xs text-emerald-700 hover:underline dark:text-emerald-300"
-        >
-          ← {t.detail.back}
-        </button>
-        <div className="space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300">
-          <p>{t.privacy.body}</p>
-          <p>{t.privacy.analytics}</p>
-          <p>{t.privacy.cookies}</p>
-        </div>
-      </ProjectSection>
-    </main>
-  );
-}
-
-function CollectionsPanel({ locale, t }: { locale: 'en' | 'pt-BR'; t: Messages }) {
-  return (
-    <ProjectSection title={t.collections.title} subtitle={t.collections.body}>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {COLLECTION_ORDER.map((collectionId) => {
-          const collection = COLLECTIONS[collectionId];
-          const count = projects.filter((project) => project.collection === collectionId).length;
-          return (
-            <div
-              key={collectionId}
-              className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-emerald-500/15 dark:bg-slate-950/80"
-            >
-              <h3 className="font-display text-base font-semibold text-slate-950 dark:text-slate-50">
-                {collection.label[locale]} <span className="text-sm text-slate-400">{count}</span>
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                {collection.description[locale]}
-              </p>
-            </div>
-          );
-        })}
+    <li>
+      <span>{number}</span>
+      <div>
+        <strong>{title}</strong>
+        <p>{body}</p>
       </div>
-    </ProjectSection>
+    </li>
   );
 }
 
-function ProjectSection({
-  title,
-  subtitle,
-  children,
-}: {
-  title?: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}) {
+function ArticlesPage() {
   return (
-    <section className="rounded-lg border border-slate-200 bg-white/85 p-5 shadow-sm backdrop-blur-md dark:border-emerald-500/15 dark:bg-black/70">
-      {title && (
-        <div className="mb-6">
-          <h2 className="font-display text-sm font-semibold uppercase text-emerald-700 dark:text-emerald-300">
-            {title}
-          </h2>
-          {subtitle && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
+    <main>
+      <section className="page-hero shell">
+        <p className="eyebrow">
+          <span className="status-dot" />
+          Biblioteca editorial
+        </p>
+        <h1>Artigos para decidir, não apenas acompanhar.</h1>
+        <p>
+          Explicações claras, fontes primárias, testes e uma conclusão que você consegue
+          aplicar.
+        </p>
+      </section>
+
+      <section className="section shell article-index-section">
+        <div className="article-filter" aria-label="Categorias">
+          <span className="active">Todos</span>
+          <span>IA e agentes</span>
+          <span>Cyber</span>
+          <span>Dev e ferramentas</span>
+          <span>Labs</span>
         </div>
-      )}
-      {children}
-    </section>
+        <div className="article-list">
+          {articles.map((article, index) => (
+            <InternalLink className="article-list-item" href={article.href} key={article.title}>
+              <div className="article-list-number">0{index + 1}</div>
+              <div className="article-list-content">
+                <div className="article-meta">
+                  <span>{article.category}</span>
+                  <span>{article.readTime}</span>
+                  <span>{article.date}</span>
+                </div>
+                <h2>{article.title}</h2>
+                <p>{article.description}</p>
+              </div>
+              <div className="article-list-action">
+                <span>{article.status}</span>
+                <strong aria-hidden="true">→</strong>
+              </div>
+            </InternalLink>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
 
-function DetailList({ title, items }: { title: string; items: string[] }) {
+function LabsPage() {
   return (
-    <div className="mb-5 last:mb-0">
-      <h2 className="mb-2 font-mono text-xs uppercase text-slate-500 dark:text-slate-400">{title}</h2>
-      <ul className="flex flex-wrap gap-1.5">
-        {items.map((item) => (
-          <li
-            key={item}
-            className="rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] text-emerald-700 dark:text-emerald-100/80"
-          >
-            {item}
-          </li>
+    <main className="labs-page">
+      <section className="labs-page-hero">
+        <div className="shell">
+          <h1>
+            Ferramentas de segurança e utilidades técnicas{' '}
+            <span>direto no navegador.</span>
+          </h1>
+        </div>
+      </section>
+      <section className="labs-catalog shell">
+        <div className="labs-filter" aria-label="Categorias">
+          <span className="active">Todos</span>
+          <span>Segurança</span>
+          <span>Dev</span>
+          <span>Utilidades</span>
+          <span>IA</span>
+        </div>
+        <div className="labs-catalog-grid">
+          {labCatalog.map((lab) => (
+            <LabCard lab={lab} key={lab.name} />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function LabCard({ lab }: { lab: (typeof labCatalog)[number] }) {
+  return (
+    <article className="hub-lab-card">
+      <div className="hub-lab-card-top">
+        <span className="hub-lab-category">
+          <span aria-hidden="true">{lab.categoryIcon}</span>
+          {lab.category}
+        </span>
+        <span className="hub-lab-status">
+          <span aria-hidden="true" />
+          Online
+        </span>
+      </div>
+      <div className="hub-lab-copy">
+        <h3>{lab.name}</h3>
+        <p>{lab.description}</p>
+      </div>
+      <ul className="hub-lab-chips hub-lab-signals" aria-label="Características">
+        {lab.signals.map((signal) => (
+          <li key={signal}>{signal}</li>
         ))}
       </ul>
-    </div>
-  );
-}
-
-function Metric({ value, label }: { value: number | string; label: string }) {
-  return (
-    <div>
-      <dt className="font-mono text-xs text-slate-500 dark:text-slate-400">{label}</dt>
-      <dd className="mt-1 font-display text-3xl font-semibold text-slate-950 dark:text-slate-50">
-        {value}
-      </dd>
-    </div>
-  );
-}
-
-function InfoPanel({
-  id,
-  title,
-  children,
-}: {
-  id?: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <article
-      id={id}
-      className="scroll-mt-24 rounded-lg border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600 shadow-sm dark:border-emerald-500/15 dark:bg-slate-950/80 dark:text-slate-300"
-    >
-      <h2 className="mb-3 font-display text-lg font-semibold text-slate-950 dark:text-slate-50">
-        {title}
-      </h2>
-      <div className="space-y-3">{children}</div>
+      <ul className="hub-lab-chips hub-lab-stack" aria-label="Stack técnica">
+        {lab.stack.map((technology) => (
+          <li key={technology}>{technology}</li>
+        ))}
+      </ul>
+      {lab.liveUrl && (
+        <a className="hub-lab-action" href={lab.liveUrl} target="_blank" rel="noreferrer">
+          Abrir ferramenta <span aria-hidden="true">→</span>
+        </a>
+      )}
     </article>
   );
+}
+
+function ArticlePage() {
+  return (
+    <main className="article-page">
+      <section className="article-hero shell">
+        <InternalLink className="back-link" href="/artigos">
+          ← Voltar para artigos
+        </InternalLink>
+        <div className="article-hero-grid">
+          <div>
+            <div className="article-meta">
+              <span>IA E AGENTES</span>
+              <span>7 MIN</span>
+              <span>18 JUL 2026</span>
+            </div>
+            <h1>Sol, Terra ou Luna: qual modelo usar no Codex?</h1>
+            <p className="article-deck">
+              A OpenAI dividiu o GPT-5.6 em três perfis de trabalho. A diferença não está
+              apenas no nome: está no tipo de decisão que cada tarefa exige.
+            </p>
+            <div className="article-author">
+              <img src="/assets/sabion-icon.png" width="42" height="42" alt="" />
+              <div>
+                <strong>Sabion Labs</strong>
+                <span>Pesquisa e veredito técnico</span>
+              </div>
+            </div>
+          </div>
+          <div className="article-cover" aria-hidden="true">
+            <span className="article-cover-kicker">GPT-5.6 / CODEX</span>
+            <div className="article-cover-models">
+              <span>SOL</span>
+              <span>TERRA</span>
+              <span>LUNA</span>
+            </div>
+            <img src="/assets/sabion-presenter.png" width="520" height="520" alt="" />
+            <strong>QUAL A DIFERENÇA?</strong>
+          </div>
+        </div>
+      </section>
+
+      <div className="article-layout shell">
+        <aside className="article-aside">
+          <span>NESTE ARTIGO</span>
+          <a href="#resumo">Em 1 minuto</a>
+          <a href="#sol">Sol</a>
+          <a href="#terra">Terra</a>
+          <a href="#luna">Luna</a>
+          <a href="#mapa">Mapa de decisão</a>
+          <a href="#fontes">Fontes</a>
+        </aside>
+
+        <article className="article-body">
+          <section id="resumo">
+            <p className="article-opening">
+              Se você abriu o seletor do Codex e encontrou Sol, Terra e Luna, pode
+              parecer que a decisão é entre “forte, médio e rápido”. Essa leitura é
+              simples demais.
+            </p>
+            <p>
+              A escolha correta começa com outra pergunta:{' '}
+              <strong>quanto da tarefa ainda precisa ser descoberto?</strong>
+            </p>
+            <div className="minute-box">
+              <span>EM 1 MINUTO</span>
+              <h2>Escolha pelo formato do trabalho.</h2>
+              <div className="minute-grid">
+                <MinuteItem name="Sol" body="Descobrir o caminho." />
+                <MinuteItem name="Terra" body="Executar com julgamento." />
+                <MinuteItem name="Luna" body="Repetir e verificar." />
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <p className="section-label">ANTES DOS MODELOS</p>
+            <h2>O que exatamente mudou?</h2>
+            <p>
+              O Codex é o agente: ele lê arquivos, modifica projetos, executa comandos e
+              confere resultados dentro das permissões disponíveis. Sol, Terra e Luna
+              são modelos GPT-5.6 que podem realizar esse trabalho com prioridades
+              diferentes.
+            </p>
+            <blockquote>
+              A tarefa não muda apenas de velocidade. Ela muda de profundidade, custo e
+              quantidade de julgamento.
+            </blockquote>
+          </section>
+
+          {modelSections.map((model) => (
+            <section
+              className={`model-section model-section-${model.accent}`}
+              id={model.name.toLowerCase()}
+              key={model.name}
+            >
+              <div className="model-copy">
+                <p className="section-label">{model.role}</p>
+                <h2>
+                  {model.name}: {model.title}
+                </h2>
+                <p>{model.body}</p>
+                <p className="model-examples">{model.examples}</p>
+                <div className="rule-box">
+                  <span>REGRA SABION</span>
+                  <strong>{model.rule}</strong>
+                </div>
+              </div>
+              <img
+                src={model.image}
+                width="440"
+                height="440"
+                alt={`Mascote representando o papel do modelo ${model.name}`}
+              />
+            </section>
+          ))}
+
+          <section id="mapa">
+            <p className="section-label">MAPA FINAL</p>
+            <h2>Não existe um melhor para tudo.</h2>
+            <p>
+              Existe o modelo adequado ao formato da tarefa — e a menor opção que passa
+              na sua régua de qualidade costuma ser a decisão mais eficiente.
+            </p>
+            <div className="decision-map">
+              <DecisionItem number="01" question="Ainda precisa descobrir o caminho?" model="Sol" />
+              <DecisionItem
+                number="02"
+                question="O caminho existe, mas exige julgamento?"
+                model="Terra"
+              />
+              <DecisionItem
+                number="03"
+                question="É repetível e fácil de verificar?"
+                model="Luna"
+              />
+            </div>
+            <div className="article-cta">
+              <img src="/assets/sabion-approved.png" width="260" height="260" alt="" />
+              <div>
+                <span>NA DÚVIDA</span>
+                <h3>Comece com Sol e reduza quando a tarefa ficar clara.</h3>
+                <p>Salve este mapa antes de abrir a próxima tarefa.</p>
+              </div>
+            </div>
+          </section>
+
+          <section className="sources-section" id="fontes">
+            <p className="section-label">FONTES PRIMÁRIAS</p>
+            <h2>Continue na documentação.</h2>
+            <a
+              href="https://learn.chatgpt.com/docs/models#recommended-models"
+              target="_blank"
+              rel="noreferrer"
+            >
+              OpenAI — Choosing Sol, Terra, and Luna <span>↗</span>
+            </a>
+            <a
+              href="https://learn.chatgpt.com/docs/whats-new"
+              target="_blank"
+              rel="noreferrer"
+            >
+              OpenAI — What&apos;s new in Codex <span>↗</span>
+            </a>
+          </section>
+        </article>
+      </div>
+    </main>
+  );
+}
+
+function MinuteItem({ name, body }: { name: string; body: string }) {
+  return (
+    <div>
+      <strong>{name}</strong>
+      <p>{body}</p>
+    </div>
+  );
+}
+
+function DecisionItem({
+  number,
+  question,
+  model,
+}: {
+  number: string;
+  question: string;
+  model: string;
+}) {
+  return (
+    <div>
+      <span>{number}</span>
+      <p>{question}</p>
+      <strong>{model}</strong>
+    </div>
+  );
+}
+
+function SiteFooter() {
+  return (
+    <footer className="site-footer">
+      <div className="shell footer-grid">
+        <div className="footer-brand">
+          <img src="/assets/sabion-icon.png" width="48" height="48" alt="" />
+          <div>
+            <strong>Sabion Labs</strong>
+            <p>Artigos, projetos e experimentos.</p>
+          </div>
+        </div>
+        <div className="footer-links">
+          <div>
+            <span>EXPLORAR</span>
+            <InternalLink href="/artigos">Artigos</InternalLink>
+            <InternalLink href="/labs">Labs</InternalLink>
+          </div>
+          <div>
+            <span>CONECTAR</span>
+            <a href="https://instagram.com/sabion_labs" target="_blank" rel="noreferrer">
+              <FaInstagram className="brand-icon" size={17} aria-hidden="true" />
+              Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="shell footer-bottom">
+        <span>© 2026 Sabion Labs</span>
+        <span>Conteúdo, código e experimentos.</span>
+      </div>
+    </footer>
+  );
+}
+
+function InternalLink({
+  href,
+  children,
+  onClick,
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement> & {
+  href: string;
+  children: ReactNode;
+}) {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    onClick?.(event);
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    window.history.pushState({}, '', href);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <a href={href} onClick={handleClick} {...props}>
+      {children}
+    </a>
+  );
+}
+
+function setMeta(name: string, content: string) {
+  const element = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+  if (element) element.content = content;
+}
+
+function setProperty(property: string, content: string) {
+  const element = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+  if (element) element.content = content;
 }

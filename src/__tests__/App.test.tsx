@@ -9,55 +9,59 @@ window.scrollTo = () => undefined;
 describe('App', () => {
   beforeEach(() => {
     localStorage.clear();
+    window.history.replaceState({}, '', '/');
   });
 
-  it('renders Sabion Labs and the featured security tools', () => {
+  it('renders the editorial home and its featured labs', () => {
     render(<App />);
 
     expect(
       screen.getByRole('heading', {
-        name: 'Browser-based security tools and technical utilities.',
+        name: /Artigos, Soluções e Laboratórios/i,
         level: 1,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText('Cyber Solutions — Solution catalog')).toBeInTheDocument();
-    expect(screen.getByText('ColaFig — Sticker collection tracker')).toBeInTheDocument();
-    expect(screen.getByText('Inspectorvg — File inspector')).toBeInTheDocument();
-    expect(screen.getByText('Certvg — Certificate and token inspector')).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /View details/i }).length).toBeGreaterThan(0);
+    expect(screen.getByText('Inspectorvg — Inspetor de arquivos')).toBeInTheDocument();
+    expect(screen.getByText('Scanvg — Gerador de comandos de scan')).toBeInTheDocument();
+    expect(screen.getByText('Biblioteca de Comandos')).toBeInTheDocument();
   });
 
-  it('filters projects by track', async () => {
+  it('navigates to the article library without reloading the page', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     render(<App />);
 
-    const securityButton = screen.getByRole('button', { name: /Security & Risk/i });
-    await user.click(securityButton);
+    await user.click(screen.getByRole('link', { name: /Ler os artigos/i }));
 
-    expect(securityButton).toHaveClass('bg-emerald-400');
+    expect(
+      screen.getByRole('heading', {
+        name: 'Artigos para decidir, não apenas acompanhar.',
+        level: 1,
+      }),
+    ).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/artigos');
   });
 
-  it('switches to Portuguese and searches the catalog', async () => {
+  it('opens the complete lab catalog', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /Switch language to Portuguese/i }));
-    expect(screen.getByText('Copa 2026 — Ao vivo')).toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: 'Explorar os Labs' }));
 
-    await user.type(screen.getByRole('searchbox', { name: /Buscar ferramentas/i }), 'jwt');
-    expect(screen.getByText('Certvg — Inspetor de certificados e tokens')).toBeInTheDocument();
+    expect(screen.getByText('Soluções Cyber — Catálogo de soluções')).toBeInTheDocument();
+    expect(screen.getByText('Cryptovg — Cofre de senhas e segredos')).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /Abrir ferramenta/i }).length).toBeGreaterThan(10);
   });
 
-  it('opens a lab detail page', async () => {
+  it('switches between dark and light themes', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getAllByRole('button', { name: /View details/i })[0]);
+    await user.click(screen.getByRole('button', { name: 'Ativar modo claro' }));
 
-    expect(screen.getByRole('link', { name: /Open live tool/i })).toBeInTheDocument();
-    expect(screen.getByText('Privacy model')).toBeInTheDocument();
+    expect(document.documentElement.dataset.theme).toBe('light');
+    expect(localStorage.getItem('theme')).toBe('light');
   });
 });

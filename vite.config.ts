@@ -3,12 +3,11 @@ import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { projects } from './src/data/projects';
 
 const SITE_URL = 'https://sabion.io';
-const DEFAULT_TITLE = 'Sabion Labs — Security Tools and Technical Utilities';
+const DEFAULT_TITLE = 'Sabion Labs — Artigos, Soluções e Laboratórios';
 const DEFAULT_DESCRIPTION =
-  'Browser-based security tools, technical utilities, and experiments built by Sergio Bernardo.';
+  'Labs de cibersegurança, desenvolvimento e inteligência artificial.';
 
 // User site (https://sabion.io) is served from the root.
 export default defineConfig({
@@ -31,26 +30,36 @@ export default defineConfig({
         );
         copyFileSync(index, resolve('dist/404.html'));
 
-        mkdirSync(resolve('dist/privacy'), { recursive: true });
-        writeFileSync(
-          resolve('dist/privacy/index.html'),
-          renderStaticPage(html, {
-            title: 'Privacy and Cookies | Sabion Labs',
+        const staticRoutes = [
+          {
+            path: 'artigos',
+            title: 'Artigos | Sabion Labs',
             description:
-              'Privacy-first analytics, local browser preferences, and cookie model for Sabion Labs.',
-            url: `${SITE_URL}/privacy`,
-          }),
-        );
+              'Análises, guias e testes sobre IA, agentes, cibersegurança e desenvolvimento.',
+          },
+          {
+            path: 'artigos/sol-terra-luna',
+            title: 'Sol, Terra ou Luna: qual modelo usar no Codex? | Sabion Labs',
+            description:
+              'Entenda a diferença entre os modelos GPT-5.6 Sol, Terra e Luna e escolha pelo formato da tarefa.',
+          },
+          {
+            path: 'labs',
+            title: 'Labs | Sabion Labs',
+            description:
+              'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
+          },
+        ];
 
-        projects.forEach((project) => {
-          const labDir = resolve(`dist/labs/${project.slug}`);
-          mkdirSync(labDir, { recursive: true });
+        staticRoutes.forEach((route) => {
+          const routeDir = resolve(`dist/${route.path}`);
+          mkdirSync(routeDir, { recursive: true });
           writeFileSync(
-            resolve(labDir, 'index.html'),
+            resolve(routeDir, 'index.html'),
             renderStaticPage(html, {
-              title: `${project.name.en} | Sabion Labs`,
-              description: project.description.en,
-              url: `${SITE_URL}/labs/${project.slug}`,
+              title: route.title,
+              description: route.description,
+              url: `${SITE_URL}/${route.path}`,
             }),
           );
         });

@@ -8,12 +8,12 @@ function getInitialTheme(): Theme {
   return 'dark';
 }
 
-/** Tracks the active theme and toggles the `dark` class on <html>. */
+/** Tracks the active theme and exposes it through the document data attribute. */
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.dataset.theme = theme;
     localStorage.setItem('theme', theme);
   }, [theme]);
 
