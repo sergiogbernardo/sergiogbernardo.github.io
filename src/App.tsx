@@ -1,4 +1,10 @@
-import { useEffect, type AnchorHTMLAttributes, type MouseEvent, type ReactNode } from 'react';
+import {
+  useEffect,
+  useState,
+  type AnchorHTMLAttributes,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa6';
 import MatrixRain from './components/MatrixRain';
@@ -17,7 +23,27 @@ const articles = [
     date: '18 JUL 2026',
     href: '/artigos/sol-terra-luna',
     status: 'NOVO',
+    track: 'ai',
   },
+];
+
+type ArticleFilter = 'all' | 'ai' | 'cyber' | 'dev' | 'labs';
+type LabFilter = 'all' | 'security' | 'dev' | 'utilities' | 'ai';
+
+const articleFilters: { value: ArticleFilter; label: string }[] = [
+  { value: 'all', label: 'Todos' },
+  { value: 'ai', label: 'IA e agentes' },
+  { value: 'cyber', label: 'Cyber' },
+  { value: 'dev', label: 'Dev e ferramentas' },
+  { value: 'labs', label: 'Labs' },
+];
+
+const labFilters: { value: LabFilter; label: string }[] = [
+  { value: 'all', label: 'Todos' },
+  { value: 'security', label: 'Segurança' },
+  { value: 'dev', label: 'Dev' },
+  { value: 'utilities', label: 'Utilidades' },
+  { value: 'ai', label: 'IA' },
 ];
 
 const tracks = [
@@ -430,6 +456,12 @@ function ProcessItem({ number, title, body }: { number: string; title: string; b
 }
 
 function ArticlesPage() {
+  const [activeFilter, setActiveFilter] = useState<ArticleFilter>('all');
+  const filteredArticles =
+    activeFilter === 'all'
+      ? articles
+      : articles.filter((article) => article.track === activeFilter);
+
   return (
     <main>
       <section className="page-hero shell">
@@ -445,15 +477,21 @@ function ArticlesPage() {
       </section>
 
       <section className="section shell article-index-section">
-        <div className="article-filter" aria-label="Categorias">
-          <span className="active">Todos</span>
-          <span>IA e agentes</span>
-          <span>Cyber</span>
-          <span>Dev e ferramentas</span>
-          <span>Labs</span>
+        <div className="article-filter" aria-label="Filtrar artigos por categoria">
+          {articleFilters.map((filter) => (
+            <button
+              type="button"
+              className={activeFilter === filter.value ? 'active' : undefined}
+              aria-pressed={activeFilter === filter.value}
+              onClick={() => setActiveFilter(filter.value)}
+              key={filter.value}
+            >
+              {filter.label}
+            </button>
+          ))}
         </div>
         <div className="article-list">
-          {articles.map((article, index) => (
+          {filteredArticles.map((article, index) => (
             <InternalLink className="article-list-item" href={article.href} key={article.title}>
               <div className="article-list-number">0{index + 1}</div>
               <div className="article-list-content">
@@ -471,6 +509,12 @@ function ArticlesPage() {
               </div>
             </InternalLink>
           ))}
+          {filteredArticles.length === 0 && (
+            <div className="filter-empty-state" role="status">
+              <strong>Nenhum artigo publicado nesta trilha ainda.</strong>
+              <p>Os próximos conteúdos aparecerão aqui automaticamente.</p>
+            </div>
+          )}
         </div>
       </section>
     </main>
@@ -478,6 +522,15 @@ function ArticlesPage() {
 }
 
 function LabsPage() {
+  const [activeFilter, setActiveFilter] = useState<LabFilter>('all');
+  const filteredLabs = labCatalog.filter((lab) => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'security') return lab.project.track === 'security';
+    if (activeFilter === 'ai') return lab.project.track === 'ai';
+    if (activeFilter === 'utilities') return lab.project.collection === 'utilities';
+    return lab.project.collection === 'build';
+  });
+
   return (
     <main className="labs-page">
       <section className="labs-page-hero">
@@ -489,15 +542,21 @@ function LabsPage() {
         </div>
       </section>
       <section className="labs-catalog shell">
-        <div className="labs-filter" aria-label="Categorias">
-          <span className="active">Todos</span>
-          <span>Segurança</span>
-          <span>Dev</span>
-          <span>Utilidades</span>
-          <span>IA</span>
+        <div className="labs-filter" aria-label="Filtrar Labs por categoria">
+          {labFilters.map((filter) => (
+            <button
+              type="button"
+              className={activeFilter === filter.value ? 'active' : undefined}
+              aria-pressed={activeFilter === filter.value}
+              onClick={() => setActiveFilter(filter.value)}
+              key={filter.value}
+            >
+              {filter.label}
+            </button>
+          ))}
         </div>
         <div className="labs-catalog-grid">
-          {labCatalog.map((lab) => (
+          {filteredLabs.map((lab) => (
             <LabCard lab={lab} key={lab.name} />
           ))}
         </div>

@@ -40,6 +40,12 @@ describe('App', () => {
       }),
     ).toBeInTheDocument();
     expect(window.location.pathname).toBe('/artigos');
+
+    await user.click(screen.getByRole('button', { name: 'Cyber' }));
+    expect(screen.getByText('Nenhum artigo publicado nesta trilha ainda.')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'IA e agentes' }));
+    expect(screen.getByText('Sol, Terra ou Luna: qual modelo usar no Codex?')).toBeInTheDocument();
   });
 
   it('opens the complete lab catalog', async () => {
@@ -52,6 +58,14 @@ describe('App', () => {
     expect(screen.getByText('Soluções Cyber — Catálogo de soluções')).toBeInTheDocument();
     expect(screen.getByText('Cryptovg — Cofre de senhas e segredos')).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /Abrir ferramenta/i }).length).toBeGreaterThan(10);
+
+    await user.click(screen.getByRole('button', { name: 'IA' }));
+    expect(screen.getByText('Prompt Inspector — Matriz de qualidade de prompts')).toBeInTheDocument();
+    expect(screen.queryByText('Cryptovg — Cofre de senhas e segredos')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Segurança' }));
+    expect(screen.getByText('Cryptovg — Cofre de senhas e segredos')).toBeInTheDocument();
+    expect(screen.queryByText('Copa 2026 — Ao vivo')).not.toBeInTheDocument();
   });
 
   it('switches between dark and light themes', async () => {

@@ -1559,8 +1559,8 @@ img {
   margin-bottom: 36px;
 }
 
-.article-filter span,
-.labs-filter span {
+.article-filter button,
+.labs-filter button {
   display: inline-flex;
   min-height: 42px;
   align-items: center;
@@ -1568,8 +1568,10 @@ img {
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   padding: 0 16px;
+  appearance: none;
   background: rgba(255, 255, 255, 0.5);
   color: #334155;
+  cursor: pointer;
   font-family: var(--font-inter), Inter, Arial, sans-serif;
   font-size: 14px;
   font-weight: 600;
@@ -1580,11 +1582,50 @@ img {
     box-shadow 160ms ease;
 }
 
+.article-filter button:hover,
+.labs-filter button:hover {
+  border-color: #10b981;
+  color: #047857;
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.12);
+}
+
+.article-filter button:focus-visible,
+.labs-filter button:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 2px;
+}
+
 .article-filter .active,
 .labs-filter .active {
   border-color: #10b981;
   background: #10b981;
   color: #020617;
+}
+
+.article-filter .active:hover,
+.labs-filter .active:hover {
+  background: #34d399;
+  color: #020617;
+}
+
+.filter-empty-state {
+  min-height: 220px;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.filter-empty-state strong {
+  color: var(--ink);
+  font-family: var(--font-space), "Space Grotesk", system-ui, sans-serif;
+  font-size: 22px;
+}
+
+.filter-empty-state p {
+  margin: 0;
 }
 
 .article-list {
@@ -2324,17 +2365,30 @@ a.article-list-item:hover {
   color: #6ee7b7;
 }
 
-[data-theme="dark"] .article-filter span,
-[data-theme="dark"] .labs-filter span {
+[data-theme="dark"] .article-filter button,
+[data-theme="dark"] .labs-filter button {
   border-color: #334155;
   background: rgba(2, 6, 23, 0.42);
   color: #e2e8f0;
+}
+
+[data-theme="dark"] .article-filter button:hover,
+[data-theme="dark"] .labs-filter button:hover {
+  border-color: #34d399;
+  color: #6ee7b7;
 }
 
 [data-theme="dark"] .article-filter .active,
 [data-theme="dark"] .labs-filter .active {
   border-color: #10b981;
   background: #10b981;
+  color: #020617;
+}
+
+[data-theme="dark"] .article-filter .active:hover,
+[data-theme="dark"] .labs-filter .active:hover {
+  border-color: #34d399;
+  background: #34d399;
   color: #020617;
 }
 
