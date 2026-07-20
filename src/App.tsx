@@ -232,15 +232,6 @@ function SiteHeader({
         </nav>
 
         <div className="header-actions">
-          <a
-            className="instagram-link"
-            href="https://instagram.com/sabion_labs"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FaInstagram className="brand-icon" size={16} aria-hidden="true" />
-            @sabion_labs
-          </a>
           <button
             type="button"
             className="theme-toggle"
