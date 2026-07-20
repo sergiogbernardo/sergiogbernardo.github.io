@@ -3,11 +3,11 @@ import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { projects } from './src/data/projects';
 
 const SITE_URL = 'https://sabion.io';
 const DEFAULT_TITLE = 'Sabion Labs — Artigos, Soluções e Laboratórios';
-const DEFAULT_DESCRIPTION =
-  'Labs de cibersegurança, desenvolvimento e inteligência artificial.';
+const DEFAULT_DESCRIPTION = 'Labs de cibersegurança, desenvolvimento e inteligência artificial.';
 
 // User site (https://sabion.io) is served from the root.
 export default defineConfig({
@@ -49,6 +49,11 @@ export default defineConfig({
             description:
               'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
           },
+          ...projects.map((project) => ({
+            path: `labs/${project.slug}`,
+            title: `${project.name['pt-BR']} | Sabion Labs`,
+            description: project.description['pt-BR'],
+          })),
         ];
 
         staticRoutes.forEach((route) => {
@@ -85,20 +90,32 @@ function renderStaticPage(
   const url = escapeHtml(meta.url);
 
   return html
-    .replace(/<html lang="[^"]*"/, '<html lang="en"')
+    .replace(/<html lang="[^"]*"/, '<html lang="pt-BR"')
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /<meta\s+name="description"\s+content="[^"]*"\s*\/>/,
       `<meta name="description" content="${description}" />`,
     )
-    .replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/, `<link rel="canonical" href="${url}" />`)
-    .replace(/<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/, `<meta property="og:title" content="${title}" />`)
+    .replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/,
+      `<link rel="canonical" href="${url}" />`,
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/,
+      `<meta property="og:title" content="${title}" />`,
+    )
     .replace(
       /<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/,
       `<meta property="og:description" content="${description}" />`,
     )
-    .replace(/<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/, `<meta property="og:url" content="${url}" />`)
-    .replace(/<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${title}" />`)
+    .replace(
+      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/,
+      `<meta property="og:url" content="${url}" />`,
+    )
+    .replace(
+      /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/,
+      `<meta name="twitter:title" content="${title}" />`,
+    )
     .replace(
       /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/,
       `<meta name="twitter:description" content="${description}" />`,

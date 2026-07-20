@@ -5,11 +5,11 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
-import { Moon, Sun } from 'lucide-react';
+import { ArrowUpRight, Menu, Moon, Search, Sun, X } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa6';
 import MatrixRain from './components/MatrixRain';
 import { projects } from './data/projects';
-import { TRACKS } from './data/types';
+import { SECURITY_AREAS, TRACKS, type SecurityArea } from './data/types';
 import { useRoute } from './hooks/useRoute';
 import { useTheme } from './hooks/useTheme';
 
@@ -29,6 +29,7 @@ const articles = [
 
 type ArticleFilter = 'all' | 'ai' | 'cyber' | 'dev' | 'labs';
 type LabFilter = 'all' | 'security' | 'dev' | 'utilities' | 'ai';
+type SecurityFilter = 'all' | SecurityArea;
 
 const articleFilters: { value: ArticleFilter; label: string }[] = [
   { value: 'all', label: 'Todos' },
@@ -44,6 +45,14 @@ const labFilters: { value: LabFilter; label: string }[] = [
   { value: 'dev', label: 'Dev' },
   { value: 'utilities', label: 'Utilidades' },
   { value: 'ai', label: 'IA' },
+];
+
+const securityFilters: { value: SecurityFilter; label: string }[] = [
+  { value: 'all', label: 'Todos em Cyber' },
+  ...Object.entries(SECURITY_AREAS).map(([value, area]) => ({
+    value: value as SecurityArea,
+    label: area.label['pt-BR'],
+  })),
 ];
 
 const tracks = [
@@ -138,7 +147,11 @@ export default function App() {
   const { theme, toggle } = useTheme();
 
   useEffect(() => {
-    const metadata = {
+    const lab =
+      route.name === 'lab'
+        ? labCatalog.find((item) => item.project.slug === route.slug)
+        : undefined;
+    const defaultMetadata = {
       home: {
         title: 'Sabion Labs — Artigos, Soluções e Laboratórios',
         description: 'Labs de cibersegurança, desenvolvimento e inteligência artificial.',
@@ -158,7 +171,14 @@ export default function App() {
         description:
           'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
       },
-    }[route.name];
+    };
+    const metadata =
+      route.name === 'lab'
+        ? {
+            title: lab ? `${lab.name} | Sabion Labs` : 'Lab não encontrado | Sabion Labs',
+            description: lab?.description ?? 'Explore os Labs da Sabion.',
+          }
+        : defaultMetadata[route.name];
 
     document.title = metadata.title;
     setMeta('description', metadata.description);
@@ -170,7 +190,7 @@ export default function App() {
 
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (canonical) canonical.href = window.location.href;
-  }, [route.name]);
+  }, [route]);
 
   return (
     <>
@@ -183,6 +203,8 @@ export default function App() {
           <ArticlePage />
         ) : route.name === 'labs' ? (
           <LabsPage />
+        ) : route.name === 'lab' ? (
+          <LabDetailPage slug={route.slug} />
         ) : (
           <HomePage />
         )}
@@ -197,10 +219,25 @@ function SiteHeader({
   theme,
   onThemeToggle,
 }: {
-  routeName: 'home' | 'articles' | 'article' | 'labs';
+  routeName: 'home' | 'articles' | 'article' | 'labs' | 'lab';
   theme: 'light' | 'dark';
   onThemeToggle: () => void;
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [routeName]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileMenuOpen]);
+
   const navItems = [
     { href: '/', label: 'Início', active: routeName === 'home' },
     {
@@ -208,7 +245,7 @@ function SiteHeader({
       label: 'Artigos',
       active: routeName === 'articles' || routeName === 'article',
     },
-    { href: '/labs', label: 'Labs', active: routeName === 'labs' },
+    { href: '/labs', label: 'Labs', active: routeName === 'labs' || routeName === 'lab' },
   ];
 
   return (
@@ -219,7 +256,7 @@ function SiteHeader({
           <strong>Sabion Labs</strong>
         </InternalLink>
 
-        <nav aria-label="Navegação principal">
+        <nav className="desktop-nav" aria-label="Navegação principal">
           {navItems.map((item) => (
             <InternalLink
               className={item.active ? 'is-active' : undefined}
@@ -245,7 +282,40 @@ function SiteHeader({
               <Moon size={17} aria-hidden="true" />
             )}
           </button>
+          <button
+            type="button"
+            className="mobile-menu-toggle"
+            aria-controls="mobile-navigation"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            {mobileMenuOpen ? (
+              <X size={19} aria-hidden="true" />
+            ) : (
+              <Menu size={19} aria-hidden="true" />
+            )}
+          </button>
         </div>
+      </div>
+      <div
+        className={`mobile-navigation${mobileMenuOpen ? ' is-open' : ''}`}
+        id="mobile-navigation"
+        hidden={!mobileMenuOpen}
+      >
+        <nav className="shell" aria-label="Navegação mobile">
+          {navItems.map((item) => (
+            <InternalLink
+              className={item.active ? 'is-active' : undefined}
+              href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              key={item.href}
+            >
+              <span>{item.label}</span>
+              <span aria-hidden="true">→</span>
+            </InternalLink>
+          ))}
+        </nav>
       </div>
     </header>
   );
@@ -312,8 +382,7 @@ function HomePage() {
             <div className="featured-rule">
               <span>REGRA SABION</span>
               <strong>
-                Não existe um melhor para tudo. Existe o modelo certo para cada tipo de
-                trabalho.
+                Não existe um melhor para tudo. Existe o modelo certo para cada tipo de trabalho.
               </strong>
             </div>
             <InternalLink className="button button-dark" href={featured.href}>
@@ -402,10 +471,7 @@ function HomePage() {
         <div className="process-intro">
           <p className="eyebrow">Método Sabion</p>
           <h2 id="process-title">Do sinal ao veredito.</h2>
-          <p>
-            Uma publicação de terceiro pode apontar o assunto. Nunca será a nossa única
-            fonte.
-          </p>
+          <p>Uma publicação de terceiro pode apontar o assunto. Nunca será a nossa única fonte.</p>
         </div>
         <ol className="process-list">
           <ProcessItem
@@ -462,8 +528,7 @@ function ArticlesPage() {
         </p>
         <h1>Artigos para decidir, não apenas acompanhar.</h1>
         <p>
-          Explicações claras, fontes primárias, testes e uma conclusão que você consegue
-          aplicar.
+          Explicações claras, fontes primárias, testes e uma conclusão que você consegue aplicar.
         </p>
       </section>
 
@@ -514,43 +579,125 @@ function ArticlesPage() {
 
 function LabsPage() {
   const [activeFilter, setActiveFilter] = useState<LabFilter>('all');
+  const [securityFilter, setSecurityFilter] = useState<SecurityFilter>('all');
+  const [query, setQuery] = useState('');
+  const normalizedQuery = normalizeSearch(query);
   const filteredLabs = labCatalog.filter((lab) => {
-    if (activeFilter === 'all') return true;
-    if (activeFilter === 'security') return lab.project.track === 'security';
-    if (activeFilter === 'ai') return lab.project.track === 'ai';
-    if (activeFilter === 'utilities') return lab.project.collection === 'utilities';
-    return lab.project.collection === 'build';
+    const matchesCategory = (() => {
+      if (activeFilter === 'all') return true;
+      if (activeFilter === 'security') {
+        return (
+          lab.project.track === 'security' &&
+          (securityFilter === 'all' || lab.project.area === securityFilter)
+        );
+      }
+      if (activeFilter === 'ai') return lab.project.track === 'ai';
+      if (activeFilter === 'utilities') return lab.project.collection === 'utilities';
+      return lab.project.collection === 'build';
+    })();
+
+    if (!matchesCategory || !normalizedQuery) return matchesCategory;
+
+    const searchableContent = [
+      lab.project.slug,
+      lab.name,
+      lab.description,
+      lab.category,
+      lab.project.area ? SECURITY_AREAS[lab.project.area].label['pt-BR'] : '',
+      ...lab.signals,
+      ...lab.stack,
+    ].join(' ');
+
+    return normalizeSearch(searchableContent).includes(normalizedQuery);
   });
+
+  const resetFilters = () => {
+    setActiveFilter('all');
+    setSecurityFilter('all');
+    setQuery('');
+  };
 
   return (
     <main className="labs-page">
       <section className="labs-page-hero">
         <div className="shell">
           <h1>
-            Ferramentas de segurança e utilidades técnicas{' '}
-            <span>direto no navegador.</span>
+            Ferramentas de segurança e utilidades técnicas <span>direto no navegador.</span>
           </h1>
         </div>
       </section>
       <section className="labs-catalog shell">
-        <div className="labs-filter" aria-label="Filtrar Labs por categoria">
-          {labFilters.map((filter) => (
-            <button
-              type="button"
-              className={activeFilter === filter.value ? 'active' : undefined}
-              aria-pressed={activeFilter === filter.value}
-              onClick={() => setActiveFilter(filter.value)}
-              key={filter.value}
-            >
-              {filter.label}
+        <div className="labs-toolbar">
+          <label className="labs-search">
+            <Search size={19} aria-hidden="true" />
+            <span className="sr-only">Buscar nos Labs</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Buscar por nome, função ou tecnologia"
+              autoComplete="off"
+            />
+            {query && (
+              <button type="button" onClick={() => setQuery('')} aria-label="Limpar busca">
+                <X size={17} aria-hidden="true" />
+              </button>
+            )}
+          </label>
+          <p className="labs-result-count" aria-live="polite">
+            <strong>{filteredLabs.length}</strong>{' '}
+            {filteredLabs.length === 1 ? 'Lab encontrado' : 'Labs encontrados'}
+          </p>
+        </div>
+        <div className="labs-filter-stack">
+          <div className="labs-filter" aria-label="Filtrar Labs por categoria">
+            {labFilters.map((filter) => (
+              <button
+                type="button"
+                className={activeFilter === filter.value ? 'active' : undefined}
+                aria-pressed={activeFilter === filter.value}
+                onClick={() => {
+                  setActiveFilter(filter.value);
+                  if (filter.value !== 'security') setSecurityFilter('all');
+                }}
+                key={filter.value}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+          {activeFilter === 'security' && (
+            <div className="security-filter" aria-label="Filtrar Cyber por especialidade">
+              {securityFilters.map((filter) => (
+                <button
+                  type="button"
+                  className={securityFilter === filter.value ? 'active' : undefined}
+                  aria-pressed={securityFilter === filter.value}
+                  onClick={() => setSecurityFilter(filter.value)}
+                  key={filter.value}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {filteredLabs.length > 0 ? (
+          <div className="labs-catalog-grid">
+            {filteredLabs.map((lab) => (
+              <LabCard lab={lab} key={lab.name} />
+            ))}
+          </div>
+        ) : (
+          <div className="labs-empty-state" role="status">
+            <span>0 resultados</span>
+            <h2>Nenhum Lab combina com essa busca.</h2>
+            <p>Tente outro termo ou volte a visualizar todo o catálogo.</p>
+            <button type="button" className="button button-primary" onClick={resetFilters}>
+              Limpar filtros
             </button>
-          ))}
-        </div>
-        <div className="labs-catalog-grid">
-          {filteredLabs.map((lab) => (
-            <LabCard lab={lab} key={lab.name} />
-          ))}
-        </div>
+          </div>
+        )}
       </section>
     </main>
   );
@@ -583,13 +730,132 @@ function LabCard({ lab }: { lab: (typeof labCatalog)[number] }) {
           <li key={technology}>{technology}</li>
         ))}
       </ul>
-      {lab.liveUrl && (
-        <a className="hub-lab-action" href={lab.liveUrl} target="_blank" rel="noreferrer">
-          Abrir ferramenta <span aria-hidden="true">→</span>
-        </a>
-      )}
+      <div className="hub-lab-actions">
+        <InternalLink className="hub-lab-action" href={`/labs/${lab.project.slug}`}>
+          Ver detalhes <span aria-hidden="true">→</span>
+        </InternalLink>
+        {lab.liveUrl && (
+          <a className="hub-lab-direct-link" href={lab.liveUrl} target="_blank" rel="noreferrer">
+            Abrir ferramenta <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        )}
+      </div>
     </article>
   );
+}
+
+function LabDetailPage({ slug }: { slug: string }) {
+  const lab = labCatalog.find((item) => item.project.slug === slug);
+
+  if (!lab) {
+    return (
+      <main className="lab-detail-page">
+        <section className="lab-not-found shell">
+          <p className="eyebrow">Lab não encontrado</p>
+          <h1>Esse endereço não faz parte do catálogo.</h1>
+          <p>O projeto pode ter mudado de nome ou ainda não foi publicado.</p>
+          <InternalLink className="button button-primary" href="/labs">
+            Voltar aos Labs <span aria-hidden="true">→</span>
+          </InternalLink>
+        </section>
+      </main>
+    );
+  }
+
+  const securityArea = lab.project.area ? SECURITY_AREAS[lab.project.area].label['pt-BR'] : null;
+
+  return (
+    <main className="lab-detail-page">
+      <section className="lab-detail-hero">
+        <div className="shell">
+          <InternalLink className="back-link lab-back-link" href="/labs">
+            ← Voltar para os Labs
+          </InternalLink>
+          <div className="lab-detail-hero-grid">
+            <div className="lab-detail-intro">
+              <div className="lab-detail-meta">
+                <span>
+                  {lab.categoryIcon} {lab.category}
+                </span>
+                {securityArea && <span>{securityArea}</span>}
+                <span className="lab-detail-live">
+                  <i aria-hidden="true" /> Online
+                </span>
+              </div>
+              <h1>{lab.name}</h1>
+              <p>{lab.description}</p>
+              {lab.liveUrl && (
+                <a
+                  className="button button-primary lab-detail-primary-action"
+                  href={lab.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Abrir ferramenta <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+              )}
+            </div>
+            <div className="lab-detail-mark" aria-hidden="true">
+              <span>{lab.project.slug.slice(0, 2).toUpperCase()}</span>
+              <strong>LAB</strong>
+              <small>SABION / {lab.project.slug.toUpperCase()}</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="lab-detail-content shell">
+        <div className="lab-detail-section lab-detail-about">
+          <p className="eyebrow">Sobre o Lab</p>
+          <h2>Uma ferramenta direta para o trabalho técnico.</h2>
+          <p>{lab.description}</p>
+        </div>
+
+        <div className="lab-detail-panels">
+          <section className="lab-detail-panel">
+            <span>COMO OS DADOS SÃO TRATADOS</span>
+            <h2>Características</h2>
+            <ul className="lab-detail-list">
+              {lab.signals.map((signal) => (
+                <li key={signal}>
+                  <i aria-hidden="true" /> {signal}
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="lab-detail-panel">
+            <span>CONSTRUÍDO COM</span>
+            <h2>Stack técnica</h2>
+            <ul className="lab-detail-list lab-detail-stack">
+              {lab.stack.map((technology) => (
+                <li key={technology}>{technology}</li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        {lab.liveUrl && (
+          <div className="lab-detail-cta">
+            <div>
+              <span>PRONTO PARA USAR</span>
+              <h2>Abra o Lab direto no navegador.</h2>
+            </div>
+            <a className="button button-neon" href={lab.liveUrl} target="_blank" rel="noreferrer">
+              Acessar {lab.name.split(' — ')[0]} <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
+
+function normalizeSearch(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('pt-BR')
+    .trim();
 }
 
 function ArticlePage() {
@@ -608,8 +874,8 @@ function ArticlePage() {
             </div>
             <h1>Sol, Terra ou Luna: qual modelo usar no Codex?</h1>
             <p className="article-deck">
-              A OpenAI dividiu o GPT-5.6 em três perfis de trabalho. A diferença não está
-              apenas no nome: está no tipo de decisão que cada tarefa exige.
+              A OpenAI dividiu o GPT-5.6 em três perfis de trabalho. A diferença não está apenas no
+              nome: está no tipo de decisão que cada tarefa exige.
             </p>
             <div className="article-author">
               <img src="/assets/sabion-icon.png" width="42" height="42" alt="" />
@@ -646,9 +912,8 @@ function ArticlePage() {
         <article className="article-body">
           <section id="resumo">
             <p className="article-opening">
-              Se você abriu o seletor do Codex e encontrou Sol, Terra e Luna, pode
-              parecer que a decisão é entre “forte, médio e rápido”. Essa leitura é
-              simples demais.
+              Se você abriu o seletor do Codex e encontrou Sol, Terra e Luna, pode parecer que a
+              decisão é entre “forte, médio e rápido”. Essa leitura é simples demais.
             </p>
             <p>
               A escolha correta começa com outra pergunta:{' '}
@@ -669,14 +934,13 @@ function ArticlePage() {
             <p className="section-label">ANTES DOS MODELOS</p>
             <h2>O que exatamente mudou?</h2>
             <p>
-              O Codex é o agente: ele lê arquivos, modifica projetos, executa comandos e
-              confere resultados dentro das permissões disponíveis. Sol, Terra e Luna
-              são modelos GPT-5.6 que podem realizar esse trabalho com prioridades
-              diferentes.
+              O Codex é o agente: ele lê arquivos, modifica projetos, executa comandos e confere
+              resultados dentro das permissões disponíveis. Sol, Terra e Luna são modelos GPT-5.6
+              que podem realizar esse trabalho com prioridades diferentes.
             </p>
             <blockquote>
-              A tarefa não muda apenas de velocidade. Ela muda de profundidade, custo e
-              quantidade de julgamento.
+              A tarefa não muda apenas de velocidade. Ela muda de profundidade, custo e quantidade
+              de julgamento.
             </blockquote>
           </section>
 
@@ -711,8 +975,8 @@ function ArticlePage() {
             <p className="section-label">MAPA FINAL</p>
             <h2>Não existe um melhor para tudo.</h2>
             <p>
-              Existe o modelo adequado ao formato da tarefa — e a menor opção que passa
-              na sua régua de qualidade costuma ser a decisão mais eficiente.
+              Existe o modelo adequado ao formato da tarefa — e a menor opção que passa na sua régua
+              de qualidade costuma ser a decisão mais eficiente.
             </p>
             <div className="decision-map">
               <DecisionItem number="01" question="Ainda precisa descobrir o caminho?" model="Sol" />
@@ -721,11 +985,7 @@ function ArticlePage() {
                 question="O caminho existe, mas exige julgamento?"
                 model="Terra"
               />
-              <DecisionItem
-                number="03"
-                question="É repetível e fácil de verificar?"
-                model="Luna"
-              />
+              <DecisionItem number="03" question="É repetível e fácil de verificar?" model="Luna" />
             </div>
             <div className="article-cta">
               <img src="/assets/sabion-approved.png" width="260" height="260" alt="" />
@@ -747,11 +1007,7 @@ function ArticlePage() {
             >
               OpenAI — Choosing Sol, Terra, and Luna <span>↗</span>
             </a>
-            <a
-              href="https://learn.chatgpt.com/docs/whats-new"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://learn.chatgpt.com/docs/whats-new" target="_blank" rel="noreferrer">
               OpenAI — What&apos;s new in Codex <span>↗</span>
             </a>
           </section>
