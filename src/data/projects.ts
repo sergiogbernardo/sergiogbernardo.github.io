@@ -88,6 +88,25 @@ export const projects: Project[] = [
     collection: 'learn',
   },
   {
+    slug: 'omini-translator',
+    name: {
+      en: 'Omini Translator — Long-text translator',
+      'pt-BR': 'Omini Translator — Tradutor de textos longos',
+    },
+    description: {
+      en: 'Translate up to 5,000 characters with MyMemory, split into ordered blocks with progress, cancellation, and optional local history.',
+      'pt-BR':
+        'Traduza até 5.000 caracteres com MyMemory, em blocos ordenados, com progresso, cancelamento e histórico local opcional.',
+    },
+    track: 'ai',
+    status: 'live',
+    stack: ['HTML', 'CSS', 'JavaScript'],
+    liveUrl: 'https://sabion.io/omini-translator/',
+    repoUrl: 'https://github.com/sergiogbernardo/omini-translator',
+    signals: ['externalApi', 'browserStorage', 'noAccount'],
+    collection: 'utilities',
+  },
+  {
     slug: 'translatorvg',
     name: { en: 'Translatorvg', 'pt-BR': 'Translatorvg' },
     description: {
