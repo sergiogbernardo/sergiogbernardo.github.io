@@ -36,7 +36,7 @@ const articleFilters: { value: ArticleFilter; label: string }[] = [
   { value: 'ai', label: 'IA e agentes' },
   { value: 'cyber', label: 'Cyber' },
   { value: 'dev', label: 'Dev e ferramentas' },
-  { value: 'labs', label: 'Labs' },
+  { value: 'labs', label: 'Ferramentas' },
 ];
 
 const labFilters: { value: LabFilter; label: string }[] = [
@@ -78,7 +78,7 @@ const tracks = [
     title: 'Dev e ferramentas',
     description:
       'Construção real, bastidores, padrões e pequenas ferramentas que economizam tempo.',
-    topics: 'CÓDIGO · AUTOMAÇÃO · LABS',
+    topics: 'CÓDIGO · AUTOMAÇÃO · FERRAMENTAS',
   },
 ];
 
@@ -153,8 +153,8 @@ export default function App() {
         : undefined;
     const defaultMetadata = {
       home: {
-        title: 'Sabion Labs — Artigos, Soluções e Laboratórios',
-        description: 'Labs de cibersegurança, desenvolvimento e inteligência artificial.',
+        title: 'Sabion Labs — Artigos, Soluções e Ferramentas',
+        description: 'Ferramentas de cibersegurança, desenvolvimento e inteligência artificial.',
       },
       articles: {
         title: 'Artigos | Sabion Labs',
@@ -167,7 +167,7 @@ export default function App() {
           'Entenda a diferença entre os modelos GPT-5.6 Sol, Terra e Luna e escolha pelo formato da tarefa.',
       },
       labs: {
-        title: 'Labs | Sabion Labs',
+        title: 'Ferramentas | Sabion Labs',
         description:
           'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
       },
@@ -175,8 +175,8 @@ export default function App() {
     const metadata =
       route.name === 'lab'
         ? {
-            title: lab ? `${lab.name} | Sabion Labs` : 'Lab não encontrado | Sabion Labs',
-            description: lab?.description ?? 'Explore os Labs da Sabion.',
+            title: lab ? `${lab.name} | Sabion Labs` : 'Ferramenta não encontrada | Sabion Labs',
+            description: lab?.description ?? 'Explore as ferramentas da Sabion.',
           }
         : defaultMetadata[route.name];
 
@@ -245,7 +245,8 @@ function SiteHeader({
       label: 'Artigos',
       active: routeName === 'articles' || routeName === 'article',
     },
-    { href: '/labs', label: 'Labs', active: routeName === 'labs' || routeName === 'lab' },
+    { href: '/labs', label: 'Ferramentas', active: routeName === 'labs' || routeName === 'lab' },
+    { href: '/certificacoes/', label: 'Certificações', active: false, external: true },
   ];
 
   return (
@@ -257,15 +258,21 @@ function SiteHeader({
         </InternalLink>
 
         <nav className="desktop-nav" aria-label="Navegação principal">
-          {navItems.map((item) => (
-            <InternalLink
-              className={item.active ? 'is-active' : undefined}
-              href={item.href}
-              key={item.href}
-            >
-              {item.label}
-            </InternalLink>
-          ))}
+          {navItems.map((item) =>
+            item.external ? (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ) : (
+              <InternalLink
+                className={item.active ? 'is-active' : undefined}
+                href={item.href}
+                key={item.href}
+              >
+                {item.label}
+              </InternalLink>
+            ),
+          )}
         </nav>
 
         <div className="header-actions">
@@ -304,17 +311,24 @@ function SiteHeader({
         hidden={!mobileMenuOpen}
       >
         <nav className="shell" aria-label="Navegação mobile">
-          {navItems.map((item) => (
-            <InternalLink
-              className={item.active ? 'is-active' : undefined}
-              href={item.href}
-              onClick={() => setMobileMenuOpen(false)}
-              key={item.href}
-            >
-              <span>{item.label}</span>
-              <span aria-hidden="true">→</span>
-            </InternalLink>
-          ))}
+          {navItems.map((item) =>
+            item.external ? (
+              <a href={item.href} key={item.href} onClick={() => setMobileMenuOpen(false)}>
+                <span>{item.label}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            ) : (
+              <InternalLink
+                className={item.active ? 'is-active' : undefined}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                key={item.href}
+              >
+                <span>{item.label}</span>
+                <span aria-hidden="true">→</span>
+              </InternalLink>
+            ),
+          )}
         </nav>
       </div>
     </header>
@@ -333,17 +347,17 @@ function HomePage() {
             <br />
             <span>Soluções e</span>
             <br />
-            Laboratórios.
+            Ferramentas.
           </h1>
           <p className="hero-lead">
-            Labs de Cibersegurança, Desenvolvimento e Inteligência Artificial.
+            Ferramentas de cibersegurança, desenvolvimento e inteligência artificial.
           </p>
           <div className="button-row">
             <InternalLink className="button button-primary" href="/artigos">
               Ler os artigos <span aria-hidden="true">→</span>
             </InternalLink>
             <InternalLink className="button button-secondary" href="/labs">
-              Explorar os Labs
+              Explorar as ferramentas
             </InternalLink>
           </div>
         </div>
@@ -451,7 +465,7 @@ function HomePage() {
       <section className="labs-section" aria-labelledby="labs-title">
         <div className="shell">
           <div className="labs-heading labs-heading-simple">
-            <h2 id="labs-title">Visualize os Labs</h2>
+            <h2 id="labs-title">Explore as ferramentas</h2>
           </div>
           <div className="lab-grid">
             {featuredLabs.map((lab) => (
@@ -461,7 +475,7 @@ function HomePage() {
           <div className="labs-footer">
             <span>{labCatalog.length} ferramentas no ecossistema</span>
             <InternalLink className="button button-neon" href="/labs">
-              Ver todos os Labs <span aria-hidden="true">→</span>
+              Ver todas as ferramentas <span aria-hidden="true">→</span>
             </InternalLink>
           </div>
         </div>
@@ -630,7 +644,7 @@ function LabsPage() {
         <div className="labs-toolbar">
           <label className="labs-search">
             <Search size={19} aria-hidden="true" />
-            <span className="sr-only">Buscar nos Labs</span>
+            <span className="sr-only">Buscar nas ferramentas</span>
             <input
               type="search"
               value={query}
@@ -646,11 +660,11 @@ function LabsPage() {
           </label>
           <p className="labs-result-count" aria-live="polite">
             <strong>{filteredLabs.length}</strong>{' '}
-            {filteredLabs.length === 1 ? 'Lab encontrado' : 'Labs encontrados'}
+            {filteredLabs.length === 1 ? 'ferramenta encontrada' : 'ferramentas encontradas'}
           </p>
         </div>
         <div className="labs-filter-stack">
-          <div className="labs-filter" aria-label="Filtrar Labs por categoria">
+          <div className="labs-filter" aria-label="Filtrar ferramentas por categoria">
             {labFilters.map((filter) => (
               <button
                 type="button"
@@ -691,7 +705,7 @@ function LabsPage() {
         ) : (
           <div className="labs-empty-state" role="status">
             <span>0 resultados</span>
-            <h2>Nenhum Lab combina com essa busca.</h2>
+            <h2>Nenhuma ferramenta combina com essa busca.</h2>
             <p>Tente outro termo ou volte a visualizar todo o catálogo.</p>
             <button type="button" className="button button-primary" onClick={resetFilters}>
               Limpar filtros
@@ -751,11 +765,11 @@ function LabDetailPage({ slug }: { slug: string }) {
     return (
       <main className="lab-detail-page">
         <section className="lab-not-found shell">
-          <p className="eyebrow">Lab não encontrado</p>
+          <p className="eyebrow">Ferramenta não encontrada</p>
           <h1>Esse endereço não faz parte do catálogo.</h1>
           <p>O projeto pode ter mudado de nome ou ainda não foi publicado.</p>
           <InternalLink className="button button-primary" href="/labs">
-            Voltar aos Labs <span aria-hidden="true">→</span>
+            Voltar às ferramentas <span aria-hidden="true">→</span>
           </InternalLink>
         </section>
       </main>
@@ -769,7 +783,7 @@ function LabDetailPage({ slug }: { slug: string }) {
       <section className="lab-detail-hero">
         <div className="shell">
           <InternalLink className="back-link lab-back-link" href="/labs">
-            ← Voltar para os Labs
+            ← Voltar às ferramentas
           </InternalLink>
           <div className="lab-detail-hero-grid">
             <div className="lab-detail-intro">
@@ -797,7 +811,7 @@ function LabDetailPage({ slug }: { slug: string }) {
             </div>
             <div className="lab-detail-mark" aria-hidden="true">
               <span>{lab.project.slug.slice(0, 2).toUpperCase()}</span>
-              <strong>LAB</strong>
+              <strong>FERRAMENTA</strong>
               <small>SABION / {lab.project.slug.toUpperCase()}</small>
             </div>
           </div>
@@ -806,7 +820,7 @@ function LabDetailPage({ slug }: { slug: string }) {
 
       <section className="lab-detail-content shell">
         <div className="lab-detail-section lab-detail-about">
-          <p className="eyebrow">Sobre o Lab</p>
+          <p className="eyebrow">Sobre a ferramenta</p>
           <h2>Uma ferramenta direta para o trabalho técnico.</h2>
           <p>{lab.description}</p>
         </div>
@@ -838,7 +852,7 @@ function LabDetailPage({ slug }: { slug: string }) {
           <div className="lab-detail-cta">
             <div>
               <span>PRONTO PARA USAR</span>
-              <h2>Abra o Lab direto no navegador.</h2>
+              <h2>Abra a ferramenta direto no navegador.</h2>
             </div>
             <a className="button button-neon" href={lab.liveUrl} target="_blank" rel="noreferrer">
               Acessar {lab.name.split(' — ')[0]} <ArrowUpRight size={17} aria-hidden="true" />
@@ -1059,7 +1073,8 @@ function SiteFooter() {
           <div>
             <span>EXPLORAR</span>
             <InternalLink href="/artigos">Artigos</InternalLink>
-            <InternalLink href="/labs">Labs</InternalLink>
+            <InternalLink href="/labs">Ferramentas</InternalLink>
+            <a href="/certificacoes/">Certificações</a>
           </div>
           <div>
             <span>CONECTAR</span>
