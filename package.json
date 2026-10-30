@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Sabion Labs editorial hub for articles, solutions, and browser-based labs.",
+  "description": "Sabion Labs editorial hub for articles, tools, and certifications.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

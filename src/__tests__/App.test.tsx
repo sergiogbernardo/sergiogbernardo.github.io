@@ -12,18 +12,27 @@ describe('App', () => {
     window.history.replaceState({}, '', '/');
   });
 
-  it('renders the editorial home and its featured labs', () => {
+  it('renders the editorial home and its featured tools', () => {
     render(<App />);
 
     expect(
       screen.getByRole('heading', {
-        name: /Artigos, Soluções e Laboratórios/i,
+        name: /Artigos, Soluções e Ferramentas/i,
         level: 1,
       }),
     ).toBeInTheDocument();
     expect(screen.getByText('Inspectorvg — Inspetor de arquivos')).toBeInTheDocument();
     expect(screen.getByText('Scanvg — Gerador de comandos de scan')).toBeInTheDocument();
     expect(screen.getByText('Biblioteca de Comandos')).toBeInTheDocument();
+    const desktopNav = screen.getByRole('navigation', { name: 'Navegação principal' });
+    expect(within(desktopNav).getByRole('link', { name: 'Ferramentas' })).toHaveAttribute(
+      'href',
+      '/labs',
+    );
+    expect(within(desktopNav).getByRole('link', { name: 'Certificações' })).toHaveAttribute(
+      'href',
+      '/certificacoes/',
+    );
   });
 
   it('navigates to the article library without reloading the page', async () => {
@@ -53,10 +62,11 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('link', { name: 'Explorar os Labs' }));
+    await user.click(screen.getByRole('link', { name: 'Explorar as ferramentas' }));
 
     expect(screen.getByText('Soluções Cyber — Catálogo de soluções')).toBeInTheDocument();
     expect(screen.getByText('Cryptovg — Cofre de senhas e segredos')).toBeInTheDocument();
+    expect(screen.queryByText('Certificações — Quizzes de estudo')).not.toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /Abrir ferramenta/i }).length).toBeGreaterThan(10);
 
     await user.click(screen.getByRole('button', { name: 'IA' }));
@@ -76,7 +86,7 @@ describe('App', () => {
     window.history.replaceState({}, '', '/labs');
     render(<App />);
 
-    const search = screen.getByRole('searchbox', { name: 'Buscar nos Labs' });
+    const search = screen.getByRole('searchbox', { name: 'Buscar nas ferramentas' });
     await user.type(search, 'hash-wasm');
 
     expect(screen.getByText('Inspectorvg — Inspetor de arquivos')).toBeInTheDocument();
@@ -123,6 +133,11 @@ describe('App', () => {
       'true',
     );
     expect(screen.getByRole('navigation', { name: 'Navegação mobile' })).toBeInTheDocument();
+    const mobileNav = screen.getByRole('navigation', { name: 'Navegação mobile' });
+    expect(within(mobileNav).getByRole('link', { name: 'Certificações' })).toHaveAttribute(
+      'href',
+      '/certificacoes/',
+    );
   });
 
   it('switches between dark and light themes', async () => {

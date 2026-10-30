@@ -7,25 +7,6 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
-    slug: 'certificacoes',
-    name: {
-      en: 'Certifications — Study quizzes',
-      'pt-BR': 'Certificações — Quizzes de estudo',
-    },
-    description: {
-      en: 'Practice technical certifications with explained questions, results by topic, and a review of mistakes. Starting with Microsoft SC-200.',
-      'pt-BR':
-        'Pratique certificações técnicas com questões comentadas, resultado por área e revisão dos erros. A primeira trilha é a Microsoft SC-200.',
-    },
-    track: 'security',
-    status: 'live',
-    stack: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
-    liveUrl: 'https://sabion.io/certificacoes/',
-    repoUrl: 'https://github.com/sergiogbernardo/certificacoes',
-    signals: ['clientSide', 'local', 'noUpload', 'noAccount'],
-    collection: 'learn',
-  },
-  {
     slug: 'solucoes-cyber',
     name: {
       en: 'Cyber Solutions — Solution catalog',

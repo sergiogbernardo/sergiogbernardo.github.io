@@ -5,7 +5,7 @@ export const DEFAULT_LOCALE: Locale = 'en';
 export const messages = {
   en: {
     nav: {
-      labs: 'Labs',
+      labs: 'Tools',
       security: 'Security',
       about: 'About',
       privacy: 'Privacy',
@@ -22,7 +22,7 @@ export const messages = {
       eyebrow: 'Sabion Labs',
       title: 'Browser-based security tools and technical utilities.',
       body: 'Analyze files, inspect headers, build scan commands, decode certificates, explore vulnerabilities, and more without sending your data away.',
-      primaryAction: 'Explore labs',
+      primaryAction: 'Explore tools',
       secondaryAction: 'Privacy model',
       builtBy: 'Built by Sergio Bernardo',
       stats: {
@@ -40,12 +40,12 @@ export const messages = {
       areaTitle: 'Security domains',
       resultCount: (count: number) => `${count} ${count === 1 ? 'tool' : 'tools'}`,
       noResults: 'No tools match this selection.',
-      noResultsBody: 'Try a different term or clear the current filters to browse all labs again.',
+      noResultsBody: 'Try a different term or clear the current filters to browse all tools again.',
       clearAll: 'Clear filters',
     },
     sections: {
       featured: 'Featured',
-      allProjects: 'All labs',
+      allProjects: 'All tools',
       buildingNext: 'Building next',
       about: 'About Sabion Labs',
       privacy: 'Privacy and cookies',
@@ -71,7 +71,7 @@ export const messages = {
       experimental: 'Experimental',
     } satisfies Record<ProjectSignal, string>,
     detail: {
-      back: 'Back to labs',
+      back: 'Back to tools',
       open: 'Open live tool',
       privacyModel: 'Privacy model',
       technicalStack: 'Technical stack',
@@ -79,11 +79,12 @@ export const messages = {
     },
     collections: {
       title: 'Tool collections',
-      body: 'Browse the labs by the job you need to do: analyze, build, learn, or use a general utility.',
+      body: 'Browse the tools by the job you need to do: analyze, build, learn, or use a general utility.',
     },
     about: {
       body: 'Sabion Labs is a public collection of security-focused tools, browser utilities, and experiments. The goal is practical: small tools that help with analysis, learning, and daily technical work.',
-      author: 'The labs are built and maintained by Sergio Bernardo, with a strong preference for transparent, client-side tools.',
+      author:
+        'The tools are built and maintained by Sergio Bernardo, with a strong preference for transparent, client-side tools.',
     },
     principles: {
       items: [
@@ -112,7 +113,7 @@ export const messages = {
   },
   'pt-BR': {
     nav: {
-      labs: 'Labs',
+      labs: 'Ferramentas',
       security: 'Segurança',
       about: 'Sobre',
       privacy: 'Privacidade',
@@ -129,7 +130,7 @@ export const messages = {
       eyebrow: 'Sabion Labs',
       title: 'Ferramentas de segurança e utilidades técnicas direto no navegador.',
       body: 'Analise arquivos, inspecione headers, monte comandos de scan, decodifique certificados, explore vulnerabilidades e mais sem enviar seus dados.',
-      primaryAction: 'Explorar labs',
+      primaryAction: 'Explorar ferramentas',
       secondaryAction: 'Modelo de privacidade',
       builtBy: 'Criado por Sergio Bernardo',
       stats: {
@@ -147,12 +148,13 @@ export const messages = {
       areaTitle: 'Domínios de segurança',
       resultCount: (count: number) => `${count} ${count === 1 ? 'ferramenta' : 'ferramentas'}`,
       noResults: 'Nenhuma ferramenta corresponde a esta seleção.',
-      noResultsBody: 'Tente outro termo ou limpe os filtros atuais para navegar por todos os labs novamente.',
+      noResultsBody:
+        'Tente outro termo ou limpe os filtros atuais para navegar por todas as ferramentas novamente.',
       clearAll: 'Limpar filtros',
     },
     sections: {
       featured: 'Em destaque',
-      allProjects: 'Todos os labs',
+      allProjects: 'Todas as ferramentas',
       buildingNext: 'Construindo agora',
       about: 'Sobre o Sabion Labs',
       privacy: 'Privacidade e cookies',
@@ -178,7 +180,7 @@ export const messages = {
       experimental: 'Experimental',
     } satisfies Record<ProjectSignal, string>,
     detail: {
-      back: 'Voltar aos labs',
+      back: 'Voltar às ferramentas',
       open: 'Abrir ferramenta',
       privacyModel: 'Modelo de privacidade',
       technicalStack: 'Stack técnica',
@@ -186,11 +188,12 @@ export const messages = {
     },
     collections: {
       title: 'Coleções de ferramentas',
-      body: 'Navegue pelos labs de acordo com o trabalho que você precisa fazer: analisar, construir, aprender ou usar uma utilidade geral.',
+      body: 'Navegue pelas ferramentas de acordo com o trabalho que você precisa fazer: analisar, construir, aprender ou usar uma utilidade geral.',
     },
     about: {
       body: 'Sabion Labs é uma coleção pública de ferramentas de segurança, utilidades de navegador e experimentos. A ideia é ser prático: ferramentas pequenas para análise, aprendizado e trabalho técnico diário.',
-      author: 'Os labs são criados e mantidos por Sergio Bernardo, com preferência por ferramentas transparentes e client-side.',
+      author:
+        'As ferramentas são criadas e mantidas por Sergio Bernardo, com preferência por ferramentas transparentes e client-side.',
     },
     principles: {
       items: [
