@@ -49,6 +49,17 @@ export default defineConfig({
             description:
               'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
           },
+          {
+            path: 'certificacoes',
+            title: 'Certificações | Sabion Labs',
+            description: 'Guias e questões comentadas para certificações de tecnologia.',
+          },
+          {
+            path: 'certificacoes/sc-200',
+            title: 'SC-200: guia e questões | Sabion Labs',
+            description:
+              'Estude para a certificação Microsoft SC-200 com um roteiro e questões comentadas.',
+          },
           ...projects.map((project) => ({
             path: `labs/${project.slug}`,
             title: `${project.name['pt-BR']} | Sabion Labs`,

@@ -8,6 +8,7 @@ import {
 import { ArrowUpRight, Menu, Moon, Search, Sun, X } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa6';
 import MatrixRain from './components/MatrixRain';
+import { CertificationsPage, Sc200Page } from './components/Certifications';
 import { projects } from './data/projects';
 import { SECURITY_AREAS, TRACKS, type SecurityArea } from './data/types';
 import { useRoute } from './hooks/useRoute';
@@ -171,6 +172,15 @@ export default function App() {
         description:
           'Ferramentas técnicas da Sabion Labs para segurança, desenvolvimento e produtividade.',
       },
+      certifications: {
+        title: 'Certificações | Sabion Labs',
+        description: 'Guias e questões comentadas para certificações de tecnologia.',
+      },
+      certification: {
+        title: 'SC-200: guia e questões | Sabion Labs',
+        description:
+          'Estude para a certificação Microsoft SC-200 com um roteiro e questões comentadas.',
+      },
     };
     const metadata =
       route.name === 'lab'
@@ -205,6 +215,10 @@ export default function App() {
           <LabsPage />
         ) : route.name === 'lab' ? (
           <LabDetailPage slug={route.slug} />
+        ) : route.name === 'certifications' ? (
+          <CertificationsPage />
+        ) : route.name === 'certification' ? (
+          <Sc200Page />
         ) : (
           <HomePage />
         )}
@@ -219,7 +233,7 @@ function SiteHeader({
   theme,
   onThemeToggle,
 }: {
-  routeName: 'home' | 'articles' | 'article' | 'labs' | 'lab';
+  routeName: 'home' | 'articles' | 'article' | 'labs' | 'lab' | 'certifications' | 'certification';
   theme: 'light' | 'dark';
   onThemeToggle: () => void;
 }) {
@@ -246,6 +260,11 @@ function SiteHeader({
       active: routeName === 'articles' || routeName === 'article',
     },
     { href: '/labs', label: 'Labs', active: routeName === 'labs' || routeName === 'lab' },
+    {
+      href: '/certificacoes',
+      label: 'Certificações',
+      active: routeName === 'certifications' || routeName === 'certification',
+    },
   ];
 
   return (
@@ -1060,6 +1079,7 @@ function SiteFooter() {
             <span>EXPLORAR</span>
             <InternalLink href="/artigos">Artigos</InternalLink>
             <InternalLink href="/labs">Labs</InternalLink>
+            <InternalLink href="/certificacoes">Certificações</InternalLink>
           </div>
           <div>
             <span>CONECTAR</span>

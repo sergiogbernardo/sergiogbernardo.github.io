@@ -125,6 +125,27 @@ describe('App', () => {
     expect(screen.getByRole('navigation', { name: 'Navegação mobile' })).toBeInTheDocument();
   });
 
+  it('opens the SC-200 study area and grades a question', async () => {
+    const { default: userEvent } = await import('@testing-library/user-event');
+    const user = userEvent.setup();
+    window.history.replaceState({}, '', '/certificacoes');
+    render(<App />);
+
+    await user.click(screen.getByRole('link', { name: /Começar a estudar/i }));
+    expect(window.location.pathname).toBe('/certificacoes/sc-200');
+    expect(
+      screen.getByRole('heading', { name: 'SC-200: estude, responda, entenda.' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('radio', { name: 'SecurityEvent' }));
+    await user.click(screen.getByRole('button', { name: 'Conferir resposta' }));
+    expect(screen.getByText('Correto!')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Conferir na documentação/i })).toHaveAttribute(
+      'href',
+      'https://learn.microsoft.com/en-us/azure/sentinel/windows-security-event-id-reference',
+    );
+  });
+
   it('switches between dark and light themes', async () => {
     const { default: userEvent } = await import('@testing-library/user-event');
     const user = userEvent.setup();
